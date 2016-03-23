@@ -1,0 +1,17 @@
+﻿@using _6tactics.Cms.Web.App_Logic
+<div class="video-popup-image-wrapper" style="text-align: center!important;">
+
+    @if (ElementsVisibilityUtility.CurrentLanguage == "HR")
+    {
+        <a class="iframe-popup-item" title="Send us an email" href="@Url.Action("MailForm", "MailSender", new { area = "MailSender" })">
+            <img src="~/Content/Images/diglossiaEmailMaskHR.png" alt="image">
+        </a>
+    }
+    else
+    {
+        <a class="iframe-popup-item" title="Send us an email" href="@Url.Action("MailForm", "MailSender", new { area = "MailSender" })">
+            <img src="~/Content/Images/diglossiaEmailMaskEN.png" alt="image">
+        </a>
+    }
+
+</div>

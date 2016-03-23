@@ -1,0 +1,13 @@
+﻿@using _6tactics.Utilities.Common
+@model _6tactics.Cms.Core.ViewModels.Common.ContentItemViewModel
+
+@if (!string.IsNullOrEmpty(Model.FileUrl) && CheckFileType.IsFileImage(Model.FileUrl))
+{
+    string imageDescription = "";
+    if (!string.IsNullOrWhiteSpace(Model.Summary))
+    {
+        imageDescription = Model.Summary;
+    }
+
+    <a href="@Model.FileUrl" title="@Model.Title"><img class="gallery-image" src="@Model.FileUrl" alt="@imageDescription"></a>
+}

@@ -1,0 +1,13 @@
+﻿@using _6tactics.Utilities.Web
+@model _6tactics.Cms.Core.ViewModels.Web.SectionViewModel
+
+@foreach (var item in Model.Items)
+{
+    if (!string.IsNullOrWhiteSpace(item.FileUrl))
+    {
+        <div class="col-md-6">
+            <div class="tip"><div title="file for download" class="tip-cube-icon"></div><a href="@FileUrlBuilder.CreateUrl(string.Concat("content/uploads/", item.Id.ToString()), item.FileUrl)">@item.Title</a></div>
+        </div>
+    }
+}
+

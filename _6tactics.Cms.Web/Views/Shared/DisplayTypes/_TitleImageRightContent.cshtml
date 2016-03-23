@@ -1,0 +1,21 @@
+﻿@using _6tactics.Cms.Web.Helpers
+@using _6tactics.Utilities.Common
+@model _6tactics.Cms.Core.ViewModels.Common.ContentItemViewModel
+
+<div class="title-image-right-content">
+    @{var fileUrlHelper = new FileUrlHelper(Model.FileUrl);}
+    @if (fileUrlHelper.IsUrlValid && CheckFileType.IsFileImage(Model.FileUrl))
+    {
+        <div class="image-wrapper"><img src="@Url.Action("GetFile", "Web", new { folderPath = fileUrlHelper.RouteFolderPath, filename = fileUrlHelper.Filename, extensionName = fileUrlHelper.ExtensionName})" alt="@Model.Title"></div>
+    }
+
+    <div class="element-title">@Model.Title</div>
+
+    <div class="element-content">
+        @Html.Raw(Model.Content)
+    </div>
+
+    @Html.Partial("DisplayTypes/_ReadMore", Model)
+</div>
+
+

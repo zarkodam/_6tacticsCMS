@@ -1,0 +1,62 @@
+﻿@using _6tactics.Utilities.FileSystem.Interfaces
+@model IDirectoryTree
+
+@helper ListDirectories(IDirectoryTree directoryTree)
+{
+
+string webPath = directoryTree.RoutePath == null ? "/uploads" : string.Concat("/uploads", directoryTree.WebPath);
+string routePath = directoryTree.RoutePath == null ? "uploads" : string.Concat("uploads-", directoryTree.RoutePath);
+
+    <div class="folder-tree-node tree-node file-manager-treeview-node">
+
+        @if (directoryTree.ChildDirectories.Any())
+        {
+            <div class="expand-collapse-icon">
+                <i class="glyphicon glyphicon-minus-sign pull-left"></i>
+            </div>
+        }
+
+        <div class="node-text">
+            <div class="folder-path">@webPath</div>
+            <div class="pull-left folder-name">@directoryTree.Name</div>
+        </div>
+
+        <div class="action-icons">
+
+
+            <a id="create--@routePath" href="" class="create-folder-popup tree-view-action action-button-color">
+                <div class="glyphicon glyphicon-new-window create" title="Create"></div>
+            </a>
+
+            @if (@directoryTree.ParentPath != null)
+            {
+                <a class="delete-folder-popup" id="remove--@directoryTree.RoutePath" href="" style="color: white;">
+                    <div class="glyphicon glyphicon-remove delete" title="Delete"></div>
+                </a>
+            }
+
+        </div>
+    </div>
+
+    <ul>
+        @foreach (var directory in directoryTree.ChildDirectories)
+        {
+            <li>@ListDirectories(directory)</li>
+        }
+    </ul>
+}
+
+
+<ul id="root">
+    <li>@ListDirectories(Model)</li>
+</ul>
+
+@Html.Partial("FileManager/_FileManagerPopup")
+
+<script type="text/javascript">
+    $(function () {
+        $('.tree').treeView().treeViewActionTooltips();
+        fileManagerFolderTreeViewInit();
+        treeViewSelectedItemHandler.folderTreeViewInit();
+    });
+</script>

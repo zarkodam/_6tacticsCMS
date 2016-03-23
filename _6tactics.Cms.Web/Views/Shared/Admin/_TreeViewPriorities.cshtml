@@ -1,0 +1,107 @@
+﻿@using _6tactics.Cms.Core.Entities
+@using _6tactics.Cms.Core.Enums.Admin
+@using _6tactics.Cms.Web.App_Logic
+@using _6tactics.Utilities.Common
+@model IEnumerable<_6tactics.Cms.Core.Entities.ContentItem>
+
+@helper ListResults(ContentItem contentItem)
+{
+    if (contentItem == null)
+    {
+        return;
+    }
+
+    @Html.HiddenFor(modelItem => contentItem.Id)
+    @Html.HiddenFor(modelItem => contentItem.Priority, new { @class = "set-priority-id", @id = "priority-id-" + contentItem.Id })
+
+    <span class="tree-node">
+
+        <span style="background-color: @TreeView.SelectGroupColor(
+                    currentContentItem: contentItem,
+                    projectColor: "tomato",
+                    languageColor: "blueviolet",
+                    pageColor: "yellowgreen",
+                    elemmentColor: "SteelBlue",
+                    subElementColor: "DeepSkyBlue",
+                    fileColor: "darkorange",
+                    subFileColor: "orange"
+                    );" class="tree-item-title">
+
+            @if (ElementsVisibilityUtility.IsTitleOfContent(contentItem))
+            {
+                <i class="glyphicon glyphicon-minus-sign pull-left" style="margin-right: 10px;"></i>
+            }
+            
+            <span class="pull-right action-icons">
+                <span id="element-priority-id-@contentItem.Id" class="priority-id">
+                    @if (contentItem.ContentType != ContentType.Project)
+                    {
+                        if (contentItem.Priority == 0)
+                        {
+                            <span> n/a</span>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => contentItem.Priority)<span>.</span>
+                        }
+                    }
+
+                </span>
+            </span>
+
+            @if (contentItem.ContentType == ContentType.Language)
+            {
+                <span class="pull-left content-item-title">@Globalization.GetDisplayNameByCultureName(contentItem.Title)</span>
+            }
+            else
+            {
+                <span class="pull-left content-item-title">@contentItem.Title</span>
+            }
+
+            @* Showing ContentType / DisplayType *@
+            @if (ElementsVisibilityUtility.IsTitleOfContent(contentItem))
+            {
+                <span class="pull-right" style="margin-left: 50px;">
+                    @contentItem.ContentType
+                    @if (!string.IsNullOrWhiteSpace(contentItem.DisplayType))
+                    {
+                        <span>/</span>
+                        @contentItem.DisplayType
+                    }
+                </span>
+            }
+
+
+        </span>
+
+    </span>
+    <ul>
+        @foreach (var item in contentItem.ContentItems.OrderBy(p => p.Priority))
+        {
+            <li id="element-id-@item.Id">@ListResults(item)</li>
+        }
+    </ul>
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tree">
+            <ul id="root">
+
+                <li>@ListResults(Model.FirstOrDefault())</li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+    $(function () {
+        $('.tree').treeView().treeViewSortable();
+    });
+</script>

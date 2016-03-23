@@ -1,0 +1,69 @@
+﻿@model _6tactics.Cms.Web.Areas.Plugins.Models.MailSender.AccountSettings
+
+<div id="action-form">
+    <div id="action-form-wrapper" class="pull-left plugin-content-wrapper">
+
+        @using (Ajax.BeginForm("SendGridAccountSettings", "MailSender",
+            new AjaxOptions
+            {
+                HttpMethod = "POST",
+                //InsertionMode = InsertionMode.Replace,
+                //UpdateTargetId = "callback-content",
+                OnBegin = "loadingStart",
+                OnComplete = "onFormCompleteCallback"
+            }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <table class="table">
+                <tr>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Target address</th>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.TextBoxFor(model => model.Username, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.Username)
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Password, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.Password)
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.TargetAddress, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.TargetAddress)
+                    </td>
+                </tr>
+            </table>
+
+            <input type="submit" value="Save" class="pull-right btn btn-danger popup-submit-btn"/>
+        }
+    </div>
+</div>
+
+<p>If you don't have <b>SendGrid</b> account get it <a href="https://sendgrid.com/pricing/" target="_blank" style="color: red"><b>here</b></a>!</p>
+<p>At the bottom of the page you'll find <b>Free Plan</b>, which is 12,000 emails per month.</p>
+
+    <div id="mail-form-account-data-popup" class="popup popup-success mfp-hide">
+        <div class="popup-content">
+            Data successfully saved!
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            $.validator.unobtrusive.addValidation('form');
+        });
+
+        function onFormCompleteCallback() {
+            loadingStop();
+
+            $.magnificPopup.open({
+                items: {
+                    src: $('#mail-form-account-data-popup'),
+                    type: 'inline'
+                }
+            });
+        }
+    </script>

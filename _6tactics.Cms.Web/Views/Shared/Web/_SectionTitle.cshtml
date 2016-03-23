@@ -1,0 +1,10 @@
+﻿@using _6tactics.Cms.Web.App_Logic
+@using _6tactics.Utilities.Web.Helpers.String
+@model _6tactics.Cms.Core.ViewModels.Web.SectionViewModel
+
+@if (ElementsVisibilityUtility.IsSectionTitleVisible(Model.SectionTitleVisibility))
+{
+    <div class="col-md-12 row-headline scrollDetector">
+        <a id="@Html.WordsConnecting(Model.Title)">@Model.Title</a>
+    </div>
+}

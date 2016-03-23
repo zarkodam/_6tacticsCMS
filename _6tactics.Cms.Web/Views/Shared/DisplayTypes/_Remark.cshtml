@@ -1,0 +1,13 @@
+﻿@using _6tactics.Cms.Core.Enums
+@using _6tactics.Cms.Core.Enums.Admin
+@model _6tactics.Cms.Core.ViewModels.Common.ContentItemViewModel
+
+@if (Model.LinkOption != LinkOption.Disable && !string.IsNullOrWhiteSpace(Model.LinkTo))
+{
+    <a href="@Model.LinkTo" target="_blank"><div class="remark"><i class="fa fa-check-square"></i>@Model.Title</div></a>
+}
+else
+{
+    <div class="remark"><i class="fa fa-check-square"></i>@Model.Title</div>
+}
+

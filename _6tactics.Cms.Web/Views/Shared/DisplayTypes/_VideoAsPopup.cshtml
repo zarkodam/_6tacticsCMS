@@ -1,0 +1,13 @@
+﻿@using _6tactics.Cms.Core.Enums.Admin
+@using _6tactics.Cms.Web.Helpers
+@using _6tactics.Utilities.Common
+@model _6tactics.Cms.Core.ViewModels.Common.ContentItemViewModel
+
+@{var fileUrlHelper = new FileUrlHelper(Model.FileUrl);}
+
+@if (Model.LinkOption != LinkOption.Disable && !string.IsNullOrWhiteSpace(Model.LinkTo) && fileUrlHelper.IsUrlValid && CheckFileType.IsFileImage(Model.FileUrl))
+{
+    <div class="video-popup-image-wrapper">
+        <a class="iframe-popup-item" href="@Model.LinkTo"><img src="@Url.Action("GetFile", "Web", new { folderPath = fileUrlHelper.RouteFolderPath, filename = fileUrlHelper.Filename, extensionName = fileUrlHelper.ExtensionName})" alt="@Model.Title"></a>
+    </div>
+}

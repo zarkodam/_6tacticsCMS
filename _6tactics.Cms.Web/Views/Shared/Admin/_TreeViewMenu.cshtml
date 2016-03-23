@@ -1,0 +1,144 @@
+﻿@using _6tactics.Cms.Core.Enums.Admin
+@using _6tactics.Cms.Core.Utilities
+@using _6tactics.Cms.Web.App_Logic
+@model IEnumerable<_6tactics.Cms.Core.Entities.ContentItem>
+
+@{
+    var currentPageTitle = ElementsVisibilityUtility.IsPrioritiePage ? "PRIORITIES" : "CONTENT ITEMS LIST";
+    var langElementsCount = Model.Count(i => i.ContentType == ContentType.Language);
+    var pageElementsCount = Model.Count(i => i.ContentType == ContentType.Page);
+    var isLangElement = Model.First().Parent != null && Model.First().Parent.ContentType == ContentType.Language;
+}
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container actions-menu">
+
+        <div class="navbar-header">
+            <span class="actions-menu-title pull-left"><b>ADMIN</b> / @currentPageTitle</span>
+
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right top-menu-items">
+                @*<li><div class="btn-group" style="min-width: 200px;"><input type="text" class="form-control pull-left" placeholder="Search"></div></li>*@
+
+                @if (!ElementsVisibilityUtility.IsPrioritiePage)
+                {
+                    <li>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                <span id="dropdown-show-content-title"><b>Titles</b> displayed</span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" class="tree-filter-titles">Show titles</a></li>
+                                <li><a href="#" class="tree-filter-content">Show content</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                }
+                <li>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                            <span id="dropdown-language-title">
+                                @* Getting selected language *@
+                                @if (langElementsCount == 1)
+                                {
+                                    <span>Language: <b>@Model.First().Title.ToUpper()</b></span>
+                                }
+                                else if (langElementsCount < 1 && isLangElement)
+                                {
+                                    <span>Language: <b>@Model.First().Parent.Title.ToUpper()</b></span>
+                                }
+                                else
+                                {
+                                    <span>Languages: <b>ALL</b></span>
+                                }
+
+                            </span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" id="lang-list">
+                            <li>@Html.ActionLink("ALL", ElementsVisibilityUtility.CurrentAction, "Admin", new { id = "" }, null)</li>
+
+                            @* Getting language list*@
+                            @* Languages list comes from partial view @Html.Partial("_TreeViewResponsive") *@
+
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="btn-group">
+
+                        <input id="page-list" type="hidden">
+
+
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                            <span id="dropdown-page-title">
+                                @* Getting selected page*@
+
+                                @if (pageElementsCount == 1)
+                                {
+                                    <span>Page: <b>@Model.First().Title.ToUpper()</b></span>
+                                }
+                                else if (pageElementsCount > 1)
+                                {
+                                    <span>Select <b>Language</b> first!</span>
+                                }
+                                else
+                                {
+                                    <span>Select <b>Page</b></span>
+                                }
+
+                            </span>
+                            <span class="caret"></span>
+                        </button>
+
+                        <ul class="dropdown-menu" id="pages-list">
+                            @* Getting page list for selected language *@
+                            @if (langElementsCount == 1)
+                            {
+                                var pageFilterIfPageIsSelected = new ContentItemsWithParentCount(Model.First().ContentItems);
+                                var filteredPagesIfPageIsSelected = pageFilterIfPageIsSelected.GetFilteredByRootAndChild(
+                                                    i => i.Parent.ContentType == ContentType.Language && i.ContentType == ContentType.Page,
+                                                    i => i.ContentType == ContentType.Page);
+
+                                foreach (var page in filteredPagesIfPageIsSelected)
+                                {
+                                    <li>@Html.ActionLink(page.ContentItem.Title.ToUpper(), ElementsVisibilityUtility.CurrentAction, "Admin", 
+                                    new { id = page.ContentItem.Id }, new { @style = string.Concat("margin-right:", page.Depth*10, "px") })</li>
+                                }
+                            }
+                            else if (pageElementsCount == 1)
+                            {
+                                var pageFilterIfPageIsSelected = new ContentItemsWithParentCount(Model.First().Parent.ContentItems);
+                                var filteredPagesIfPageIsSelected = pageFilterIfPageIsSelected.GetFilteredByRootAndChild(
+                                                    i => i.Parent.ContentType == ContentType.Language && i.ContentType == ContentType.Page,
+                                                    i => i.ContentType == ContentType.Page);
+
+                                foreach (var page in filteredPagesIfPageIsSelected)
+                                {
+                                    <li>@Html.ActionLink(page.ContentItem.Title.ToUpper(), ElementsVisibilityUtility.CurrentAction, "Admin", 
+                                    new { id = page.ContentItem.Id }, new { @style = string.Concat("margin-right:", page.Depth*10, "px") })</li>
+                                }
+                            }
+
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
+                    @if (ElementsVisibilityUtility.IsPrioritiePage)
+                    {
+                        <input type="submit" value="Set Priotities" class="btn btn-danger" />
+                    }
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

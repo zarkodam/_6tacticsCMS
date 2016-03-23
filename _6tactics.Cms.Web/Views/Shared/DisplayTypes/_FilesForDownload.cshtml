@@ -1,0 +1,12 @@
+﻿@using _6tactics.Cms.Web.App_Logic
+@model _6tactics.Cms.Core.ViewModels.Common.ContentItemViewModel
+
+@if (ElementsVisibilityUtility.IsElementVisible(Model.ElementVisibility, User.Identity.IsAuthenticated))
+{
+    <div class="link-item-title">
+        @if (!string.IsNullOrWhiteSpace(Model.FileUrl))
+        {
+            <a href="@Model.FileUrl" target="_blank">@Model.Title</a>
+        }
+    </div>
+}

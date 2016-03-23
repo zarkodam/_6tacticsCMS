@@ -1,0 +1,35 @@
+﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+
+<div class="row">
+    <h3>Delete confirmation</h3>
+</div>
+
+<br>
+
+<div class="row">
+    <table class="table">
+        <tr>
+            <th>
+                Role
+            </th>
+            <th class="text-right">Actions</th>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.Name)
+            </td>
+
+            <td class="text-right">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ActionLink("Back to list", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
+                    <input type="submit" value="Delete" class="btn btn-danger">
+                }
+            </td>
+
+        </tr>
+    </table>
+</div>
+

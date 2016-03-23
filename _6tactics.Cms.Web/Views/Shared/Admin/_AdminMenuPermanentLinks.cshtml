@@ -1,0 +1,104 @@
+﻿@using _6tactics.Cms.Core.Entities
+@using _6tactics.Cms.Web.App_Logic
+@model dynamic
+
+@{
+    var homePageSelected = "";
+    var prioritiesPageSelected = "";
+    var pluginsPageSelected = "";
+    var setupPageSelected = "";
+
+    var createPageSelected = "";
+    var editPageSelected = "";
+    var detailsPageSelected = "";
+    
+
+    if (ElementsVisibilityUtility.IsHomePage)
+    {
+        homePageSelected = "active";
+    }
+    else if (ElementsVisibilityUtility.IsPrioritiePage)
+    {
+        prioritiesPageSelected = "active";
+    }
+    else if (ElementsVisibilityUtility.IsPluginsPage)
+    {
+        pluginsPageSelected = "active";
+    }
+    else if (ElementsVisibilityUtility.IsSetupPage)
+    {
+        setupPageSelected = "active";
+    }
+        
+    else if (ElementsVisibilityUtility.IsCreatePage)
+    {
+        createPageSelected = "active";
+    }
+    else if (ElementsVisibilityUtility.IsEditPage)
+    {
+        editPageSelected = "active";
+    }
+    else if (ElementsVisibilityUtility.IsDetailsPage)
+    {
+        detailsPageSelected = "active";
+    }
+    else
+    {
+        homePageSelected = "";
+        prioritiesPageSelected = "";
+        pluginsPageSelected = "";
+        setupPageSelected = "";
+    }
+}
+
+<ul class=" nav navbar-nav">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li class="@homePageSelected">
+            <a href="@Url.Action("Index", "Admin")">
+                <span class="glyphicon glyphicon-tasks navbar-icon-margin"></span>Content items list
+            </a>
+        </li>
+        if (ElementsVisibilityUtility.IsHomePage)
+        {
+            @Html.Partial("Admin/_TreeViewActions", (ContentItem)Model)
+
+        }
+
+        <li class="@prioritiesPageSelected">
+            <a href="@Url.Action("Priorities", "Admin")">
+                <span class="glyphicon glyphicon-sort navbar-icon-margin"></span>Priorities
+            </a>
+        </li>
+        if (ElementsVisibilityUtility.IsPrioritiePage)
+        {
+            @Html.Partial("Admin/_TreeViewActions", (ContentItem)Model)
+
+        }
+
+        if (ElementsVisibilityUtility.IsCreatePage)
+        {
+            <li class="@createPageSelected">
+                <span class="glyphicon glyphicon-new-window navbar-icon-margin"></span>Create
+            </li>
+        }
+        if (ElementsVisibilityUtility.IsEditPage)
+        {
+            <li class="@editPageSelected">
+                <span class="glyphicon glyphicon-edit navbar-icon-margin"></span>Edit
+            </li>
+        }
+        if (ElementsVisibilityUtility.IsDetailsPage)
+        {
+            <li class="@detailsPageSelected">
+                <span class="glyphicon glyphicon-log-out navbar-icon-margin"></span>Details
+            </li>
+        }
+
+        <li class="@setupPageSelected">
+            <a href="@Url.Action("Setup", "Admin")">
+                <span class="glyphicon glyphicon-cog navbar-icon-margin"></span>Setup
+            </a>
+        </li>
+    }
+</ul>

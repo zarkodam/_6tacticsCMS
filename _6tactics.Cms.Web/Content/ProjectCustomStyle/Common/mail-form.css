@@ -1,0 +1,43 @@
+﻿.input-validation-error {
+    border-radius: 0!important;
+    border: 0!important;
+    border-bottom: 2px solid #fa8072!important;
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+    .fileUpload .button-title {
+        margin-top: 8px;
+    }
+
+
+    .fileUpload input.upload {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        right: 0;
+        padding: 0;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+
+    .fileUpload, .fileUpload input.upload, .mail-form input, textarea.content-textarea {
+        border-radius: 2px !important;
+        font-weight: bolder!important;
+        font: 14px Arial;
+    }
+
+    .fileUpload, .fileUpload input.upload, .mail-form input {
+        outline: 0!important;
+        height: 46px!important;
+    }
+
+    textarea.content-textarea {
+        height: 56px;
+    }

@@ -1,0 +1,26 @@
+﻿@using _6tactics.Cms.Core.Enums.Admin
+@using _6tactics.Cms.Web.App_Logic
+@using _6tactics.Cms.Web.Helpers
+@using _6tactics.Utilities.Common
+@model _6tactics.Cms.Core.ViewModels.Common.ContentItemViewModel
+
+@if (CheckExistence.IsUrlExist(Model.FileUrl) && ElementsVisibilityUtility.IsElementVisible(Model.ElementVisibility, User.Identity.IsAuthenticated))
+{
+    <div class="link-item-image">
+        @{var fileUrlHelper = new FileUrlHelper(Model.FileUrl);}
+
+        @if (fileUrlHelper.IsUrlValid && CheckFileType.IsFileImage(Model.FileUrl))
+        {
+            if (Model.LinkOption != LinkOption.Disable && !string.IsNullOrWhiteSpace(Model.LinkTo))
+            {
+                <a href="@Model.LinkTo" target="_blank"><img src="@Url.Action("GetFile", "Web", new { folderPath = fileUrlHelper.RouteFolderPath, filename = fileUrlHelper.Filename, extensionName = fileUrlHelper.ExtensionName})" alt="@Model.Title"></a>
+            }
+            else
+            {
+                <div class="image-wrapper"><img src="@Url.Action("GetFile", "Web", new { folderPath = fileUrlHelper.RouteFolderPath, filename = fileUrlHelper.Filename, extensionName = fileUrlHelper.ExtensionName})" alt="@Model.Title"></div>
+            }
+        }
+    </div>
+}
+
+

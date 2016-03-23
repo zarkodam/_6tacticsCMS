@@ -1,0 +1,10 @@
+[
+  {
+    "Language": "EN",
+    "Email": "required as valid e-mail address, 100 character max",
+    "Name": "required, 100 character max, A-Z a-z",
+    "Subject": "required, 100 character max, A-Z a-z",
+    "Content": "required, 500 character max",
+    "File": "3Mb max, extensions allowed: rar, zip, 7z"
+  }
+]

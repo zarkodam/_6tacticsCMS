@@ -1,0 +1,123 @@
+﻿@model _6tactics.Cms.Web.Areas.Plugins.Models.GoogleMaps.GoogleMapPreviewSetup
+
+<div id="action-form">
+    <div id="action-form-wrapper" class="pull-left plugin-content-wrapper">
+
+        @using (Ajax.BeginForm("PreviewSetup", "GoogleMaps",
+        new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnBegin = "loadingStart",
+            OnComplete = "onFormCompleteCallback"
+        }))
+        {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.DefaultAddress)
+                @Html.TextBoxFor(model => model.DefaultAddress, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DefaultAddress)
+            </div>
+
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.Zoom)
+                @Html.TextBoxFor(model => model.Zoom, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.Zoom)
+            </div>
+        </div>
+
+        <br><br>
+
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.InfowindowMaxWidth)
+                @Html.TextBoxFor(model => model.InfowindowMaxWidth, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.InfowindowMaxWidth)
+            </div>
+
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.InfowindowMaxHeight)
+                @Html.TextBoxFor(model => model.InfowindowMaxHeight, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.InfowindowMaxHeight)
+            </div>
+        </div>
+
+        <br><br>
+
+        <div class="row">
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.AutomaticallyCenterLocations)
+                @Html.CheckBoxFor(model => model.AutomaticallyCenterLocations, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.AutomaticallyCenterLocations)
+            </div>
+
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Scrollwheel)
+                @Html.CheckBoxFor(model => model.Scrollwheel, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.Scrollwheel)
+            </div>
+
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.MarkerVisibility)
+                @Html.CheckBoxFor(model => model.MarkerVisibility, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.MarkerVisibility)
+            </div>
+
+            @*<div class="col-md-4">
+            @Html.LabelFor(model => model.MarkerImageUrl)
+            @Html.TextBoxFor(model => model.MarkerImageUrl, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.MarkerImageUrl)
+            <br>
+            </div>*@
+
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.InfowindowVisibility)
+                @Html.CheckBoxFor(model => model.InfowindowVisibility, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.InfowindowVisibility)
+            </div>
+
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.IsGoogleMapStyleEnabled)
+                @Html.CheckBoxFor(model => model.IsGoogleMapStyleEnabled, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IsGoogleMapStyleEnabled)
+            </div>
+        </div>
+
+        <br>
+
+        @*<div class="col-md-4">
+        @Html.LabelFor(model => model.InfowindowImageUrl)
+        @Html.TextBoxFor(model => model.InfowindowImageUrl, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.InfowindowImageUrl)
+        <br>
+        </div>*@
+
+        <input style="margin-top: 20px; height: 40px!important;" type="submit" value="Update Settings" class="col-md-12 btn btn-primary popup-submit-btn" />
+        }
+    </div>
+</div>
+
+<div id="preview-setup-form-account-data-popup" class="popup popup-success mfp-hide">
+    <div class="popup-content">
+        Setup is saved successfully!
+    </div>
+</div>
+
+<script type="text/javascript">
+    function onFormCompleteCallback() {
+        loadingStop();
+
+        $.magnificPopup.open({
+            items: {
+                src: $('#preview-setup-form-account-data-popup'),
+                type: 'inline'
+            }
+        });
+    }
+
+    $(function () {
+        $.validator.unobtrusive.addValidation('form');
+    });
+</script>

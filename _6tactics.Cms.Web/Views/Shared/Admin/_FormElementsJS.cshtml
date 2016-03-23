@@ -1,0 +1,482 @@
+﻿@using _6tactics.Cms.Core.ViewModels
+@using _6tactics.Cms.Core.ViewModels.Common
+@using _6tactics.Cms.Web.App_Logic
+@model dynamic
+
+@* Form elements handler *@
+
+@{
+    if (ElementsVisibilityUtility.IsCreatePage || ElementsVisibilityUtility.IsEditPage)
+    {
+        ViewBag.ContentItemTitle = "#ContentItemViewModel_Title";
+        ViewBag.ContentType = "#ContentItemViewModel_ContentType";
+        ViewBag.DisplayType = "#ContentItemViewModel_DisplayType";
+        ViewBag.Summary = "#ContentItemViewModel_Summary";
+        ViewBag.Content = "#ContentItemViewModel_Content";
+        ViewBag.ElementVisibility = "#ContentItemViewModel_ElementVisibility";
+        ViewBag.SectionVisibility = "#ContentItemViewModel_SectionTitleVisibility";
+
+        ViewBag.ElementWidthPanel = ".element-width-panel";
+
+        bool isParentElementOrFile = Model.CreateEditDataViewModel.IsParentElementOrFile;
+        ViewBag.ElementColor = isParentElementOrFile ? "deepSkyBlue" : "steelBlue";
+        ViewBag.FileColor = isParentElementOrFile ? "orange" : "darkorange";
+
+        ViewBag.LinkOption = "#ContentItemViewModel_LinkOption";
+
+        ViewBag.SectionTitlteVisibilityVisible = ElementsVisibilityUtility.IsSectionTitleVsibilityVisible(Model) ? "visible" : "";
+
+        ViewBag.IsTitleOfContent = ElementsVisibilityUtility.IsElementWidthPanelVisible((ContentItemViewModel)Model.ContentItemViewModel) ? "true" : "false";
+    }
+    if (ElementsVisibilityUtility.IsDetailsPage)
+    {
+        ViewBag.ContentType = "#ContentType";
+        ViewBag.DisplayType = "#DisplayType";
+        ViewBag.Summary = "#Summary";
+        ViewBag.Content = "#Content";
+
+        ViewBag.ElementColor = ViewBag.IsParentElementOrFile ? "deepSkyBlue" : "steelBlue";
+        ViewBag.FileColor = ViewBag.IsParentElementOrFile ? "orange" : "darkorange";
+
+        ViewBag.FileUrl = Model != null && Model.FileUrl != null ? Model.FileUrl : "";
+
+        ViewBag.IsTitleOfContent = ElementsVisibilityUtility.IsElementWidthPanelVisible(Model) ? "true" : "false";
+    }
+    if (ElementsVisibilityUtility.IsEditPage)
+    {
+        ViewBag.FileUrl = Model != null && Model.ContentItemViewModel.FileUrl != null ? Model.ContentItemViewModel.FileUrl : "";
+    }
+    if (ElementsVisibilityUtility.IsSetupPage)
+    {
+        ViewBag.Summary = "#Project_Summary";
+        ViewBag.FileUrl = Model != null && Model.Project.FileUrl != null ? Model.Project.FileUrl : "";
+    }
+}
+<script type="text/javascript">
+
+    // Values from elements
+    var contentTypeValue = $("@ViewBag.ContentType").val();
+    var displayTypeValue = $("@ViewBag.DisplayType").val();
+    var isTitleOfContent = Boolean(@ViewBag.IsTitleOfContent);
+    var isFooterElementSelected = false;
+
+    // Elements
+    var summary = $("@ViewBag.Summary");
+    var content = $("@ViewBag.Content");
+    var contentTypeDropdownElement = $("@ViewBag.ContentType");
+    var displayTypeDropdownElement = $("@ViewBag.DisplayType");
+
+    var titlePanel = $("@ViewBag.ContentItemTitle").parent().parent().parent();
+    var contentTypePanel = $("@ViewBag.ContentType").parent().parent().parent();
+    var displayTypePanel = $("@ViewBag.DisplayType").parent().parent().parent();
+    var elementVisibilityPanel = $("@ViewBag.ElementVisibility").parent().parent().parent();
+    var sectionVisibilityPanel = $("@ViewBag.SectionVisibility").parent().parent().parent();
+
+    var summaryElement = $('.summary-panel');
+    var fileUrlElement = $('.file-url-panel');
+    var contentElement = $('.content-panel');
+
+    // Adding panel color
+    function addPanelColorForSelectedContentType(color) {
+        $(".panel-heading").css("background-color", color);
+        $(".btn-primary").css("background-color", color);
+        $(".btn-primary").css("border", color);
+        $(".panel-custom").css("border-color", color);
+    }
+
+    function addRemoveFileUrlElementIfElementIsNotTitle() {
+        if (isTitleOfContent)
+            fileUrlElement.hide();
+        else
+            fileUrlElement.show();
+    }
+
+    function resizeElementBySelectedContentType(element, bootstrapClassForRemove, bootstrapClassForAdd) {
+        element.removeClass(bootstrapClassForRemove);
+        element.addClass(bootstrapClassForAdd);
+    }
+
+    function addDisplayTypePanel(contentTypePanel) {
+        resizeElementBySelectedContentType(contentTypePanel, "col-md-12", "col-md-6");
+        displayTypePanel.show();
+    }
+
+    function removeDisplayTypePanel(contentTypePanel) {
+        resizeElementBySelectedContentType(contentTypePanel, "col-md-6", "col-md-12");
+        displayTypePanel.hide();
+    }
+
+    function addElementWidthPanel() {
+        if (isTitleOfContent) {
+            $("@ViewBag.ElementWidthPanel").show();
+            resizeElementBySelectedContentType(contentTypePanel, "col-md-6", "col-md-5");
+            resizeElementBySelectedContentType(displayTypePanel, "col-md-6", "col-md-4");
+        }
+    }
+
+    function removeElementWidthPanel() {
+        if (isTitleOfContent) {
+
+            @*alert("@ViewBag.ElementWidthPanel");
+        alert(contentTypePanel.parent().attr('class'));*@
+
+            $("@ViewBag.ElementWidthPanel").hide();
+            resizeElementBySelectedContentType(contentTypePanel, "col-md-5", "col-md-6");
+            resizeElementBySelectedContentType(displayTypePanel, "col-md-4", "col-md-6");
+        }
+    }
+
+    function addTitle(title) {
+        $('@ViewBag.ContentItemTitle').val(title);
+        $('@ViewBag.ContentItemTitle').removeAttr('readonly');
+    }
+
+    function addTitleToReadOnly(title) {
+        $('@ViewBag.ContentItemTitle').val(title);
+        $('@ViewBag.ContentItemTitle').attr('readonly', 'readonly');
+    }
+
+    function addSectionVisibilityPanel() {
+        sectionVisibilityPanel.show();
+        titlePanel.removeClass("col-md-8");
+        titlePanel.addClass("col-md-6");
+        elementVisibilityPanel.removeClass("col-md-4");
+        elementVisibilityPanel.addClass("col-md-3");
+    }
+
+    function removeSectionVisibilityPanel() {
+        sectionVisibilityPanel.hide();
+        titlePanel.removeClass("col-md-6");
+        titlePanel.addClass("col-md-8");
+        elementVisibilityPanel.removeClass("col-md-3");
+        elementVisibilityPanel.addClass("col-md-4");
+    }
+
+    // Defining elements view per selected display type
+    function displayItemsByDisplayType(displayType) {
+
+        // Empty row
+        if (displayType == "EmptyRow") {
+            fileUrlElement.hide();
+            summaryElement.hide();
+            contentElement.hide();
+            removeSectionVisibilityPanel();
+            removeElementWidthPanel();
+        }
+
+        // Title with ElementWidthPanel visible
+        if (displayType == "Remark" ||
+            displayType == "YoutubeVideo") {
+            fileUrlElement.hide();
+            summaryElement.hide();
+            contentElement.hide();
+            addElementWidthPanel();
+        }
+
+        // Title without ElementWidthPanel visible
+        if (displayType == "LinkWithTitle") {
+            fileUrlElement.hide();
+            summaryElement.hide();
+            contentElement.hide();
+            removeElementWidthPanel();
+        }
+
+        // Title, fileUrl visible
+        if (displayType == "LinkWithImage" ||
+            displayType == "LinkWithTitleAndImage") {
+            addRemoveFileUrlElementIfElementIsNotTitle();
+            summaryElement.hide();
+            contentElement.hide();
+            removeElementWidthPanel();
+        }
+
+        // Title, fileUrl visible
+        if (displayType == "LinkWithImage" ||
+            displayType == "LinkWithTitleAndImage") {
+            addRemoveFileUrlElementIfElementIsNotTitle();
+            summaryElement.hide();
+            contentElement.hide();
+            removeElementWidthPanel();
+        }
+
+        // Title, summary, fileUrl without ElementWidthPanel visible
+        if (displayType == "FilesForDownload") {
+            contentElement.hide();
+            removeElementWidthPanel();
+        }
+
+        // Title, content, fileUrl visible
+        if (displayType == "ContentImageBottom" ||
+        displayType == "ContentImageRight" ||
+        displayType == "TitleContentImageBottom" ||
+        displayType == "TitleImageRightContent" ||
+        displayType == "TitleImageTopContent" ||
+        displayType == "ImageLeftContent" ||
+        displayType == "ImageLeftTitleContent" ||
+        displayType == "ImageTopContent" ||
+        displayType == "ImageTopTitleContent") {
+            addRemoveFileUrlElementIfElementIsNotTitle();
+            summaryElement.hide();
+            addElementWidthPanel();
+        }
+
+        // Title, summary, content visible
+        if (displayType == "TitleSummaryContent") {
+            fileUrlElement.hide();
+            addElementWidthPanel();
+        }
+
+        // Title, summary, content, fileUrl visible
+        if (displayType == "TitleImageRightSummaryContent" ||
+        displayType == "TitleImageRightSummaryContent" ||
+        displayType == "TitleImageRightSummaryContent" ||
+        displayType == "TitleImageTopSummaryContent" ||
+        displayType == "TitleSummaryContentImageBottom" ||
+        displayType == "ImageLeftTitleSummaryContent" ||
+        displayType == "ImageTopTitleSummaryContent") {
+            addRemoveFileUrlElementIfElementIsNotTitle();
+            addElementWidthPanel();
+        }
+
+        // Title, summary, fileUrl visible
+        if (displayType == "ImageSlider" ||
+        displayType == "ImageGallery" ||
+        displayType == "") {
+            addRemoveFileUrlElementIfElementIsNotTitle();
+            contentElement.hide();
+            addElementWidthPanel();
+        }
+
+        // All element are visible without ElementWidthPanel and with fileUrl on TitleElement!
+        if (displayType == "ParallaxSlider") {
+            fileUrlElement.show();
+            fileUrlElement.find("label:first").html("Background image");
+            fileStyleOnCallback("ContentItemViewModel.FileUrl", "ContentItemViewModel_FileUrl");
+            removeElementWidthPanel();
+        }
+
+
+        //switch (displayType) {
+            //case "LinkWithTitle":
+            //    fileUrlElement.hide();
+            //    summaryElement.hide();
+            //    contentElement.hide();
+            //    removeElementWidthPanel();
+            //    break;
+            //case "LinkWithImage":
+            //    addRemoveFileUrlElementIfElementIsNotTitle();
+            //    summaryElement.hide();
+            //    contentElement.hide();
+            //    removeElementWidthPanel();
+            //    break;
+            //case "LinkWithTitleAndImage":
+            //    addRemoveFileUrlElementIfElementIsNotTitle();
+            //    summaryElement.hide();
+            //    contentElement.hide();
+            //    removeElementWidthPanel();
+            //    break;
+            //case "YoutubeVideo":
+            //    fileUrlElement.hide();
+            //    summaryElement.hide();
+            //    contentElement.hide();
+            //    removeElementWidthPanel();
+            //    break;
+            //case "ParallaxSlider":
+            //    fileUrlElement.show();
+            //    fileUrlElement.find("label:first").html("Background image");
+            //    fileStyleOnCallback("ContentItemViewModel.FileUrl", "ContentItemViewModel_FileUrl");
+            //    removeElementWidthPanel();
+            //    break;
+            //case "Custom":
+            //    summaryElement.hide();
+            //    fileUrlElement.hide();
+            //    addElementWidthPanel();
+            //    break;
+            //case "FilesForDownload":
+            //    contentElement.hide();
+            //    removeElementWidthPanel();
+            //    break;
+        //    default:
+        //        break;
+        //}
+    }
+
+    // Defining elements view per selected content type
+    function displayItemByContnetType(contentType) {
+
+        switch (contentType) {
+            case "Project":
+                addPanelColorForSelectedContentType("tomato");
+                contentElement.hide();
+                removeSectionVisibilityPanel();
+                resizeElementBySelectedContentType(titlePanel, "col-md-8", "col-md-12");
+                resizeElementBySelectedContentType(contentTypePanel.parent(), "col-md-6", "col-md-12");
+                break;
+            case "Language":
+                addPanelColorForSelectedContentType("blueviolet");
+                fileUrlElement.hide();
+                summaryElement.hide();
+                contentElement.hide();
+                removeSectionVisibilityPanel();
+                resizeElementBySelectedContentType(contentTypePanel.parent(), "col-md-6", "col-md-12");
+                break;
+            case "Page":
+                addPanelColorForSelectedContentType("yellowgreen");
+                fileUrlElement.hide();
+                summaryElement.hide();
+                contentElement.hide();
+                removeSectionVisibilityPanel();
+                if (isFooterElementSelected) {
+                    addDisplayTypePanel(contentTypePanel);
+                    isFooterElementSelected = false;
+                }
+                //addTitle('');
+                @if (ElementsVisibilityUtility.IsCreatePage)
+                {
+                    <text> removeElementWidthPanel(); </text>
+                }
+                break;
+            case "Footer":
+                isFooterElementSelected = true;
+                addPanelColorForSelectedContentType("gray");
+                fileUrlElement.hide();
+                summaryElement.hide();
+                contentElement.hide();
+                removeSectionVisibilityPanel();
+                removeDisplayTypePanel(contentTypePanel);
+                //addTitleToReadOnly('Footer');
+                break;
+            case "ContentElement":
+                @if (ViewBag.SectionTitlteVisibilityVisible == "visible")
+                {
+                    <text>
+                addSectionVisibilityPanel();
+                </text>
+                }
+                addPanelColorForSelectedContentType("@ViewBag.ElementColor");
+                addElementWidthPanel();
+                break;
+            case "File":
+                @if (ViewBag.SectionTitlteVisibilityVisible == "visible")
+                {
+                    <text>
+                addSectionVisibilityPanel();
+                </text>
+                }
+                addPanelColorForSelectedContentType("@ViewBag.FileColor");
+                $(".summary-panel").find("label").html("Description");
+                addElementWidthPanel();
+                fileUrlElement.hide();
+                break;
+            default:
+                break;
+        }
+    }
+
+    // Creating display type dropdown by selected content type
+    function getDisplayTypeListItem(selectedContentType) {
+        $.get('@Url.Action("GetDisplayTypeList", "Ajax")', { selectedContentType: selectedContentType }, function (data) {
+            $("@ViewBag.DisplayType").html("");
+
+            $.each(data, function (key, value) {
+                $("@ViewBag.DisplayType").append("<option>" + value + "</option>");
+            });
+        });
+    }
+
+    // Plugins and functions initialization
+    $(function () {
+
+        @if (ElementsVisibilityUtility.IsCreatePage || ElementsVisibilityUtility.IsEditPage)
+    {
+        <text>
+        summary.tinyMceInit({ elementHeight: 100 });
+        content.tinyMceInit({ isBasicConfig: false });
+
+        $("@ViewBag.LinkOption").on("change", function () {
+            if ($(this).val() == "Disable") {
+                $("#select2-pages-dropdown").hide();
+                $("#custom-link").show().val("Adding link for current element is disabled!").attr("readonly", "readonly");
+                $("#link-value-temp").val($("#ContentItemViewModel_LinkTo").val());
+                $("#ContentItemViewModel_LinkTo").val("");
+            }
+            else if ($(this).val() == "PageList") {
+                $("#custom-link").hide();
+                $("#select2-pages-dropdown").show();
+                //$("#ContentItemViewModel_LinkTo").val($("#select2-pages-dropdown").val());
+            }
+            else if ($(this).val() == "Custom") {
+                $("#select2-pages-dropdown").hide();
+                $("#custom-link").show().val("").removeAttr("readonly").val($("#link-value-temp").val());
+                $("#ContentItemViewModel_LinkTo").val($("#link-value-temp").val());
+            }
+        });
+
+        $("#custom-link").on("change", function () {
+            $("#ContentItemViewModel_LinkTo").val($(this).val());
+        });
+        </text>
+    }
+
+        @if (ElementsVisibilityUtility.IsCreatePage)
+    {
+        <text> fileStyleInit("ContentItemViewModel.FileUrl", "ContentItemViewModel_FileUrl"); </text>
+    }
+    else if (ElementsVisibilityUtility.IsEditPage)
+    {
+        <text> fileStyleInit("ContentItemViewModel.FileUrl", "ContentItemViewModel_FileUrl", "@ViewBag.FileUrl"); </text>
+    }
+    else if (ElementsVisibilityUtility.IsSetupPage)
+    {
+        <text>
+        summary.tinyMceInit({ elementHeight: 100 });
+        fileStyleInit("Project.FileUrl", "Project_FileUrl", "@ViewBag.FileUrl");
+        addPanelColorForSelectedContentType("tomato");
+        $(".setup-language").css("background-color", "blueviolet");
+        $(".panel-custom").css("border-color", "blueviolet");
+        </text>
+    }
+    else if (ElementsVisibilityUtility.IsDetailsPage)
+    {
+        <text>
+        summary.tinyMceInit({ elementHeight: 100, readonly: true });
+        content.tinyMceInit({ isBasicConfig: false, readonly: true });
+        inputResize($("#FileUrl"));
+
+        </text>
+    }
+
+
+        @if (ElementsVisibilityUtility.IsEditPage || ElementsVisibilityUtility.IsSetupPage || ElementsVisibilityUtility.IsDetailsPage)
+    {
+        <text>$('.image-link').magnificPopup({ type: 'image' });</text>
+    }
+
+        // Fill display type list by selected content item
+        //getDisplayTypeListItem(contentTypeValue);
+
+        // Show items by selected content type
+        displayItemByContnetType(contentTypeValue);
+
+        // Show items by selected display type
+        displayItemsByDisplayType(displayTypeValue);
+
+        @if (ElementsVisibilityUtility.IsCreatePage || ElementsVisibilityUtility.IsEditPage)
+    {
+        <text>
+        // Fill display type dropdown by changing content type
+        contentTypeDropdownElement.on('change', function () {
+            getDisplayTypeListItem(this.value);
+            displayItemByContnetType(this.value);
+        });
+
+        // Turn on or off element width by selected display type
+        displayTypeDropdownElement.on('change', function () {
+            displayItemsByDisplayType(this.value);
+        });
+        </text>
+    }
+
+    });
+
+</script>

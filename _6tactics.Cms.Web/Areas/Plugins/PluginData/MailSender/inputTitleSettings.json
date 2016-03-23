@@ -1,0 +1,22 @@
+[
+  {
+    "Language": "HR",
+    "Email": "Email",
+    "Name": "Ime",
+    "Subject": "Tema",
+    "Content": "Sadržaj",
+    "File": "Datoteka",
+    "UploadButton": "Odaberi datoteku",
+    "SendButton": "Pošalji poruku"
+  },
+  {
+    "Language": "EN",
+    "Email": "Email",
+    "Name": "Name",
+    "Subject": "Subject",
+    "Content": "Content",
+    "File": "File",
+    "UploadButton": "Choose file",
+    "SendButton": "Send message"
+  }
+]

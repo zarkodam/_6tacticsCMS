@@ -1,0 +1,68 @@
+﻿#wizard .content, .steps ul li a, .wizard > .actions a {
+    -ms-border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+
+.steps ul li a {
+    margin-left: 0!important;
+    background: rgba(51, 51, 51, 0.4) !important;
+    /*height: 30px !important;*/
+}
+
+.wizard > .steps a {
+    /*cursor: pointer;*/
+    font-size: 0.9em !important;
+    padding: 5px !important;
+    /*margin-bottom: 0 !important;*/
+}
+
+#wizard .content {
+    margin-left: 0; 
+    background: rgba(51, 51, 51, 0.4);
+}
+
+.wizard > .actions {
+    margin-top: 14px;
+}
+
+.wizard > .actions a {
+    background-color: #5cb85c !important;
+    padding: 12px !important;
+}
+
+.wizard > .actions a:hover {
+    background-color: #449d44 !important;
+    padding: 12px !important;
+}
+
+/*background-color: #618fb0;*/
+
+
+#add-location, #add-map-item, #remove-location {
+    height: 40px !important;
+    width: 100%;
+}
+
+.location-error-message {
+    padding: 10px;
+    color: #ff0000;
+    text-align: center;
+}
+
+#title-and-description-form input, #title-and-description-form select, #title-and-description-form textarea {
+    margin-bottom: 10px;
+}
+
+#title-and-description-form [type="submit"] {
+    margin-top: 10px;
+    width: 100px;
+    float: right;
+}
+
+.validation-message {
+    float: right; color: #ff0000; font-weight: bold; font-size: 0.9em!important; margin-left: 2px;
+}
+
+.input-wrapper {
+    width: 96%; float: left;
+}

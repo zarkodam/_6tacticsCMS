@@ -1,0 +1,26 @@
+﻿@using _6tactics.Cms.Core.Enums.Admin
+@using _6tactics.Cms.Web.App_Logic
+@model _6tactics.Cms.Core.ViewModels.Common.ContentItemViewModel
+
+@if (ElementsVisibilityUtility.IsElementVisible(Model.ElementVisibility, User.Identity.IsAuthenticated))
+{
+    if (!string.IsNullOrWhiteSpace(Model.FileUrl))
+    {
+        <div class="owl-item">
+
+            @if (Model.LinkOption != LinkOption.Disable && !string.IsNullOrWhiteSpace(Model.LinkTo))
+            {
+                <a class="read-more" href="@Model.LinkTo" target="_blank"><img src="@Model.FileUrl" alt="@Model.Title"></a>
+            }
+            else
+            {
+                <img src="@Model.FileUrl" alt="@Model.Title">
+            }
+
+            @if (!string.IsNullOrWhiteSpace(Model.Summary))
+            {
+                <div id="image-slider-element-summary">@Html.Raw(Model.Summary)</div>
+            }
+        </div>
+    }
+}

@@ -1,0 +1,45 @@
+@model _6tactics.Cms.Web.Areas.Plugins.ViewModels.GoogleMaps.MapLocationsViewModel
+
+@using (Ajax.BeginForm("AddLocationToMap", "GoogleMaps",
+                            new AjaxOptions
+                            {
+                                HttpMethod = "POST",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "locations-list",
+                                OnBegin = "loadingStart",
+                                OnComplete = "updateHeight"
+                            }))
+{
+    <div class="table-responsive">
+        <table class="table table-locations">
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.Map.Title)
+
+            <thead>
+                <tr>
+                    <td>
+                        <div class="input-wrapper">
+                            @Html.TextBoxFor(model => model.Location.FormattedAddress, new { @class = "form-control", @readonly = "readonly", @placeholder = "Formatted address" })
+                            <span class="validation-message">@Html.ValidationMessageFor(model => model.Location.FormattedAddress)</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-wrapper">@Html.TextBoxFor(model => model.Location.Latitude, new { @class = "form-control", @readonly = "readonly", @placeholder = "Latitude" })</div>
+                        <span class="validation-message">@Html.ValidationMessageFor(model => model.Location.Latitude)</span>
+                    </td>
+                    <td>
+                        <div class="input-wrapper">@Html.TextBoxFor(model => model.Location.Longitude, new { @class = "form-control", @readonly = "readonly", @placeholder = "Longitude" })</div>
+                        <div class="validation-message">@Html.ValidationMessageFor(model => model.Location.Longitude)</div>
+                    </td>
+                    <td>
+                        <div class="input-wrapper">@Html.TextBoxFor(model => model.Location.ZIndex, new { @class = "form-control", @placeholder = "Z-index" })</div>
+                        <span class="validation-message">@Html.ValidationMessageFor(model => model.Location.ZIndex)</span>
+                    </td>
+                    <td>
+                        <input class="btn btn-primary" id="add-location" type="submit" value="Add">
+                    </td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+}

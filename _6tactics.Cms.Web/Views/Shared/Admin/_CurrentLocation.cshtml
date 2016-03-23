@@ -1,0 +1,91 @@
+﻿@using _6tactics.Cms.Web.App_Logic
+@model _6tactics.Cms.Core.ViewModels.Admin.AdminActionsViewModel
+
+@{
+    //string colorByContentType = TreeView.SelectGroupColor(
+    //currentContentItem: Model.ContentItemModel,
+    //projectColor: "tomato",
+    //languageColor: "blueviolet",
+    //pageColor: "yellowgreen",
+    //footerColor: "gray",
+    //contentElemmentColor: "SteelBlue",
+    //subElementColor: "DeepSkyBlue",
+    //fileColor: "darkorange",
+    //subFileColor: "orange"
+    //);
+
+    string introMessage = "";
+    string title = "";
+    string contentType = "";
+    string displayType = "";
+
+    if (!ElementsVisibilityUtility.IsPluginsPage && !ElementsVisibilityUtility.IsSetupPage)
+    {
+        if (Model.CreateEditDataViewModel != null)
+        {
+            if (ElementsVisibilityUtility.IsCreatePage)
+            {
+                introMessage = "Create child elements for: ";
+
+                contentType = Model.CreateEditDataViewModel.SelectedContentType.ToString();
+
+                if (!string.IsNullOrWhiteSpace(Model.CreateEditDataViewModel.SelectedDisplayType))
+                {
+                    displayType = string.Concat(" / ", Model.CreateEditDataViewModel.SelectedDisplayType);
+                }
+            }
+            else if (ElementsVisibilityUtility.IsEditPage)
+            {
+                introMessage = "Editing element: ";
+            }
+            else if (ElementsVisibilityUtility.IsDetailsPage)
+            {
+                introMessage = "Details for element: ";
+            }
+
+            if (ElementsVisibilityUtility.IsEditPage || ElementsVisibilityUtility.IsDetailsPage)
+            {
+                contentType = Model.ContentItemViewModel.ContentType.ToString();
+
+                if (!string.IsNullOrWhiteSpace(Model.ContentItemViewModel.DisplayType))
+                {
+                    displayType = string.Concat(" / ", Model.ContentItemViewModel.DisplayType);
+                }
+            }
+
+            title = Model.CreateEditDataViewModel.SelectedTitle;
+        }
+        else
+        {
+            introMessage = "Results showed from: ";
+
+            if (Model.ContentItemModel != null)
+            {
+                if (!string.IsNullOrWhiteSpace(Model.ContentItemModel.DisplayType))
+                {
+                    displayType = string.Concat(" / ", Model.ContentItemModel.DisplayType);
+                }
+
+                title = Model.ContentItemModel.Title;
+                contentType = Model.ContentItemModel.ContentType.ToString();
+            }
+
+        }
+    }
+
+}
+
+<div id="current-location">
+    <div class="gears-wrapper">
+        <span class="gear"></span>
+        <span class="gear"></span>
+    </div>
+
+    <p id="current-location-message">
+        <span id="current-location-intro-message">@introMessage</span>
+        <b id="current-location-title">@title</b>
+        (<span id="current-location-content-type">@contentType</span><span id="current-location-display-type">@displayType</span>)
+    </p>
+</div>
+
+@*<br><br>*@

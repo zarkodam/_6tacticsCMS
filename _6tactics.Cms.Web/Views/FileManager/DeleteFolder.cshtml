@@ -1,0 +1,65 @@
+﻿@using _6tactics.Utilities.FileSystem.Interfaces
+@model IList<_6tactics.Utilities.FileSystem.Interfaces.IDirectory>
+
+<div class="popup-wrapper">
+    <div class="popup-text">
+        <p>
+            Are you sure you want to delete folder: <b>@Model.First().WebPath</b>
+        </p>
+        @if (Model.Count > 1)
+        {
+            <span>with his child folder/s:</span><br>
+
+            foreach (IDirectory folderPath in Model.Skip(1))
+            {
+                <b>@folderPath.WebPath</b><br>
+            }
+        }
+    </div>
+
+    <div class="popup-form">
+        @using (Ajax.BeginForm("DoDeletingFolder", "FileManager",
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    //InsertionMode = InsertionMode.Replace,
+                    //UpdateTargetId = "callback-content",
+                    OnBegin = "loadingStart",
+                    OnSuccess = "onSuccess"
+                }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.HiddenFor(model => model.First().Path)
+
+            <div class="pull-right">
+                <input type="submit" id="remove--submit" value="Delete" class="btn btn-danger popup-submit-btn" />
+            </div>
+        }
+
+    </div>
+    <br>
+</div>
+
+<script type="text/javascript">
+    function onSuccess() {
+        //var deletingElementId = "#remove--@Model.First().RoutePath";
+        //$(deletingElementId).closest(".parent_li").remove();
+        //$("#delete-folder-popup").removeClass("popup-warning").addClass("popup-success");
+        //$('#delete-popup-content').html("Directory successfully deleted!");
+        //$('.popup-submit-btn').remove();
+
+        $.magnificPopup.instance.close();
+
+        $('#folders-list').load('/FileManager/_FoldersTreeView', function () {
+            fileManagerReadAndEditInit("/uploads");
+
+            $('#current-location-path').html("/uploads");
+            $('#SelectedLocation').val("/uploads");
+
+            treeViewSelectedItemHandler.selectItemInFolderAndPluginTree($('.folder-tree-node:first'));
+
+            loadingStop();
+        });
+    }
+</script>

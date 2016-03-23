@@ -1,0 +1,75 @@
+﻿@using Microsoft.AspNet.Identity.EntityFramework
+@model _6tactics.AspIdentity.ViewModels.UsersHandler.UsersHandlerCreateViewModel
+
+<h3>Create user</h3>
+
+@using (Html.BeginForm("Create", "UserAdministration", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr/>
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.RegisterViewModel.Username, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.RegisterViewModel.Username, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.RegisterViewModel.Username, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.RegisterViewModel.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.RegisterViewModel.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.RegisterViewModel.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.RegisterViewModel.Password, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(model => model.RegisterViewModel.Password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.RegisterViewModel.Password, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.RegisterViewModel.ConfirmPassword, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(model => model.RegisterViewModel.ConfirmPassword, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.RegisterViewModel.ConfirmPassword, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    if (Model.SelectedRoles.Any())
+    {
+        <div class="form-group">
+            <label class="col-md-2 control-label">
+                Select User Role
+            </label>
+            <div class="col-md-10">
+                @foreach (IdentityRole role in Model.SelectedRoles)
+                {
+                    <input id="role-@role.Name" type="checkbox" name="SelectedRoles" value="@role.Name" class="checkbox-inline role-checkbox" />
+                    @Html.Label(role.Name, new { @class = "control-label" })
+                }
+            </div>
+        </div>
+    }
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.ActionLink("Back to list", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
+            <input type="submit" class="btn btn-success" value="Create" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(".role-checkbox").on("click", function () {
+            if ($(this).attr("id") === "role-Administrators")
+                $(".role-checkbox").not($(this)).prop('checked', false);
+            else
+                $("#role-Administrators").prop('checked', false);
+        });
+    </script>
+}

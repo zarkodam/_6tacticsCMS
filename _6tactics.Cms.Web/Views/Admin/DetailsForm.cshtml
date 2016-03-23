@@ -1,0 +1,284 @@
+﻿@using _6tactics.Cms.Core.Entities
+@using _6tactics.Cms.Core.Helpers
+@using _6tactics.Cms.Web.App_Logic
+@using _6tactics.Utilities.Common
+@model _6tactics.Cms.Core.ViewModels.Admin.AdminActionsViewModel
+
+@{
+    var imageUrl = ElementsVisibilityUtility.CreateImagePath(Model.ContentItemViewModel.Id, Model.ContentItemViewModel.FileUrl);
+    var currentContentType = Model.CreateEditDataViewModel.CurrentContentType;
+
+    bool isParentElementOrFile = Model.CreateEditDataViewModel.IsParentElementOrFile;
+
+
+    ViewBag.TitleElementWidth = isParentElementOrFile ? "col-md-8" : "col-md-6";
+    ViewBag.ElementVisibilityWidth = isParentElementOrFile ? "col-md-4" : "col-md-3";
+
+
+    string elementColor = isParentElementOrFile ? "deepSkyBlue" : "steelBlue";
+    string fileColor = isParentElementOrFile ? "orange" : "darkorange";
+
+    string isElementTitle = ElementsVisibilityUtility.IsElementWidthPanelVisible(Model.ContentItemViewModel) ? "true" : "false";
+    string sectionTitlteVisibilityVisible = ElementsVisibilityUtility.IsSectionTitleVsibilityVisible(Model) ? "visible" : "";
+}
+
+<div id="action-form">
+    <div id="action-form-wrapper" class="col-md-12">
+
+        @Html.Partial("Admin/_AdminMenu", new ContentItem())
+
+        <div id="detailsPreview">
+            <div class="row">
+
+                @* Title *@
+                <div id="title-panel-wrapper" class="@ViewBag.TitleElementWidth">
+                    <div id="title-panel" class="panel panel-custom">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">@Html.LabelFor(model => model.ContentItemViewModel.Title)</h3>
+                        </div>
+                        <div class="panel-body text-center">
+                            @Html.TextBoxFor(model => model.ContentItemViewModel.Title, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.ContentItemViewModel.Title)
+                        </div>
+                    </div>
+                </div>
+
+                @if (ElementsVisibilityUtility.IsSectionTitleVsibilityVisible(Model))
+                {
+                    @* Section title visibility *@
+                    <div id="section-title-visibility-panel-wrapper" class="col-md-3">
+                        <div id="section-title-visibility-panel" class="panel panel-custom">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <label>Section title visibility</label>
+                                </h3>
+                            </div>
+                            <div class="panel-body text-center">
+                                @Html.TextBoxFor(model => model.ContentItemViewModel.SectionTitleVisibility, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @*@if (Model.ContentItemViewModel.ContentType != ContentType.Project)
+                    {*@
+                    @* Element visibility *@
+                    <div id="element-visibility-panel-wrapper" class="@ViewBag.ElementVisibilityWidth">
+                        <div id="element-visibility-panel" class="panel panel-custom">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <label>Element visibility</label>
+                                </h3>
+                            </div>
+                            <div class="panel-body text-center">
+                                @Html.TextBoxFor(model => model.ContentItemViewModel.ElementVisibility, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    @*}*@
+
+                </div>
+
+                <div class="row">
+                    @* ContentType / Link - add from page list, custom, off *@
+
+                    @* Show ContentType except for children items of ContentType.Element and ContentType.File*@
+                    @if (!Model.CreateEditDataViewModel.IsParentElementOrFile)
+                    {
+                        <div id="content-type-panel-wrapper" class="col-md-6">
+                            <div id="content-type-panel" class="panel panel-custom">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">@Html.LabelFor(model => model.ContentItemViewModel.ContentType)</h3>
+                                </div>
+
+                                <div class="panel-body text-center">
+                                    @{
+                        // List ContentTypes for children element from current element
+                        var childTypes = ContentTypeSelectorHelper.GetChildContentTypesListForEditing(currentContentType);
+
+                        if (!ContentTypeSelectorHelper.IsDropDownForEditingVisible(currentContentType))
+                        {
+                            <div>
+                                <input class="form-control"
+                                       id="ContentItemViewModel_ContentType"
+                                       name="ContentItemViewModel.ContentType" type="text" readonly="readonly" value="@childTypes.First().Text">
+                            </div>
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(model => model.ContentItemViewModel.ContentType, new { @class = "form-control", @readonly = "readonly" })
+                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        // Adding link options and add ContentType in hidden field
+                        <div id="link-option-panel-wrapper" class="col-md-4">
+                            <div id="link-option-panel" class="panel panel-custom">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <label>Link options</label>
+                                    </h3>
+                                </div>
+
+                                <div class="panel-body text-center">
+                                    @Html.TextBoxFor(model => model.ContentItemViewModel.LinkOption, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+
+                        @Html.HiddenFor(model => model.ContentItemViewModel.ContentType)
+                    }
+
+                    @Html.ValidationMessageFor(model => model.ContentItemViewModel.ContentType)
+
+                    @* DisplayType / Link - pages dropdown, input field for custom link *@
+
+                    @* Show DisplayType except for children items of ContentType.Element and ContentType.File*@
+                    @if (Model.CreateEditDataViewModel.DisplayTypeList != null)
+                    {
+                        // DisplayType
+                        if (!Model.CreateEditDataViewModel.IsParentElementOrFile)
+                        {
+                            <div id="display-type-panel-wrapper" class="col-md-6">
+                                <div id="display-type-panel" class="panel panel-custom">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">@Html.LabelFor(model => model.ContentItemViewModel.DisplayType) </h3>
+                                    </div>
+                                    <div class="panel-body text-center">
+                                        @Html.TextBoxFor(model => model.ContentItemViewModel.DisplayType, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="element-width-panel-wrapper" class="col-md-3 element-width-panel">
+                                <div id="element-width-panel" class="panel panel-custom">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">@Html.LabelFor(model => model.ContentItemViewModel.ElementWidth) </h3>
+                                    </div>
+                                    <div class="panel-body text-center">
+                                        @Html.TextBoxFor(model => model.ContentItemViewModel.ElementWidth, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            // Link - dropdown, input
+                            <div id="link-to-with-options-panel-wrapper" class="col-md-8">
+                                <div id="link-to-with-options-panel" class="panel panel-custom">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title"><label>Add link</label></h3>
+                                    </div>
+                                    <div class="panel-body text-center">
+                                        @Html.TextBoxFor(model => model.ContentItemViewModel.LinkTo, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            @Html.HiddenFor(model => model.ContentItemViewModel.DisplayType)
+                        }
+                        @Html.ValidationMessageFor(model => model.ContentItemViewModel.DisplayType)
+                    }
+
+                    @* Parent *@
+                    <div style="visibility: hidden;"><input id="ContentViewModel_ParentId" name="ContentItemViewModel.ParentId" type="hidden" value="@Model.ContentItemViewModel.ParentId"></div>
+                </div>
+
+
+
+                <div class="row">
+                    @*@if (Model.CreateEditDataViewModel.IsParentElementOrFile || Model.CreateEditDataViewModel.ParentContentType == ContentType.Project)*@
+                    @if (Model.CreateEditDataViewModel.IsParentElementOrFile)
+                    {
+                        @* Summary *@
+                        <div id="summary-panel-wrapper" class="col-md-12 summary-panel">
+                            <div id="summary-panel" class="panel panel-custom">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">@Html.LabelFor(model => model.ContentItemViewModel.Summary)</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="summary-element" class="tinymce-element">
+                                        @Html.TextAreaFor(model => model.ContentItemViewModel.Summary)
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.ContentItemViewModel.Summary)
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    @* FileUrl *@
+                    <div id="file-url-panel-wrapper" class="col-md-12 file-url-panel">
+                        <div id="file-url-panel" class="panel panel-custom">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">@Html.LabelFor(model => model.ContentItemViewModel.FileUrl)</h3>
+                            </div>
+                            <div class="panel-body filestyle-body">
+
+                                @if (CheckExistence.IsUrlExist(imageUrl))
+                                {
+                                    <div class="pull-left">
+                                        <a class="image-link" href="@imageUrl"><img class="preview-for-uploaded-image" src="@imageUrl" alt="img"></a>
+                                    </div>
+                                }
+
+                                <div class="pull-right">
+                                    <input type="file" name="file" class="filestyle" data-buttonname="btn-primary">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                @if (Model.CreateEditDataViewModel.IsParentElementOrFile)
+                {
+                    @* Content *@
+                    <div class="row">
+                        <div id="content-panel-wrapper" class="col-md-12 content-panel">
+                            <div id="content-panel" class="panel panel-custom">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">@Html.LabelFor(model => model.ContentItemViewModel.Content)</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="content-element" class="tinymce-element">
+                                        @Html.TextAreaFor(model => model.ContentItemViewModel.Content)
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.ContentItemViewModel.Content)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <script type="text/javascript">
+                $('title').html('Admin / Details');
+
+                $(function () {
+                    $('#detailsPreview').adminFormFieldsVisibilityHandler({
+                        selectedActionPage: "Details",
+                        elementColor: "@elementColor",
+                        fileColor: "@fileColor",
+                        contentItemTitle: "#ContentItemViewModel_Title",
+                        contentType: "#ContentItemViewModel_ContentType",
+                        displayType: "#ContentItemViewModel_DisplayType",
+                        fileUrl: "#ContentItemViewModel_FileUrl",
+                        fileUrlContent: "@Model.ContentItemViewModel.FileUrl",
+                        summary: "#ContentItemViewModel_Summary",
+                        content: "#ContentItemViewModel_Content",
+                        elementVisibility: "#ContentItemViewModel_ElementVisibility",
+                        sectionVisibility: "#ContentItemViewModel_SectionTitleVisibility",
+                        linkOption: "#ContentItemViewModel_LinkOption",
+                        isElementTitle: @isElementTitle,
+                        sectionTitlteVisibilityVisible: "@sectionTitlteVisibilityVisible"
+                    });
+                });
+            </script>
+        </div>
+    </div>

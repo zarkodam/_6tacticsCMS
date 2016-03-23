@@ -1,0 +1,72 @@
+﻿@model _6tactics.AspIdentity.ViewModels.UsersHandler.UsersHandlerEditViewModel
+
+<div class="row">
+    <h3>Edit user</h3>
+</div>
+
+
+<div class="row">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Roles", new {@class = "control-label col-md-2"})
+                <span class=" col-md-10">
+                    @foreach (SelectListItem roleItem in Model.RolesList)
+                    {
+                        <input id="role-@roleItem.Value" type="checkbox" name="SelectedRole" value="@roleItem.Value" checked="@roleItem.Selected" class="checkbox-inline role-checkbox" />
+                        @Html.Label(roleItem.Value, new {@class = "control-label"})
+                    }
+                </span>
+            </div>
+            <div class="form-group">
+                @Html.Label("Reset password", new { @class = "control-label col-md-2" })
+                @*@Html.LabelFor(model => model.ResetPassword, new {@class = "control-label col-md-2"})*@
+                <div class="col-md-10">
+                    <div>
+                        @Html.CheckBoxFor(model => model.ResetPassword, new { @class = "checkbox-inline" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @Html.ActionLink("Back to list", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
+                    <input type="submit" value="Save" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(".role-checkbox").on("click", function () {
+            if ($(this).attr("id") === "role-Administrators")
+                $(".role-checkbox").not($(this)).prop('checked', false);
+            else
+                $("#role-Administrators").prop('checked', false);
+        });
+    </script>
+}

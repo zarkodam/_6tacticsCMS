@@ -1,0 +1,181 @@
+﻿@using System.Diagnostics
+@using _6tactics.Cms.Core.Entities
+@using _6tactics.Cms.Core.Enums.Admin
+@using _6tactics.Cms.Web.App_Logic
+@using _6tactics.Utilities.Common
+@model ContentItem
+
+@{ ElementsVisibilityUtility.LanguageFromAdminTreeView = null; }
+
+@helper ListResults(ContentItem contentItem, string language = null)
+{
+if (contentItem == null)
+{
+    return;
+}
+
+if (ElementsVisibilityUtility.IsPrioritiePage)
+{
+        @Html.HiddenFor(modelItem => contentItem.Id)
+        @Html.HiddenFor(modelItem => contentItem.ContentType)
+        @Html.HiddenFor(modelItem => contentItem.Priority, new { @class = "set-priority-id", @id = "priority-id-" + contentItem.Id })
+}
+
+string colorByContentType = TreeView.SelectGroupColor(
+    currentContentItem: contentItem,
+    projectColor: "tomato",
+    languageColor: "blueviolet",
+    pageColor: "yellowgreen",
+    footerColor: "dimgray",
+    contentElemmentColor: "SteelBlue",
+    subElementColor: "DeepSkyBlue",
+    fileColor: "darkorange",
+    subFileColor: "orange"
+    );
+
+string elementVisibilityBorderColor = colorByContentType;
+
+if (contentItem.ElementVisibility == ElementVisibility.Visible)
+{
+    elementVisibilityBorderColor = "white";
+}
+else if (contentItem.ElementVisibility == ElementVisibility.VisibleForAdminOnly)
+{
+    elementVisibilityBorderColor = "#f9fcff";
+}
+
+
+string sectionTitleVisibilityBorderColor = colorByContentType;
+
+if (contentItem.SectionTitleVisibility == SectionTitleVisibility.Visible)
+{
+    sectionTitleVisibilityBorderColor = "white";
+}
+
+bool checkforVisibility = ElementsVisibilityUtility.IsTitleOfContent(contentItem);
+bool isElementHasChildrens = ElementsVisibilityUtility.IsCollapsingButtonVisible(contentItem);
+
+    <div id="conent-item-@contentItem.Id" class="tree-node" style="background-color: @colorByContentType; border-right: 1px solid @elementVisibilityBorderColor; border-top: 1px solid @sectionTitleVisibilityBorderColor">
+
+        @if (isElementHasChildrens)
+        {
+            <div class="expand-collapse-icon">
+                <i class="glyphicon glyphicon-minus-sign pull-left"></i>
+            </div>
+        }
+
+        <div class="node-text">
+
+            @* Showing ContentType / DisplayType *@
+            @if (checkforVisibility)
+            {
+                string contentDisplayType = "";
+                <div class="content-display-type-title">
+                    @{ contentDisplayType += contentItem.ContentType; }
+                    @if (!string.IsNullOrWhiteSpace(contentItem.DisplayType))
+                    {
+                        contentDisplayType += " / ";
+                        contentDisplayType += contentItem.DisplayType;
+                    }
+
+                    <span>@contentDisplayType</span>
+                </div>
+                        }
+
+            @if (contentItem.ContentType == ContentType.Language)
+            {
+                ElementsVisibilityUtility.LanguageFromAdminTreeView = contentItem.Title;
+                <div class="pull-left content-item-title">@Globalization.GetDisplayNameByCultureName(contentItem.Title)</div>
+            }
+            else
+            {
+                <div class="pull-left content-item-title">@contentItem.Title</div>
+            }
+
+        </div>
+
+        @if (!ElementsVisibilityUtility.IsPrioritiePage)
+        {
+            <div class="action-icons">
+
+                @if (checkforVisibility)
+                {
+                    <a href="@Url.Action("Create", "Admin", new {parentId = contentItem.Id, language = ElementsVisibilityUtility.LanguageFromAdminTreeView})" style="color: white;" class="tree-view-action">
+                        <div class="glyphicon glyphicon-new-window create" title="Add Child For @contentItem.ContentType"></div>
+                    </a>
+                }
+
+                <a href="@Url.Action("Edit", "Admin", new {id = contentItem.Id, language = ElementsVisibilityUtility.LanguageFromAdminTreeView})" style="color: white;" class="tree-view-action">
+                    <div class="glyphicon glyphicon-edit edit" title="Edit"></div>
+                </a>
+
+                <a class="delete-content-item-popup" id="@contentItem.Id" href="@Url.Action("Delete", "Admin", new {id = contentItem.Id})" style="color: white;">
+                    <div class="glyphicon glyphicon-remove delete" title="Delete"></div>
+                </a>
+
+                @if (contentItem.ContentType == ContentType.Page)
+                {
+                    <a target="_blank" href="@Url.Action("Index", "Web", new {lang = ElementsVisibilityUtility.LanguageFromAdminTreeView, routeTitle = contentItem.RouteTitle})" style="color: white;">
+                        <div class="glyphicon glyphicon-log-out details" title="Goto page"></div>
+                    </a>
+                }
+            </div>
+        }
+
+        @if (ElementsVisibilityUtility.IsPrioritiePage)
+        {
+            <div class="action-icons">
+                <span id="element-priority-id-@contentItem.Id" class="priority-id">
+                    @if (contentItem.ContentType != ContentType.Project)
+                    {
+                        if (contentItem.Priority == 0)
+                        {
+                            <span> n/a</span>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => contentItem.Priority)<span>.</span>
+                        }
+                    }
+                </span>
+            </div>
+        }
+    </div>
+
+    if (!contentItem.ContentItems.Any())
+    {
+        return;
+    }
+
+    <ul>
+        @foreach (var item in contentItem.ContentItems.OrderBy(p => p.Priority).ThenBy(i => i.Id))
+        {
+            string childContentElement = ElementsVisibilityUtility.IsTitleOfContent(item) ? "" : "child-content-element";
+            <li id="element-id-@item.Id" class="@childContentElement">@ListResults(item)</li>
+        }
+    </ul>
+}
+
+<ul id="root">
+    <li>@ListResults(Model)</li>
+</ul>
+
+@if (ElementsVisibilityUtility.IsHomePage || ElementsVisibilityUtility.IsCreatePage || ElementsVisibilityUtility.IsEditPage || ElementsVisibilityUtility.IsDetailsPage)
+{
+    <script type="text/javascript">
+        $(function () {
+            $('.tree').treeView().treeViewActionTooltips();
+        });
+    </script>
+
+    @Html.Partial("Admin/_PopupDeleteMessage")
+}
+
+@if (ElementsVisibilityUtility.IsPrioritiePage)
+{
+    <script type="text/javascript">
+        $(function () {
+            $('.tree').treeView().treeViewSortable().treeViewActionTooltips();
+        });
+    </script>
+}

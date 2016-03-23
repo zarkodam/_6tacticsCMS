@@ -1,0 +1,52 @@
+﻿@model _6tactics.Cms.Web.Areas.Plugins.ViewModels.GoogleMaps.MapSettingsViewModel
+
+<div class="content-wrapper">
+    <div id="map-settings-map" class="google-map"></div>
+    <div id="map-settings-form">
+        @Html.Partial("_MapSettingsForm", Model.Map)
+        <p style="padding-left: 8px; padding-bottom: 20px;">To set proper zoom on map use <span style="color: red"><b>+</b></span> or <span style="color: red"><b>-</b></span> map buttons <b>at the right bottom corner</b></p>
+    </div>
+</div>
+
+@{
+
+    }
+
+    <script type="text/javascript">
+        function updateHeight() {
+            loadingStop();
+
+            var calculatedHeight = $('.google-map').height() + $('#map-settings-form').height();
+            jquerStepsHeightRefrash(calculatedHeight);
+        }
+
+        $(function () {
+            // Fixed json string from model
+            var mapData = @Html.Raw(Json.Encode(Model.MapJsonString));
+            var mapDataParsed = JSON.parse(mapData.replace(/"/g, '"'));
+
+            $("#map-settings-map").googleMapsWizard({
+                action: 'zoomAndCenter',
+                mapResizeEventActivatorId: '#wizard-t-3, #wizard-t-2, #wizard-t-1, #wizard-t-0',
+                defaultAddress: 'zagreb',
+                zoom: 12,
+                scrollwheel: false,
+
+                mapZoomId: '#Zoom',
+                mapLatitudeId: '#MapCenterLatitude',
+                mapLongitudeId: '#MapCenterLongitude',
+                savedLocations: mapDataParsed.locations,
+
+                markerVisibility: true
+                //markerImageUrl: "/Content/Images/logo-small.png",
+
+                //infowindowVisibility: false,
+                //infowindowMaxWidth: '330px',
+                //infowindowMaxHeight: 'auto',
+                //infowindowImageUrl: "/Content/Images/logo-small.png",
+            });
+
+
+            updateHeight();
+        });
+    </script>

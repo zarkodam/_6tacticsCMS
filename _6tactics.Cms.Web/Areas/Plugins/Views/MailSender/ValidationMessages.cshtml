@@ -1,0 +1,146 @@
+﻿@using _6tactics.Cms.Web.Areas.Plugins.Models.MailSender
+@model _6tactics.Cms.Web.Areas.Plugins.ViewModels.MailSender.ValidationsViewModel
+
+<div id="action-form">
+    <div id="action-form-wrapper" class="pull-left plugin-content-wrapper">
+
+        @using (Ajax.BeginForm("ValidationMessages", "MailSender",
+                                        new AjaxOptions
+                                        {
+                                            HttpMethod = "POST",
+                                            //InsertionMode = InsertionMode.Replace,
+                                            //UpdateTargetId = "callback-content",
+                                            OnBegin = "loadingStart",
+                                            OnComplete = "onFormCompleteCallback"
+                                        }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            foreach (var language in Model.LanguageList)
+            {
+                {
+                    string nameTitle = "";
+                    string emailTitle = "";
+                    string subjectTitle = "";
+                    string contentTitle = "";
+                    string fileTitle = "";
+                    string captchaCodeTitle = "";
+
+                    if (Model.InputTitleSettings != null)
+                    {
+                        InputTitleSettings inputTitleSettingsByLanguage = Model.InputTitleSettings.FirstOrDefault(i => i.Language == language);
+
+
+                        nameTitle = inputTitleSettingsByLanguage != null ? inputTitleSettingsByLanguage.Name : "Name";
+                        emailTitle = inputTitleSettingsByLanguage != null ? inputTitleSettingsByLanguage.Email : "Email";
+                        subjectTitle = inputTitleSettingsByLanguage != null ? inputTitleSettingsByLanguage.Subject : "Subject";
+                        contentTitle = inputTitleSettingsByLanguage != null ? inputTitleSettingsByLanguage.Content : "Content";
+
+                        if (Model.FormSettings.IsUploadEnabled)
+                        {
+                            fileTitle = inputTitleSettingsByLanguage != null ? inputTitleSettingsByLanguage.File : "File";
+                        }
+
+                        if (Model.FormSettings.IsCaptchaEnabled)
+                        {
+                            captchaCodeTitle = inputTitleSettingsByLanguage != null ? inputTitleSettingsByLanguage.CaptchaCode : "Captcha";
+                        }
+                    }
+
+
+                    string name = "";
+                    string email = "";
+                    string subject = "";
+                    string content = "";
+                    string file = "";
+                    string captchaCode = "";
+
+                    if (Model.ValidationMessages != null)
+                    {
+                        ValidationMessage elementByLanguage = Model.ValidationMessages.FirstOrDefault(i => i.Language == language);
+
+                        name = elementByLanguage != null ? elementByLanguage.Name : "";
+                        email = elementByLanguage != null ? elementByLanguage.Email : "";
+                        subject = elementByLanguage != null ? elementByLanguage.Subject : "";
+                        content = elementByLanguage != null ? elementByLanguage.Content : "";
+
+                        if (Model.FormSettings.IsUploadEnabled)
+                        {
+                            file = elementByLanguage != null ? elementByLanguage.File : "";
+                        }
+
+                        if (Model.FormSettings.IsCaptchaEnabled)
+                        {
+                            captchaCode = elementByLanguage != null ? elementByLanguage.CaptchaCode : "";
+                        }
+                    }
+
+                    @Html.Hidden("Language", language)
+
+                    <p><b>Validation messages for: @language language</b></p>
+                    <table class="table">
+                        <tr>
+                            <td>@nameTitle:</td>
+                            <td>@Html.TextBox("Name", name, new { @class = "form-control" })</td>
+                        </tr>
+                        <tr>
+                            <td>@emailTitle:</td>
+                            <td>@Html.TextBox("Email", email, new { @class = "form-control" })</td>
+                        </tr>
+                        <tr>
+                            <td>@subjectTitle:</td>
+                            <td>@Html.TextBox("Subject", subject, new { @class = "form-control" })</td>
+                        </tr>
+                        <tr>
+                            <td>@contentTitle:</td>
+                            <td>@Html.TextBox("Content", content, new {@class = "form-control"})</td>
+                        </tr>
+                        @if (Model.FormSettings.IsUploadEnabled)
+                        {
+                            <tr>
+                                <td>@fileTitle:</td>
+                                <td>@Html.TextBox("File", file, new { @class = "form-control" })</td>
+                            </tr>
+                        }
+                        @if (Model.FormSettings.IsCaptchaEnabled)
+                        {
+                            <tr>
+                                <td>@captchaCodeTitle:</td>
+                                <td>@Html.TextBox("Captcha", captchaCode, new { @class = "form-control" })</td>
+                            </tr>
+                        }
+
+                    </table>
+                }
+            }
+
+            <input type="submit" value="Save" class="pull-right btn btn-danger popup-submit-btn" />
+        }
+    </div>
+</div>
+
+<div id="validation-form-account-data-popup" class="popup popup-success mfp-hide">
+    <div class="popup-content">
+        Validation messages are successfully saved!
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $.validator.unobtrusive.addValidation('form');
+    });
+
+    function onFormCompleteCallback() {
+        //if ($(".field-validation-valid").css("display") === "none") {
+        //}
+
+        loadingStop();
+
+        $.magnificPopup.open({
+            items: {
+                src: $('#validation-form-account-data-popup'),
+                type: 'inline'
+            }
+        });
+    }
+</script>

@@ -1,0 +1,19 @@
+﻿@model _6tactics.Cms.Core.ViewModels.Admin.AdminActionsViewModel
+
+@{ ViewBag.Title = "Admin / Create"; }
+
+@Html.Partial("Admin/_CurrentLocation", Model)
+
+<div class="height-offset-40px"></div>
+
+<div id="content-items-list" class="tree">
+    <div id="content-items-list-wrapper" class="scrollbar-outer">
+        @Html.Partial("Admin/_TreeView", Model.ContentItemModel)
+    </div>
+</div>
+
+<div id="content-item-preview">
+    <div id="content-item-preview-wrapper" class="scrollbar-outer">
+        @Html.Partial("CreateForm", Model)
+    </div>
+</div>

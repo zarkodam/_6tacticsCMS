@@ -1,0 +1,94 @@
+﻿.gear {
+    display: block;
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 25px;
+    left: 25px;
+    background: url(Images/gear.png);
+    -webkit-animation: barrelRoll 2s infinite linear;
+    -moz-animation: barrelRoll 2s infinite linear;
+    -o-animation: barrelRoll 2s infinite linear;
+    -ms-animation: barrelRoll 2s infinite linear;
+    animation: barrelRoll 2s infinite linear;
+    -webkit-animation-play-state: paused;
+    -moz-animation-play-state: paused;
+    -ms-animation-play-state: paused;
+    -o-animation-play-state: paused;
+    animation-play-state: paused;
+}
+
+    .gear:last-of-type {
+        top: 22px;
+        left: 46px;
+        -webkit-animation-name: invertBarrelRoll;
+        -moz-animation-name: invertBarrelRoll;
+        -ms-animation-name: invertBarrelRoll;
+        -o-animation-name: invertBarrelRoll;
+        animation-name: invertBarrelRoll;
+    }
+
+.gears-wrapper > .gear {
+    -webkit-animation-play-state: running;
+    -moz-animation-play-state: running;
+    -ms-animation-play-state: running;
+    -o-animation-play-state: running;
+    animation-play-state: running;
+}
+
+@-webkit-keyframes barrelRoll {
+    0% { -webkit-transform: rotate(0); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@-webkit-keyframes invertBarrelRoll {
+    0% {
+        -webkit-transform: rotate(0);
+        -moz-transform: rotate(0);
+        -ms-transform: rotate(0);
+        -o-transform: rotate(0);
+        transform: rotate(0);
+    }
+
+    100% {
+        -webkit-transform: rotate(-360deg);
+        -moz-transform: rotate(-360deg);
+        -ms-transform: rotate(-360deg);
+        -o-transform: rotate(-360deg);
+        transform: rotate(-360deg);
+    }
+}
+
+@-moz-keyframes invertBarrelRoll {
+    0% {
+        -webkit-transform: rotate(0);
+        -moz-transform: rotate(0);
+        -ms-transform: rotate(0);
+        -o-transform: rotate(0);
+        transform: rotate(0);
+    }
+    100% {
+        -webkit-transform: rotate(-360deg);
+        -moz-transform: rotate(-360deg);
+        -ms-transform: rotate(-360deg);
+        -o-transform: rotate(-360deg);
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes invertBarrelRoll {
+    0% {
+        -webkit-transform: rotate(0);
+        -moz-transform: rotate(0);
+        -ms-transform: rotate(0);
+        -o-transform: rotate(0);
+        transform: rotate(0);
+    }
+    100% {
+        -webkit-transform: rotate(-360deg);
+        -moz-transform: rotate(-360deg);
+        -ms-transform: rotate(-360deg);
+        -o-transform: rotate(-360deg);
+        transform: rotate(-360deg);
+    }
+}

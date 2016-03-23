@@ -1,0 +1,95 @@
+﻿@using _6tactics.Cms.Core.Enums.Admin
+@using _6tactics.Cms.Web.App_Logic
+@model _6tactics.Cms.Core.Entities.ContentItem
+
+@{
+	var currentPageTitle = ElementsVisibilityUtility.IsPrioritiePage ? "PRIORITIES" : "CONTENT ITEMS LIST";
+	//var langElementsCount = Model.Count(i => i.ContentType == ContentType.Language);
+	//var pageElementsCount = Model.Count(i => i.ContentType == ContentType.Page);
+	var pageElementsCount = Model.Parent != null && Model.Parent.ContentType == ContentType.Language
+		? Model.Parent.ContentItems.Count(i => i.ContentType == ContentType.Page) : 0;
+	//var isLangElement = Model.First().Parent != null && Model.First().Parent.ContentType == ContentType.Language;
+}
+
+@*<li><div class="btn-group" style="min-width: 200px;"><input type="text" class="form-control pull-left" placeholder="Search"></div></li>*@
+
+@if (!ElementsVisibilityUtility.IsPrioritiePage)
+{
+	@*<li class="dropdown navbar-subitems-active pages-list">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdown-show-content-title">
+				<b>Titles</b> displayed
+				<span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu">
+				<li><a href="#" class="tree-filter-titles">Show titles</a></li>
+				<li><a href="#" class="tree-filter-content">Show content</a></li>
+			</ul>
+		</li>*@
+}
+
+<li class="dropdown navbar-subitems-active pages-list">
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdown-language-title">
+		@* Getting selected language *@
+		@if (ElementsVisibilityUtility.CurrentLanguage != null)
+		{
+			<span>Language: <b> @ElementsVisibilityUtility.CurrentLanguage.ToUpper()</b></span>}
+		else
+		{
+			<span>Languages: <b>ALL</b></span>}
+		<span class="caret"></span>
+	</a>
+	<ul class="dropdown-menu" role="menu" id="lang-list">
+		<li>@Html.ActionLink("All", ElementsVisibilityUtility.CurrentAction, "admin", new { lang = "" }, null)</li>
+
+		@* Getting language list*@
+	</ul>
+</li>
+
+<li class="dropdown navbar-subitems-active pages-list">
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdown-page-title">
+		@* Getting selected page *@
+
+		@if (ElementsVisibilityUtility.CurrentLanguage == null)
+		{
+			<span>Select <b>Language</b> first!</span>}
+		else if (ElementsVisibilityUtility.CurrentLanguage != null && pageElementsCount < 1)
+		{
+			<span>Pages: <b>ALL</b></span>}
+		else
+		{
+			<span>Page: <b>@Model.Title</b></span>}
+
+		<span class="caret"></span>
+	</a>
+	<ul class="dropdown-menu" role="menu" id="pages-list-by-selected-language"></ul>
+</li>
+
+@if (ElementsVisibilityUtility.IsPrioritiePage)
+{
+	<li class="navbar-submit-button">
+		@*<a href="javascript:document.getElementById('prioritiesForm').submit()">Set Priotities</a>*@
+		<input type="submit" value="Set Priotities" class="btn btn-danger navbar-action-button" />
+	</li>
+}
+
+<script type="text/javascript">
+	$(function () {
+
+		$.getJSON('@Url.Action("GetLanguages", "Ajax")', function (data) {
+			$.each(data, function (key, value) {
+				$('#lang-list').append(
+					'<li><a href="/Admin/@ElementsVisibilityUtility.CurrentAction/' + value + '" class="page-item">' + value.toUpperCase() + '</a></li>'
+				);
+			});
+		});
+
+		@if (ElementsVisibilityUtility.CurrentLanguage != null)
+		{
+		<text>
+		$('#pages-list-by-selected-language').load('@Url.Action("PagesBySelectedLanguage", "Ajax")',
+			{ selectedLanguage: '@ElementsVisibilityUtility.CurrentLanguage', currentAction: '@ElementsVisibilityUtility.CurrentAction' });
+		</text>
+		}
+
+	});
+</script>

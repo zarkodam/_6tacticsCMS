@@ -1,0 +1,15 @@
+﻿@model _6tactics.Cms.Core.ViewModels.Error.ErrorViewModel
+
+@{
+    <div style="margin-top: 40px;" class="text-center">
+        @if (!string.IsNullOrEmpty(Model.StatusCode))
+        {
+            <p style="font-size: 10em; font-weight: bold">@Model.StatusCode</p>
+        }
+        @if (!string.IsNullOrEmpty(Model.Message))
+        {
+            <p style="text-transform: uppercase; font-size: 1em;">@Model.Message</p>
+        }
+    </div>
+}
+

@@ -1,0 +1,165 @@
+﻿@using _6tactics.Cms.Web.App_Logic
+@model _6tactics.Cms.Core.ViewModels.Web.SectionViewModel
+
+@{
+    var bootstrapUnpredictableHeight = new BootstrapUnpredictableHeight();
+}
+
+@foreach (var item in Model.Items.OrderBy(i => i.Priority).ThenBy(i => i.Id))
+{
+    switch (item.DisplayType)
+    {
+        case "Bulletin":
+            <div class="@item.Parent.ElementWidth  @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_Bulletin.cshtml", item)
+            </div>
+            break;
+        case "Content":
+            <div class="@item.Parent.ElementWidth  @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_Content.cshtml", item)
+            </div>
+            break;
+        case "ContentImageBottom":
+            <div class="@item.Parent.ElementWidth  @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_ContentImageBottom.cshtml", item)
+            </div>
+            break;
+        case "ContentImageRight":
+            <div class="@item.Parent.ElementWidth  @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_ContentImageRight.cshtml", item)
+            </div>
+            break;
+        case "TitleContent":
+            <div class="@item.Parent.ElementWidth  @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_TitleContent.cshtml", item)
+            </div>
+            break;
+        case "TitleContentImageBottom":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_TitleContentImageBottom.cshtml", item)
+            </div>
+            break;
+        case "TitleImageRightContent":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_TitleImageRightContent.cshtml", item)
+            </div>
+            break;
+        case "TitleImageRightSummaryContent":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_TitleImageRightSummaryContent.cshtml", item)
+            </div>
+            break;
+        case "TitleImageTopContent":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_TitleImageTopContent.cshtml", item)
+            </div>
+            break;
+        case "TitleImageTopSummaryContent":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_TitleImageTopSummaryContent.cshtml", item)
+            </div>
+            break;
+        case "TitleSummaryContent":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_TitleSummaryContent.cshtml", item)
+            </div>
+            break;
+        case "TitleSummaryContentImageBottom":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_TitleSummaryContentImageBottom.cshtml", item)
+            </div>
+            break;
+        case "ImageLeftContent":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_ImageLeftContent.cshtml", item)
+            </div>
+            break;
+        case "ImageLeftTitleContent":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_ImageLeftTitleContent.cshtml", item)
+            </div>
+            break;
+        case "ImageLeftTitleSummaryContent":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_ImageLeftTitleSummaryContent.cshtml", item)
+            </div>
+            break;
+        case "ImageTopContent":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_ImageTopContent.cshtml", item)
+            </div>
+            break;
+        case "ImageTopTitleContent":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_ImageTopTitleContent.cshtml", item)
+            </div>
+            break;
+        case "ImageTopTitleSummaryContent":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_ImageTopTitleSummaryContent.cshtml", item)
+            </div>
+            break;
+        case "GoogleMap":
+            <div style="padding: 0!important;" class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_GoogleMap.cshtml", item)
+            </div>
+            break;
+        case "GoogleMapFluid":
+            <div style="padding: 0!important;" class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_GoogleMapFluid.cshtml", item)
+            </div>
+            break;
+        case "GoogleMapSummary":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_GoogleMapSummary.cshtml", item)
+            </div>
+            break;
+        case "SummaryGoogleMap":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_SummaryGoogleMap.cshtml", item)
+            </div>
+            break;
+        case "ContactUsMailForm":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_ContactUsMailForm.cshtml", item)
+            </div>
+            break;
+        case "ContactUsMailFormSummary":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_ContactUsMailFormSummary.cshtml", item)
+            </div>
+            break;
+        case "SummaryContactUsMailForm":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_SummaryContactUsMailForm.cshtml", item)
+            </div>
+            break;
+        case "CubeLink":
+            @Html.Partial("~/Views/Shared/DisplayTypes/_CubeLink.cshtml", item)
+            break;
+        case "LinkWithTitle":
+            @Html.Partial("~/Views/Shared/DisplayTypes/_LinkWithTitle.cshtml", item)
+            break;
+        case "LinkWithImage":
+            @Html.Partial("~/Views/Shared/DisplayTypes/_LinkWithImage.cshtml", item)
+            break;
+        case "LinkWithTitleAndImage":
+            @Html.Partial("~/Views/Shared/DisplayTypes/_LinkWithTitleAndImage.cshtml", item)
+            break;
+        case "YoutubeVideo":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_YoutubeVideo.cshtml", item)
+            </div>
+            break;
+        case "VideoAsPopup":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_VideoAsPopup.cshtml", item)
+            </div>
+            break;
+        case "ParallaxSliderFluid":
+            // Parallax slider with left and right side of content with youtube link (which opens in popup) from image on right side
+            @Html.Partial("~/Views/Shared/DisplayTypes/_ParallaxSliderFluid.cshtml", item)
+            break;
+    }
+}
+

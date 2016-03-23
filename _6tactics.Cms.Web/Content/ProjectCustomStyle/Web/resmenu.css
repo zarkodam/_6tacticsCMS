@@ -1,0 +1,127 @@
+.menus_wrapper, .dropdown_menu-wrapper, .dropdown_menu-wrapper select {
+    z-index: 999999999;
+    outline: none !important;
+    background: none;
+}
+
+    .menus_wrapper a, .menus_wrapper ul, .menus_wrapper ul li, .dropdown_menu-wrapper select {
+        line-height: 40px;
+    }
+
+.menus_wrapper {
+    clear: both;
+    display: block;
+    border: none;
+    padding: 0;
+    margin: 0 auto;
+    height: 40px;
+}
+
+    .menus_wrapper a {
+        font-family: Arial;
+        font-weight: normal;
+        color: #0096db;
+        font-size: 1em;
+        text-decoration: none;
+        display: block;
+        padding: 0 15px;
+    }
+
+
+    .menus_wrapper > a i, .left-arrow, .right-arrow {
+        top: 15px;
+        position: absolute;
+    }
+
+    .menus_wrapper > a i {
+        right: 9px;
+    }
+
+.left-arrow {
+    left: 9px;
+    display: none;
+}
+
+.right-arrow {
+    right: 9px;
+    display: none;
+}
+
+.menus_wrapper ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 1em !important;
+    border: none !important;
+    background-color: #333;
+}
+
+    .menus_wrapper ul li.selected-menu-item {
+        background-color: white;
+    }
+
+    .menus_wrapper ul li {
+        min-width: 100px;
+        /*max-width: 180px;*/
+        font-size: 1em !important;
+        border: none !important;
+        background-color: #333;
+    }
+
+.menus_wrapper > ul > li {
+    display: block;
+    float: left;
+    position: relative;
+}
+
+.selected, .menus_wrapper ul li:hover, .menus_wrapper ul > li > ul > li:hover > ul {
+    background: #f4f4f4;
+}
+
+.menus_wrapper > ul > li > ul {
+    position: absolute;
+    display: none;
+    min-width: 160px;
+    max-width: 300px;
+}
+
+.menus_wrapper > ul > li:hover > ul {
+    display: block;
+}
+
+.menus_wrapper > ul > li > ul > li {
+    position: relative;
+}
+
+.menus_wrapper ul > li > ul > li:hover > ul {
+    display: block;
+    /*background-color: #f4f4f4;*/
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    top: 0;
+    /*left: 100%;*/
+    border: 1px solid #eee;
+    min-width: 160px;
+    max-width: 300px;
+}
+
+    .submenu > li {
+        position: relative;
+    }
+
+.dropdown_menu-wrapper select {
+    font-weight: bolder;
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    display: block;
+    width: 100%;
+    height: 40px;
+    padding: 6px 12px;
+    font-size: 1.3em;
+    color: rgb(85, 85, 85);
+    vertical-align: middle;
+    background-color: white;
+    border: none;
+}

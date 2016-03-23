@@ -1,0 +1,38 @@
+﻿@using _6tactics.Cms.Core.Models
+@using _6tactics.Cms.Core.Models.Common
+@using _6tactics.Cms.Core.ViewModels
+@using _6tactics.Cms.Core.ViewModels.Admin
+@model IEnumerable<_6tactics.Cms.Core.Models.Plugins.PluginInfo>
+
+@{ ViewBag.Title = "Admin / Plugins"; }
+
+@Html.Partial("Admin/_CurrentLocation", new AdminActionsViewModel())
+@Html.Partial("Admin/_AdminMenu", new ContentItem())
+
+<div class="row">
+    @Html.Partial("Admin/_PluginsTreeView", Model)
+    <div id="content-item-preview">
+        <div id="content-item-preview-wrapper" class="scrollbar-outer">
+            @{
+                foreach (var plugin in Model)
+                {
+                    <p>@plugin.MainControllerName</p>
+                    <p>@plugin.Name</p>
+                    <p>@plugin.ShortDescription</p>
+                    <p>@plugin.Description</p>
+
+                    <p>Settings files names: </p>
+                    foreach (var settingsName in plugin.SettingsFilesNames)
+                    {
+                        <p>@settingsName</p>
+                    }
+                }
+            }
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#current-location-message").html("@Model.First().Name");
+</script>

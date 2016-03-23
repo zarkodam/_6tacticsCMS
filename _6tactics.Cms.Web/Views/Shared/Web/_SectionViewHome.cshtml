@@ -1,0 +1,134 @@
+﻿@using _6tactics.Cms.Core.Enums.Admin
+@using _6tactics.Cms.Web.Helpers
+@model _6tactics.Cms.Core.ViewModels.Web.PageViewModel
+
+@foreach (var item in Model.PageSections)
+{
+    if (item.ContentType == ContentType.FileElement)
+    {
+        if (item.DisplayType.Equals("ImageFluid"))
+        {
+            <div class="container-fluid" style="padding: 0!important;">
+                @Html.Partial("~/Views/Shared/Web/_SectionTitle.cshtml", item)
+                @Html.Partial("~/Views/Shared/Web/_SectionViewFile.cshtml", item)
+            </div>
+        }
+        else if (item.DisplayType.Equals("Image"))
+        {
+            <div class="container">
+                <div class="row">
+                    @Html.Partial("~/Views/Shared/Web/_SectionTitle.cshtml", item)
+                    @Html.Partial("~/Views/Shared/Web/_SectionViewFile.cshtml", item)
+                </div>
+            </div>
+        }
+        else if (item.DisplayType.Equals("ImageSlider"))
+        {
+            <div class="container">
+                <div class="row">
+                    @Html.Partial("~/Views/Shared/Web/_SectionTitle.cshtml", item)
+
+                    <div class="image-slider owl-carousel owl-theme">
+                        @Html.Partial("~/Views/Shared/Web/_SectionViewFile.cshtml", item)
+                    </div>
+                </div>
+            </div>
+        }
+        else if (item.DisplayType.Equals("ImageGallery"))
+        {
+            <div class="container">
+                <div class="row">
+                    @Html.Partial("~/Views/Shared/Web/_SectionTitle.cshtml", item)
+
+                    <div id="image-@item.Id" class="popup-gallery">
+                        @Html.Partial("~/Views/Shared/Web/_SectionViewFile.cshtml", item)
+                    </div>
+                </div>
+            </div>
+        }
+        else if (item.DisplayType.Equals("FilesForDownload"))
+        {
+            <div class="container">
+                <div class="row text-center margin-bottom-20px">
+                    @Html.Partial("~/Views/Shared/Web/_SectionTitle.cshtml", item)
+                    @Html.Partial("~/Views/Shared/Web/_SectionViewFile.cshtml", item)
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="container">
+                <div class="row">
+                    @Html.Partial("~/Views/Shared/Web/_SectionTitle.cshtml", item)
+                    @Html.Partial("~/Views/Shared/Web/_SectionViewFile.cshtml", item)
+                </div>
+            </div>
+        }
+    }
+    else if (item.ContentType == ContentType.ContentElement)
+    {
+        string linkStyle = "";
+        if (item.DisplayType == "LinkWithImage" || item.DisplayType == "LinkWithTitle" || item.DisplayType == "LinkWithTitleAndImage")
+        {
+            linkStyle = "text-center margin-bottom-20px";
+        }
+
+        if (item.DisplayType == "ParallaxSliderFluid")
+        {
+            @Html.Partial("~/Views/Shared/Web/_SectionTitle.cshtml", item)
+
+            var fileUrlHelper = new FileUrlHelper(item.FileUrl);
+
+            <div class="container-fluid" style="padding: 0;">
+                <div id="da-slider" class="da-slider" style="background: transparent url(@Url.Action("GetFile", "Web", new { folderPath = fileUrlHelper.RouteFolderPath, filename = fileUrlHelper.Filename, extensionName = fileUrlHelper.ExtensionName })) repeat 0 0;">
+                    @Html.Partial("~/Views/Shared/Web/_SectionViewContentElement.cshtml", item)
+
+                    @*  Navigation *@
+                    <nav class="da-arrows">
+                        <i class="da-arrows-prev fa fa-angle-left"></i>
+                        <i class="da-arrows-next fa fa-angle-right"></i>
+                    </nav>
+                </div>
+            </div>
+        }
+        else if (item.DisplayType == "GoogleMapFluid")
+        {
+            @Html.Partial("~/Views/Shared/Web/_SectionTitle.cshtml", item)
+
+            <div class="container-fluid" style="padding: 0!important;">
+                @Html.Partial("~/Views/Shared/Web/_SectionViewContentElement.cshtml", item)
+            </div>
+        }
+        else if (item.DisplayType == "EmptyRow" && item.ElementVisibility == ElementVisibility.Visible)
+        {
+            @Html.Partial("~/Views/Shared/DisplayTypes/_EmptyRow.cshtml")
+        }
+        else if (item.DisplayType == "CubeLink")
+        {
+            <div class="container">
+
+                <div class="row margin-bottom-40px">
+
+                    @Html.Partial("~/Views/Shared/Web/_SectionTitle.cshtml", item)
+
+                    <div class="col-md-12">
+                        <div id="grid-container" style="clear: both;">
+                            <ul>
+                                @Html.Partial("~/Views/Shared/Web/_SectionViewContentElement.cshtml", item)
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="container">
+                <div class="row @linkStyle">
+                    @Html.Partial("~/Views/Shared/Web/_SectionTitle.cshtml", item)
+                    @Html.Partial("~/Views/Shared/Web/_SectionViewContentElement.cshtml", item)
+                </div>
+            </div>
+        }
+    }
+}

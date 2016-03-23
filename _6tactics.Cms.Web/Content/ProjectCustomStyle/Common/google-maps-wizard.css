@@ -1,0 +1,142 @@
+﻿/* Style for google map*/
+
+.google-map{
+    width: 100% !important;
+    height: 400px !important;
+}
+
+    .google-map img{
+        max-width: none!important;
+    }
+
+.controls {
+    margin-top: 16px;
+    border: 1px solid transparent;
+    -ms-border-radius: 2px 0 0 2px;
+    border-radius: 2px 0 0 2px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 32px;
+    outline: none;
+    -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    -ms-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.info-window {
+     color: #333;
+}
+
+.search-box {
+    color: #333;
+    background-color: #fff;
+    padding: 0 11px 0 13px;
+    width: 280px;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    -moz-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    display: none !important;
+    margin-top: 10px;
+    height: 31px!important;
+}
+
+.search-box:focus {
+        border-color: #4d90fe;
+        padding-left: 14px; /* Regular padding-left + 1. */
+        width: 401px;
+    }
+
+/*search box dropdow font*/
+.pac-container {
+    font-family: Roboto;
+}
+
+/* Add new location */
+/*#add-location {
+    margin-left: 10px;
+    margin-top: 16px;
+    height: 33px;
+}*/
+
+/*th span, #add-item, #FormattedAddress, #Latitude, #Longitude {
+    margin-left: 10px;
+}*/
+
+/*#add-content-item, #add-item {
+    width: 90px;
+}
+
+#FormattedAddress {
+    max-width: 460px !important;
+    width: 400px;
+}
+
+#Latitude, #Longitude {
+    width: 200px;
+}*/
+
+
+
+
+/* Style for jquery steps plugin*/
+
+/*#title-and-description-form, #location-form {
+    padding: 15px;
+    margin-top: 20px;
+}
+
+#title-and-description-form {
+    height: 300px;
+}
+
+    #title-and-description-form input, #title-and-description-form textarea {
+        width: 100%;
+    }*/
+
+.wizard > .content > .body {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+/*.infobox-wrapper {
+    display:none;
+}
+#infobox {
+    border:2px solid black;
+    margin-top: 8px;
+    background:#333;
+    color:#FFF;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:12px;
+    padding: .5em 1em;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    text-shadow:0 -1px #000000;
+    -webkit-box-shadow: 0 0  8px #000;
+    box-shadow: 0 0 8px #000;
+}*/
+
+
+
+/*.marker-label,
+.marker-icon {
+    z-index: 99;
+    position: absolute;
+    display: block;
+    margin-top: -50px;
+    margin-left: -25px;
+    width: 50px;
+    height: 50px;
+    font-size: 30px !important;
+    text-align: center;
+    color: #FFFFFF;
+    white-space: nowrap;
+}*/

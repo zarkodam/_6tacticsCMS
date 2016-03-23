@@ -1,0 +1,31 @@
+﻿@using _6tactics.Cms.Web.App_Logic
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="6tacticsCMS" />
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Content/admin-styles")
+    @Scripts.Render("~/Scripts/admin-scripts-before-body")
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/ckeditor/adapters/jquery.js"></script>
+</head>
+<body>
+    @Html.Partial("_LoginForm")
+
+    <div class="container-body body-content">@RenderBody()</div>
+
+    @if (ElementsVisibilityUtility.CurrentController.Equals("pluginsmanager"))
+    {
+        <script id="googleMapsApi" src="https://maps.googleapis.com/maps/api/js?v=3&libraries=places"></script>
+    }
+
+    <script src="~/Scripts/jquery.steps.js"></script>
+
+    @Scripts.Render("~/Scripts/admin-scripts-after-body")
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

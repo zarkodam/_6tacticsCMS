@@ -1,0 +1,27 @@
+﻿@using _6tactics.Cms.Core.Enums.Admin
+@model _6tactics.Cms.Core.ViewModels.Web.PageViewModel
+
+@if (Model.FooterSections != null)
+{
+    <footer>
+        <div>
+            @foreach (var item in Model.FooterSections)
+            {
+                if (item.ContentType == ContentType.ContentElement)
+                {
+                    string linkStyle = "";
+                    if (item.DisplayType == "LinkWithImage" || item.DisplayType == "LinkWithTitle" || item.DisplayType == "LinkWithTitleAndImage")
+                    {
+                        linkStyle = "text-align: center;";
+                    }
+                    <div class="row section-row-footer" style="@linkStyle">
+                        @Html.Partial("~/Views/Shared/Web/_SectionViewContentElement.cshtml", item)
+                    </div>
+                }
+            }
+            <div class="footer-text">
+                @Model.Project.Title &copy; @DateTime.Now.Year
+            </div>
+        </div>
+    </footer>
+}

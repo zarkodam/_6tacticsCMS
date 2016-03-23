@@ -1,0 +1,12 @@
+﻿@model _6tactics.Cms.Core.ViewModels.Admin.AdminPagesListViewModel
+
+@* Getting page list for selected language *@
+
+<li>@Html.ActionLink("All", Model.CurrentAction, "admin", new { lang = Model.SelectedLanguage }, null)</li>
+@foreach (var page in Model.ElementsDepthAndTitle)
+{
+    <li>
+        @{ var pageDepth = string.Concat("margin-left: ", (page.Depth * 10), "px;");}
+        <a style="@pageDepth" href="@Url.Action(Model.CurrentAction, "Admin", new { lang = Model.SelectedLanguage, pageId = page.ContentItem.Id })">@page.ContentItem.Title</a>
+    </li>
+}

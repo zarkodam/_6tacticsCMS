@@ -1,0 +1,106 @@
+﻿@using _6tactics.Cms.Core.Enums
+@using _6tactics.Cms.Core.Enums.Admin
+@using _6tactics.Cms.Web.App_Logic
+@using _6tactics.Utilities.Common
+@using _6tactics.Utilities.Web.Helpers.String
+@model _6tactics.Cms.Core.ViewModels.Web.PageViewModel
+
+@{
+    //string currentPage = Model.PageContentMenu.Title;
+    //var pagePath = new PagePathBuilder(ElementsVisibilityUtility.CurrentLanguage, Model.MainMenu.Items);
+}
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            @if (CheckExistence.IsUrlExist(Model.Project.FileUrl))
+            {
+                <a href="#home" rel="" class="logo-small"><img src="@Model.Project.FileUrl" alt="logo-small"></a>
+            }
+
+        </div>
+        @*<div class="navbar-collapse collapse navbar-example">*@
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                @{
+                    var firstOrDefaultLanguage = Model.LanguagesWithDefaultRouteTitle.FirstOrDefault();
+                    var languageFromRouteData = HttpContext.Current.Request.RequestContext.RouteData.Values["lang"];
+                    var selectedLanguage = languageFromRouteData ?? firstOrDefaultLanguage;
+
+                    // List page links
+                    if (Model.MainMenu.Items.ToList().Count > 1)
+                    {
+                        foreach (var item in Model.MainMenu.Items)
+                        {
+                            // Add for visibility hidden
+                            <li><a href="@Url.Action("Index", "Web", new { lang = selectedLanguage, pageId = item.Id })">@item.Title</a></li>
+                        }
+                    }
+
+                    // List section titles
+                    else
+                    {
+                        foreach (var item in Model.PageContentMenu.Items
+                            .Where(item => item.SectionTitleVisibility != null && item.SectionTitleVisibility != SectionTitleVisibility.Hidden))
+                        {
+                            if (ElementsVisibilityUtility.IsSectionVisible(item.ElementVisibility, User.Identity.IsAuthenticated, Model.PageContentMenu.Items.ToList()))
+                            {
+                                <li><a href="#@Html.WordsConnecting(item.Title)">@item.Title</a></li>
+                            }
+                        }
+                    }
+                }
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+
+                @* List languages *@
+                @if (Model.LanguagesWithDefaultRouteTitle.Count > 1)
+                {
+                    foreach (var language in Model.LanguagesWithDefaultRouteTitle)
+                    {
+                        //if (Model.PageContentMenu.Items.Where(i => i.ContentType == ContentType.Language && i.Title == language))
+                        <li><a href="@Url.Action("Index", "Web", new { lang = language })">@language</a></li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+@*<div class="container-fluid selected-page-panel">d
+    <div class="wrapper">
+        <div class="pull-left selected-page">@currentPage</div>
+        <div class="pull-right selected-page-path">@pagePath.GetPagePath</div>
+    </div>
+    <div class="empty-row"></div>
+</div>*@
+
+<a name="home" id="home"></a>
+
+<script type="text/javascript">
+    $(function () {
+
+        $(window).on("load", function () {
+            $("body").css("margin-top", $(".navbar").height() - 48);
+        });
+
+        $(window).on("resize", function () {
+            $("body").css("margin-top", $(".navbar").height() - 48);
+        });
+
+        //$('.toresponsive').resmenu({ maxWidth: 850 }).resmenuBootstrap();
+        $('.toresponsive').resmenu({ maxWidth: 860 });
+
+        //$('.navbar').animatedScrollNavigation({ menuItemSelectingType: 'immediately' });
+        $('.navbar').animatedScrollNavigation({ menuItemSelectingType: 'onScroll' });
+        //$('.navbar').animatedScrollNavigation();
+
+    });
+</script>

@@ -1,0 +1,64 @@
+﻿@model  IEnumerable<_6tactics.AspIdentity.ViewModels.UsersHandler.UsersHandlerIndexViewModel>
+
+<div class="row">
+    <h3>Users</h3>
+</div>
+
+<div class="row text-right">
+    <p>
+        @Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = "btn btn-primary" })
+        @Html.ActionLink("Create Prepare", "CreatePrepare", null, htmlAttributes: new { @class = "btn btn-primary" })
+    </p>
+</div>
+
+<div class="row">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUser.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUser.Email)
+            </th>
+            <th>Email confirmed</th>
+            <th>Roles</th>
+            <th class="text-right">Actions</th>
+        </tr>
+
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => user.ApplicationUser.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.ApplicationUser.Email)
+                </td>
+                <td>
+                    <div style="margin-top: -4px;">@Html.DisplayFor(modelItem => user.ApplicationUser.EmailConfirmed)</div>
+                </td>
+                @if (user.RolesList.Any())
+                {
+                    <td>
+                        @foreach (string role in user.RolesList)
+                        {
+                            <p>@role</p>
+                        }
+                    </td>
+
+                }
+                else
+                {
+                    <td></td>
+                }
+
+                <td class="text-right">
+
+                    @Html.ActionLink("Edit", "Edit", new { id = user.ApplicationUser.Id }, htmlAttributes: new { @class = "btn btn-info" })
+                    @Html.ActionLink("Delete", "Delete", new { id = user.ApplicationUser.Id }, htmlAttributes: new { @class = "btn btn-info" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

@@ -1,0 +1,22 @@
+﻿@model _6tactics.Cms.Core.ViewModels.Web.PageViewModel
+
+@{ViewBag.Title = Model.Project.Title + " / " + Model.PageContentMenu.Title;}
+
+@*@Html.Partial("~/Views/Shared/Web/_MainMenu.cshtml", Model)*@
+@Html.Partial("~/views/Shared/Web/_MainMenuDropDown.cshtml", Model)
+
+
+<div class="container-body body-content">
+    @Html.Partial("~/Views/Shared/Web/_SectionViewHome.cshtml", Model)
+</div>
+
+@*@Html.Partial("~/Views/Shared/Web/_FooterFixed.cshtml", Model)*@
+@Html.Partial("~/Views/Shared/Web/_Footer.cshtml", Model)
+
+@Html.Partial("~/Views/Shared/DisplayTypes/_IframePopup.cshtml")
+
+@{
+    // Include GoogleMaps API if page contaings any GoogleMap
+    ViewBag.IsAnyGoogleMapOnThisPage = (bool)Model.IsAnyGoogleMapOnThisPage;
+}
+

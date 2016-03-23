@@ -1,0 +1,28 @@
+﻿/* Validation style*/
+.field-validation-error, .validation-summary-errors {
+    color: red;
+    font-weight: bold;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #ff0000;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.bt-grid-item {
+    border: 1px #d3d3d3 solid;
+    background-color: #e6e6fa;
+    height: 100%;
+    padding: 10px;
+}

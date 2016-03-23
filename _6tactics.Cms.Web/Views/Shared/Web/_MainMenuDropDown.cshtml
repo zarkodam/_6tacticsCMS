@@ -1,0 +1,151 @@
+﻿@using _6tactics.Cms.Core.Enums.Admin
+@using _6tactics.Cms.Core.Models.Common
+@using _6tactics.Cms.Web.App_Logic
+@using _6tactics.Cms.Web.Helpers
+@using _6tactics.Utilities.Web.Helpers.String
+@model _6tactics.Cms.Core.ViewModels.Web.PageViewModel
+
+@{
+    string firstOrDefaultLanguage = Model.LanguagesWithDefaultRouteTitle.Keys.FirstOrDefault();
+    string languageFromRouteData = ElementsVisibilityUtility.CurrentLanguage;
+    string selectedLanguage = languageFromRouteData ?? firstOrDefaultLanguage;
+
+    string currentPage = Model.PageContentMenu.Title;
+    var pagePath = new PagePathBuilder(ElementsVisibilityUtility.CurrentLanguage, Model.MainMenu.Items);
+
+    bool isMenuHasMultiplePages = Model.MainMenu.Items.Count() > 1
+     || Model.MainMenu.Items.ToList().Find(i => i.ContentType == ContentType.Page).ContentItems.Count(i => i.ContentType == ContentType.Page) >= 1;
+}
+
+@helper MenuBuilder(string selectedLanguage, IEnumerable<IContentItem> contentItems)
+{
+    foreach (var page in contentItems.Where(item => item.ContentType == ContentType.Page && item.ElementVisibility != ElementVisibility.Hidden).OrderBy(i => i.Priority))
+    {
+        var selectedClass = ElementsVisibilityUtility.IsPageSelected(page, ElementsVisibilityUtility.CurrentRouteTitle) ? "selected" : "";
+            <li style="color: white" class="@selectedClass">
+                @if (page.ContentItems.Count(i => i.ContentType == ContentType.Page) > 0)
+                {
+                    var isParentContentTypePage = page.Parent.ContentType == ContentType.Page;
+                    var submenuClass = isParentContentTypePage ? "submenu" : "";
+
+                    if (isParentContentTypePage)
+                    {
+                        <a href="@Url.Action("index", "web", new {lang = selectedLanguage, routeTitle = page.RouteTitle})"><i class="left-arrow fa fa-caret-left"></i> @page.Title <i class="right-arrow fa fa-caret-right"></i></a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("index", "web", new {lang = selectedLanguage, routeTitle = page.RouteTitle})"> @page.Title <i class="fa fa-caret-down"></i></a>
+                    }
+                    <ul class="@submenuClass">@MenuBuilder(selectedLanguage, page.ContentItems)</ul>
+                }
+                else
+                {
+                    <a href="@Url.Action("index", "web", new {lang = selectedLanguage, routeTitle = page.RouteTitle})">@page.Title</a>
+                }
+            </li>
+    }
+}
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+
+        <div style="margin: 0 auto" class="row">
+
+            <div class="col-md-3 header-logo-wrapper">
+                @{var fileUrlHelper = new FileUrlHelper(Model.Project.FileUrl);}
+                @if (fileUrlHelper.IsUrlValid)
+                {
+                    // If is single page do scroll with animation on first item
+                    if (Model.LanguagesWithDefaultRouteTitle.Count < 1)
+                    {
+                        <a href="#home" rel=""><img src="@Url.Action("GetFile", "Web", new { folderPath = fileUrlHelper.RouteFolderPath, filename = fileUrlHelper.Filename, extensionName = fileUrlHelper.ExtensionName})" alt="logo"></a>
+                    }
+                    // If is multiple page website goto home page
+                    else
+                    {
+                        <a href="@Url.Action("index", "web", new {lang = ElementsVisibilityUtility.CurrentLanguage, routeTitle = "", area = ElementsVisibilityUtility.GetCurrentArea(Request)})" rel="">
+                            <img src="@Url.Action("GetFile", "Web", new { folderPath = fileUrlHelper.RouteFolderPath, filename = fileUrlHelper.Filename, extensionName = fileUrlHelper.ExtensionName})" alt="logo">
+                        </a>
+                    }
+                }
+            </div>
+
+            <div class="col-md-9 header-menu-wrapper">
+
+                @if (Model.LanguagesWithDefaultRouteTitle.Count > 1)
+                {
+                    @* List languages with default route value*@
+                foreach (var languageWithDefaultRouteTitle in Model.LanguagesWithDefaultRouteTitle.Reverse())
+                {
+                    var textTransform = "none";
+                    if (selectedLanguage != null && selectedLanguage.Equals(languageWithDefaultRouteTitle.Key, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        textTransform = "underline!important";
+                    }
+                    <a style="text-decoration: @textTransform" class="dropdown-menu-language-list" href="@Url.Action("index", "web", new {lang = languageWithDefaultRouteTitle.Key, routeTitle = languageWithDefaultRouteTitle.Value, area = ElementsVisibilityUtility.GetCurrentArea(Request)})">
+                        @languageWithDefaultRouteTitle.Key.ToUpper()
+                    </a>
+                    }
+                }
+
+                <div style="margin-top: 30px;" class="menus_wrapper">
+
+                    <ul class="list-menu">
+                        @{
+                            // List page links hierarchically
+                            if (isMenuHasMultiplePages)
+                            {
+                                @MenuBuilder(selectedLanguage, Model.MainMenu.Items)
+                            }
+
+                            // If page count is 1 list section titles (as singe page web)
+                            else
+                            {
+                                foreach (var item in Model.PageContentMenu.Items
+                                    .Where(item => item.SectionTitleVisibility != null && item.SectionTitleVisibility != SectionTitleVisibility.Hidden)
+                                    .Where(item => ElementsVisibilityUtility.IsSectionVisible(item.ElementVisibility, User.Identity.IsAuthenticated, Model.PageContentMenu.Items.ToList())))
+                                {
+                                    <li><a href="#@Html.WordsConnecting(item.Title)">@item.Title</a></li>
+                                }
+                            }
+                        }
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid selected-page-panel">
+    <div class="web-current-location-wrapper wrapper">
+        <div class="selected-page"><h1 style="font-size: 1em; margin: 0; margin-top: 2px;">@currentPage</h1></div>
+        <div class="selected-page-path">@pagePath.GetPagePath</div>
+    </div>
+</div>
+
+<a id="home"></a>
+
+<script type="text/javascript">
+    $(function () {
+        var onWhichSizeOpensTheDropDownMenu = 860;
+
+        $('.list-menu').resmenu({ maxWidth: onWhichSizeOpensTheDropDownMenu, menuActualWidthTolerance: 5 });
+        $('.selected-page-panel').selectedPagePanel({ onWhichSizeHideTitle: onWhichSizeOpensTheDropDownMenu });
+    });
+</script>
+
+@* Add animatedScrollNavigation for single page web *@
+@if (!isMenuHasMultiplePages)
+{
+    <script type="text/javascript">
+        $(function () {
+            $('.navbar').animatedScrollNavigation({ menuItemSelectingType: 'onScroll' });
+
+            // napraviti tako da bude samo jedan plugin, da se odlucuje kada se na koji ide
+            //$('#dropdown-menu1').animatedScrollNavigation();
+        });
+    </script>
+}

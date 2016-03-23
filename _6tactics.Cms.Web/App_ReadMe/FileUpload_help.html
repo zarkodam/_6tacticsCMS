@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+	<style type="text/css">
+
+ p.MsoNormal
+	{margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+			margin-left: 0cm;
+			margin-right: 0cm;
+			margin-top: 0cm;
+		}
+p.MsoListParagraph
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	}
+	</style>
+</head>
+<body>
+
+	<p class="MsoNormal">
+		<span lang="HR" style="mso-ansi-language:HR">Napravljena je osnovna funkcionalnost upload-a file-ova u chunk-ovima(Html5 i Silverlight).<o:p></o:p></span></p>
+	<p class="MsoNormal">
+		<span lang="HR" style="mso-ansi-language:HR"><o:p>&nbsp;</o:p></span></p>
+	<p class="MsoNormal">
+		<span lang="HR" style="mso-ansi-language:HR">Konfigurabilno je postavljanje veličine chunk-a, sada 1MB.<o:p></o:p></span></p>
+	<p class="MsoNormal">
+		<span lang="HR" style="mso-ansi-language:HR">U „~/App_Data/UploadCache“ folderu se spremaju chunkovi koji se nakon upload-a svih spajaju u jedan file i snimaju na lokaciju dokumenta.<o:p></o:p></span></p>
+	<p class="MsoNormal">
+		<span lang="HR" style="mso-ansi-language:HR">Ako upload prođe uspješno cache folder se odmah obriše, a ako pukne ili user abort-a naknadno će se obrisati prilikom logina ako je direktorij sa chunk-ovima modificiran više od 4 sata.<o:p></o:p></span></p>
+	<p class="MsoNormal">
+		<span lang="HR" style="mso-ansi-language:HR"><o:p>&nbsp;</o:p></span></p>
+	<p class="MsoNormal">
+		<span lang="HR" style="mso-ansi-language:HR">Na klijentu je kôd u folderu „~/Scripts/utilis/upload/“.<o:p></o:p></span></p>
+	<p class="MsoNormal">
+		<span lang="HR" style="mso-ansi-language:HR">Fileovi: <b>jquery.upload.js</b>, <b>utilis.UploadHtml5.js</b>, <b>utilis.UploadSilverlight.js</b>, <b>FileUpload.xap</b>(silverlight plugin – compile projekta FileUpload u solution-u).<o:p></o:p></span></p>
+	<p class="MsoNormal">
+		<span lang="HR" style="mso-ansi-language:HR"><o:p>&nbsp;</o:p></span></p>
+	<p class="MsoNormal">
+		<span lang="HR" style="mso-ansi-language:HR">Na serverskoj strani je sva logika za upload upisana u <b>FileUploadManager</b> klasi.<o:p></o:p></span></p>
+	<p class="MsoNormal">
+		<span lang="HR" style="mso-ansi-language:HR">Konkretno bitna je samo jedna metoda <b>SaveFileChunk</b> npr.<o:p></o:p></span></p>
+	<p class="MsoNormal" style="text-autospace:none">
+		<span style="font-size: 10.0pt; font-family: Consolas; color: blue; background: white; mso-highlight: white">var</span><span style="font-size: 10.0pt; font-family: Consolas; color: black; background: white; mso-highlight: white"> saveFile = fm.SaveFileChunk(uuid, chunk, chunks, fileData);<o:p></o:p></span></p>
+	<p class="MsoNormal" style="text-autospace:none">
+		<span style="font-size: 10.0pt; font-family: Consolas; color: blue; background: white; mso-highlight: white">if</span><span style="font-size: 10.0pt; font-family: Consolas; color: black; background: white; mso-highlight: white"> (saveFile != </span><span style="font-size: 10.0pt; font-family: Consolas; color: blue; background: white; mso-highlight: white">null</span><span style="font-size: 10.0pt; font-family: Consolas; color: black; background: white; mso-highlight: white">)<o:p></o:p></span></p>
+	<p class="MsoNormal" style="text-autospace:none">
+		<span style="font-size: 10.0pt; font-family: Consolas; color: black; background: white; mso-highlight: white">{<o:p></o:p></span></p>
+	<p class="MsoNormal" style="text-autospace:none">
+		<span style="font-size: 10.0pt; font-family: Consolas; color: black; background: white; mso-highlight: white">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-size: 10.0pt; font-family: Consolas; color: green; background: white; mso-highlight: white">// All chunk uploaded, save whole file</span><span style="font-size: 10.0pt; font-family: Consolas; color: black; background: white; mso-highlight: white"><o:p></o:p></span></p>
+	<p class="MsoNormal" style="text-autospace:none">
+		<span style="font-size: 10.0pt; font-family: Consolas; color: black; background: white; mso-highlight: white">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; saveFile(wholeFilePath);<o:p></o:p></span></p>
+	<p class="MsoNormal">
+		<span style="font-size: 10.0pt; font-family: Consolas; color: black; background: white; mso-highlight: white">}</span><span style="font-size:10.0pt;font-family:Consolas;color:black"><o:p></o:p></span></p>
+	<p class="MsoNormal">
+		<span lang="HR" style="font-size:10.0pt;mso-ansi-language:
+HR">Metoda vraća </span><span style="font-size: 10.0pt; font-family: Consolas; color: #2B91AF; background: white; mso-highlight: white">Action</span><span style="font-size: 10.0pt; font-family: Consolas; color: black; background: white; mso-highlight: white">&lt;</span><span style="font-size: 10.0pt; font-family: Consolas; color: blue; background: white; mso-highlight: white">string</span><span style="font-size: 10.0pt; font-family: Consolas; color: black; background: white; mso-highlight: white">&gt;</span><span style="font-size:10.0pt"> </span><span lang="HR" style="mso-ansi-language:HR">ako je zadnji chunk upload-an i cijeli file je spreman za snimanje.<o:p></o:p></span></p>
+	<p class="MsoNormal">
+		<span lang="HR" style="mso-ansi-language:HR">Poziv te metode sa putanjom do file snima cijeli file gdje je potrebno.<o:p></o:p></span></p>
+	<p class="MsoNormal">
+		<span lang="HR" style="mso-ansi-language:HR"><o:p>&nbsp;</o:p></span></p>
+	<p class="MsoNormal">
+		<span lang="HR" style="mso-ansi-language:HR">Napomena:<o:p></o:p></span></p>
+	<p class="MsoNormal">
+		<span lang="HR" style="mso-ansi-language:HR">Zbog nedovoljno vremena, nije do kraja napravljen:<o:p></o:p></span></p>
+	<p class="MsoListParagraph" style="text-indent:-18.0pt;mso-list:l0 level1 lfo1">
+		<![if !supportLists]><span lang="HR" style="font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol;mso-ansi-language:HR"><span style="mso-list:Ignore">·<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]><span lang="HR" style="mso-ansi-language:HR">error handling(posebno silverlight plugin)<o:p></o:p></span></p>
+	<p class="MsoListParagraph" style="text-indent:-18.0pt;mso-list:l0 level1 lfo1">
+		<![if !supportLists]><span lang="HR" style="font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol;mso-ansi-language:HR"><span style="mso-list:Ignore">·<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]><span lang="HR" style="mso-ansi-language:HR">statusi fileova na klijentu<o:p></o:p></span></p>
+	<p class="MsoListParagraph" style="text-indent:-18.0pt;mso-list:l0 level1 lfo1">
+		<![if !supportLists]><span lang="HR" style="font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol;mso-ansi-language:HR"><span style="mso-list:Ignore">·<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]><span lang="HR" style="mso-ansi-language:HR">retry requesta ako pukne upload jednog chunk(posebno bitno za velike fileove)<o:p></o:p></span></p>
+	<p class="MsoListParagraph" style="text-indent:-18.0pt;mso-list:l0 level1 lfo1">
+		<![if !supportLists]><span lang="HR" style="font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol;mso-ansi-language:HR"><span style="mso-list:Ignore">·<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]><span lang="HR" style="mso-ansi-language:HR">progress na silverlight pluginu – za sad pokazuje samo kad je cijeli chunk upload-an<o:p></o:p></span></p>
+	<p class="MsoListParagraph" style="text-indent:-18.0pt;mso-list:l0 level1 lfo1">
+		<![if !supportLists]><span lang="HR" style="font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol;mso-ansi-language:HR"><span style="mso-list:Ignore">·<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]><span lang="HR" style="mso-ansi-language:HR">opcija za multiple file upload(dio je napravljen, ali budući da za Alstom ne treba, nisam to završio)<o:p></o:p></span></p>
+	<p class="MsoListParagraph" style="text-indent:-18.0pt;mso-list:l0 level1 lfo1">
+		<![if !supportLists]><span lang="HR" style="font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol;mso-ansi-language:HR"><span style="mso-list:Ignore">·<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]><span lang="HR" style="mso-ansi-language:HR">provjera veličine file-a na klijentu – na serveru nije ni bilo<o:p></o:p></span></p>
+	<p class="MsoListParagraph" style="text-indent:-18.0pt;mso-list:l0 level1 lfo1">
+		<![if !supportLists]><span lang="HR" style="font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol;mso-ansi-language:HR"><span style="mso-list:Ignore">·<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]><span lang="HR" style="mso-ansi-language:HR">opcija da ne upload-a u chunk-ovima(ovo nisam siguran da li je uopće potrebno)<o:p></o:p></span></p>
+	<p class="MsoNormal">
+		<span lang="HR" style="mso-ansi-language:HR"><o:p>&nbsp;</o:p></span></p>
+	<span lang="HR" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;mso-bidi-font-family:
+&quot;Times New Roman&quot;;mso-ansi-language:HR;mso-fareast-language:EN-US;mso-bidi-language:
+AR-SA">T.</span>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+﻿@using _6tactics.Cms.Core.ViewModels
+@using _6tactics.Cms.Core.ViewModels.Common
+@using _6tactics.Cms.Web.App_Logic
+@model dynamic
+
+@* Form elements handler *@
+
+@{
+    if (ElementsVisibilityUtility.IsCreatePage || ElementsVisibilityUtility.IsEditPage)
+    {
+        ViewBag.ContentItemTitle = "#ContentItemViewModel_Title";
+        ViewBag.ContentType = "#ContentItemViewModel_ContentType";
+        ViewBag.DisplayType = "#ContentItemViewModel_DisplayType";
+        ViewBag.Summary = "#ContentItemViewModel_Summary";
+        ViewBag.Content = "#ContentItemViewModel_Content";
+        ViewBag.ElementVisibility = "#ContentItemViewModel_ElementVisibility";
+        ViewBag.SectionVisibility = "#ContentItemViewModel_SectionTitleVisibility";
+
+        ViewBag.ElementWidthPanel = ".element-width-panel";
+
+        bool isParentElementOrFile = Model.CreateEditDataViewModel.IsParentElementOrFile;
+        ViewBag.ElementColor = isParentElementOrFile ? "deepSkyBlue" : "steelBlue";
+        ViewBag.FileColor = isParentElementOrFile ? "orange" : "darkorange";
+
+        ViewBag.LinkOption = "#ContentItemViewModel_LinkOption";
+
+        ViewBag.SectionTitlteVisibilityVisible = ElementsVisibilityUtility.IsSectionTitleVsibilityVisible(Model) ? "visible" : "";
+
+        ViewBag.IsTitleOfContent = ElementsVisibilityUtility.IsElementWidthPanelVisible((ContentItemViewModel)Model.ContentItemViewModel) ? "true" : "false";
+    }
+    if (ElementsVisibilityUtility.IsDetailsPage)
+    {
+        ViewBag.ContentType = "#ContentType";
+        ViewBag.DisplayType = "#DisplayType";
+        ViewBag.Summary = "#Summary";
+        ViewBag.Content = "#Content";
+
+        ViewBag.ElementColor = ViewBag.IsParentElementOrFile ? "deepSkyBlue" : "steelBlue";
+        ViewBag.FileColor = ViewBag.IsParentElementOrFile ? "orange" : "darkorange";
+
+        ViewBag.FileUrl = Model != null && Model.FileUrl != null ? Model.FileUrl : "";
+
+        ViewBag.IsTitleOfContent = ElementsVisibilityUtility.IsElementWidthPanelVisible(Model) ? "true" : "false";
+    }
+    if (ElementsVisibilityUtility.IsEditPage)
+    {
+        ViewBag.FileUrl = Model != null && Model.ContentItemViewModel.FileUrl != null ? Model.ContentItemViewModel.FileUrl : "";
+    }
+    if (ElementsVisibilityUtility.IsSetupPage)
+    {
+        ViewBag.Summary = "#Project_Summary";
+        ViewBag.FileUrl = Model != null && Model.Project.FileUrl != null ? Model.Project.FileUrl : "";
+    }
+}
+
+
+<script type="text/javascript">
+    $(function() {
+        adminFormFieldsVisibilityHandler({
+            selectedActionPage: "",
+            elementColor: "",
+            fileColor: "",
+            contentItemTitle: "",
+            contentType: "",
+            displayType: "",
+            fileUrl: "",
+            summary: "",
+            content: "",
+            elementVisibility: "",
+            sectionVisibility: "",
+            elementWidthPanel: "",
+            linkOption: "",
+            isElementTitle: "",
+            isParentElementOrFile: "",
+            sectionTitlteVisibilityVisible: "",
+        });
+    })
+</script>

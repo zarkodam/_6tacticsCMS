@@ -1,0 +1,204 @@
+﻿/* Tree view*/
+
+.tree {
+    font-family: Lato-bold;
+}
+
+    .tree li {
+        list-style-type: none;
+        margin: 0;
+        padding-top: 6px;
+        position: relative;
+        left: -16px;
+    }
+
+        .tree li::before, .tree li::after {
+            content: '';
+            left: -10px;
+            top: 0;
+            position: absolute;
+            right: auto;
+        }
+
+        .tree li::before {
+            border-left: 1px solid rgb(70, 130, 180);
+            bottom: 50px;
+            height: 100%;
+            top: 0;
+            width: 1px;
+        }
+
+        .tree li::after {
+            border-top: 1px solid rgb(70, 130, 180);
+            top: 24px;
+            width: 10px;
+        }
+
+        .tree li span {
+            display: inline-block;
+            text-decoration: none;
+        }
+
+
+/* Tree node */
+.tree-node {
+    width: 340px;
+    height: 28px;
+}
+
+
+    .tree-node .expand-collapse-icon {
+        font-size: 0.9em !important;
+        text-align: center;
+        float: left;
+        padding: 6px;
+        padding-right: 0;
+        color: white;
+    }
+
+    .tree-node .node-text {
+        font-size: 1.01em !important;
+        margin: 0;
+        padding: 0;
+        padding-left: 6px;
+        float: left;
+        color: white;
+    }
+
+        .tree-node .node-text .content-display-type-title, .tree-node .node-text .folder-path {
+            font-size: 0.65em !important;
+            color: black;
+        }
+
+.folder-path {
+    min-height: 6px!important;
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    -moz-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+
+.tree-node .node-text .content-display-type-title span {
+    /*font-weight: 900 !important;*/
+}
+
+.child-content-element .tree-node .node-text {
+    padding: 5px;
+}
+
+.tree-node .action-icons {
+    font-size: 0.85em !important;
+    padding: 5px;
+    float: right;
+    color: white;
+}
+
+
+.tree-item-title, .tree-item-subtitle {
+    color: white;
+}
+
+.tree-item-visible {
+    border-right: 4px solid;
+}
+
+.tree-item-visible-for-admin-only {
+    border-right: 4px solid #999;
+}
+
+.tree-item-hidden {
+    border-right: 4px solid #333;
+}
+
+.content-item-title, .folder-name {
+    font-size: 0.75em !important;
+    max-width: 225px;
+    white-space: nowrap;
+    overflow: hidden;
+    -moz-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+
+.content-display-item-type {
+    font-weight: 500 !important;
+    font-size: 0.6em;
+    color: white;
+}
+
+.content-item-type {
+    margin-left: 20px;
+}
+
+.tree-item-image {
+    padding-right: 10px;
+}
+
+.tree-item-summary, .tree-item-content {
+    margin-top: 4px;
+    padding: 5px;
+    color: black;
+    background-color: #e0ffff;
+}
+
+.tree-item-summary {
+    font-weight: bolder;
+}
+
+.ui-state-default {
+    background: none;
+    border: none;
+}
+
+.tree-item-title {
+    -ms-border-radius: 0;
+    border-radius: 0;
+    padding: 5px;
+    font-weight: bold;
+    background-color: rgb(70, 130, 180);
+}
+
+.tree-item-subtitle {
+    background-color: #5bc0de;
+}
+
+.action-icons {
+    margin-left: 20px;
+}
+
+.tree-item-actions {
+    padding: 8px;
+}
+
+    .tree-item-actions a {
+        color: white;
+    }
+
+.tree li.parent_li > div {
+    cursor: pointer;
+}
+
+.tree > ul > li::before, .tree > ul > li::after {
+    border: 0;
+}
+
+.tree li:last-child::before {
+    height: 30px;
+}
+
+.tree li.parent_li > div:hover, .tree-node-selected {
+    -ms-opacity: 0.8 !important;
+    opacity: 0.8 !important;
+}
+
+
+/* Treeview node for FileManager*/
+.file-manager-treeview-node {
+    background-color: grey;
+    border-right: 1px solid grey;
+    border-top: 1px solid grey;
+}
+
+.action-button-color {
+    color: white;
+}

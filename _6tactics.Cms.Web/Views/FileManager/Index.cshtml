@@ -1,0 +1,33 @@
+﻿@model _6tactics.Utilities.FileSystem.Interfaces.IDirectoryTree
+
+@{ ViewBag.Title = "Admin / FileManager"; }
+
+
+@Html.Partial("Admin/_AdminMenu")
+
+@Html.Partial("FileManager/_CurrentLocation", Model)
+
+@Html.Hidden("SelectedLocation", "/uploads")
+
+<div class="height-offset-40px"></div>
+
+<div class="row">
+    <div id="folders-list" class="tree">
+        <div id="folders-list-wrapper" class="scrollbar-outer">
+            @Html.Partial("/Views/FileManager/_FoldersTreeView.cshtml", Model)
+        </div>
+    </div>
+
+    <div id="files-preview">
+        <div id="files-preview-wrapper" class="scrollbar-outer"></div>
+    </div>
+</div>
+
+@Html.Partial("_PopupMessages")
+
+
+<script type="text/javascript">
+    $(function () {
+        fileManagerIndexInit('@Html.AntiForgeryToken()');
+    });
+</script>

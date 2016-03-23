@@ -1,0 +1,22 @@
+﻿@model _6tactics.Cms.Core.ViewModels.Common.ContentItemViewModel
+
+<div>
+    <div class="@Model.Parent.ElementWidth">
+        @*@if (!string.IsNullOrWhiteSpace(Model.Title))
+        {
+            <div class="custom-view-title">@Model.Title</div>
+        }*@
+        @if (!string.IsNullOrWhiteSpace(Model.FileUrl))
+        {
+            @*<div class="custom-view-image">@Model.FileUrl</div>*@
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.Summary))
+        {
+            <div class="custom-view-summary">@Html.Raw(Model.Summary)</div>
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.Content))
+        {
+            <div class="custom-view-content">@Html.Raw(Model.Content)</div>
+        }
+    </div>
+</div>

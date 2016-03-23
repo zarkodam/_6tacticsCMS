@@ -1,0 +1,21 @@
+﻿@using _6tactics.Cms.Core.Enums
+@using _6tactics.Cms.Core.Enums.Admin
+@model _6tactics.Cms.Core.ViewModels.Common.ContentItemViewModel
+
+<div class="title-summary-content">
+    <div class="element-title">@Model.Title</div>
+
+    <div class="element-summary">
+        @Html.Raw(Model.Summary)
+    </div>
+
+    <div class="element-content">
+        @Html.Raw(Model.Content)
+    </div>
+
+    @Html.Partial("DisplayTypes/_ReadMore", Model)
+</div>
+
+
+
+

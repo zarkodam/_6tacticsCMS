@@ -1,0 +1,35 @@
+﻿@model IEnumerable<_6tactics.Cms.Core.Entities.ContentItem>
+
+<div class="popup-wrapper">
+    <div class="popup-content">
+        Are you sure you want to delete <b>@Model.First().Title</b>
+        @if (Model.Count() > 1)
+        {
+            <span>and his childrens:</span>
+            var i = 2;
+            <span><br><br>"</span>
+
+            foreach (var item in @Model.Skip(1))
+            {
+                <b>@item.Title</b>
+                if (i < Model.Count())
+                {
+                    <span>,</span>
+                }
+                i++;
+            }
+            <span>"</span>
+        }
+        <span> ?</span><br><br>
+
+        <div class="popup-form">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="pull-right">
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

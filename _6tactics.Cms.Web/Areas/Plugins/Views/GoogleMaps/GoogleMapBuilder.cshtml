@@ -1,0 +1,35 @@
+﻿@model List<_6tactics.Cms.Web.Areas.Plugins.Models.GoogleMaps.Map>
+
+
+<div id="action-form">
+    <div id="action-form-wrapper" class="pull-left plugin-content-wrapper">
+        <div id="wizard">
+            <h2>Choose action</h2>
+            <section data-mode="async" data-url="/Plugins/GoogleMaps/ChooseAction"></section>
+
+            <h2>Map locations</h2>
+            <section data-mode="async" data-url="/Plugins/GoogleMaps/MapLocations"></section>
+
+            <h2>Map settings</h2>
+            <section data-mode="async" data-url="/Plugins/GoogleMaps/MapSettings"></section>
+
+            <h2>Preview</h2>
+            <section data-mode="async" data-url="/Plugins/GoogleMaps/Preview"></section>
+
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#wizard').steps({
+            headerTag: "h2",
+            bodyTag: "section",
+            transitionEffect: "slideLeft",
+            enableFinishButton: false
+    });
+
+        $('#wizard').find('.actions').hide();
+    });
+</script>

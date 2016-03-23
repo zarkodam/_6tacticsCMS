@@ -1,0 +1,210 @@
+﻿/* FileUpload style - icon and content title */
+
+#drop-zone {
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 100%;
+    height: 300px;
+    max-height: 100%;
+}
+
+.cursorPointer {
+    cursor: pointer;
+}
+
+.displayNone {
+    display: none;
+}
+
+.displayBlock {
+    display: block;
+}
+
+.upload-progress-bar-title {
+    border: 0;
+    float: left;
+    height: 6px;
+    width: 100%;
+}
+
+.file-wrapper-title {
+    float: left;
+    margin: 14px;
+    border-radius: 2px;
+    /*cursor: pointer;*/
+    background-color: #E6E6E6;
+    color: #333;
+    /*color: #E6E6E6;*/
+    max-width: 250px;
+    height: 56px;
+}
+
+.remove-button-title {
+    cursor: pointer;
+    padding-right: 8px;
+    float: right;
+    font-weight: 800;
+}
+
+
+.icon-content-wrapper-title {
+    background-image: url('/Content/ProjectCustomStyle/Admin/Images/iconBackground.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 40px;
+    height: 45px;
+    position: relative;
+    margin: 5px;
+    float: left;
+}
+
+    .icon-content-wrapper-title .extension-title {
+        position: absolute;
+        bottom: 4px;
+        left: 3px;
+        font-size: 0.7em;
+        color: white;
+    }
+
+    .icon-content-wrapper-title img {
+        position: absolute;
+        bottom: 4px;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        max-width: 30px;
+        max-height: 22px;
+    }
+
+.file-info-wrapper-title {
+    margin-top: 10px;
+    padding-bottom: 2px;
+    width: 182px;
+    float: left;
+}
+
+.filename-wrapper-title, .file-size-wrapper-title {
+    white-space: nowrap;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    font-weight: normal;
+    font-size: 0.9em;
+}
+
+.file-size-wrapper-title {
+    clear: both;
+    font-size: 0.8em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* FileUpload style - icon and content thumbnail */
+
+.upload-progress-bar-thumbnail {
+    border: 0;
+    height: 6px;
+    width: 100%;
+}
+
+.file-wrapper-thumbnail {
+    margin: 10px;
+    /*cursor: pointer;*/
+    color: #333;
+    width: 200px;
+    height: 280px;
+    float: left;
+}
+
+.remove-button-thumbnail {
+    cursor: pointer;
+    padding-right: 8px;
+    float: right;
+    font-weight: 800;
+}
+
+.icon-content-wrapper-thumbnail {
+    background-image: url('/Content/ProjectCustomStyle/Admin/Images/iconBackground.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 100%;
+    height: 219px;
+    position: relative;
+}
+
+    .icon-content-wrapper-thumbnail .extension-thumbnail {
+        position: absolute;
+        bottom: 30px;
+        left: 36px;
+        font-size: 2.2em;
+        color: white;
+    }
+
+    .icon-content-wrapper-thumbnail img {
+        position: absolute;
+        bottom: 22px;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        max-width: 130px;
+        max-height: 110px;
+    }
+
+.file-info-wrapper-thumbnail {
+    width: 100%;
+    color: white;
+}
+
+.file-info-thumbnail {
+    text-align: center;
+    margin: 0 auto;
+    width: 90%;
+    color: white;
+}
+
+.filename-wrapper-thumbnail, .file-size-wrapper-thumbnail {
+    white-space: nowrap;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    font-weight: normal;
+    font-size: 0.9em;
+}
+
+.filename-wrapper-thumbnail {
+    margin-top: 2px;
+}
+
+
+.file-size-wrapper-thumbnail {
+    clear: both;
+    font-size: 0.8em;
+}
+
+
+/* Read mode popup*/
+#selected-files-preview {
+    overflow: hidden;
+    height: 100%;
+    zoom: 0.74;
+}
+
+
+.file-url-button {
+    height: 40px !important;
+    font-weight: bolder!important;
+}

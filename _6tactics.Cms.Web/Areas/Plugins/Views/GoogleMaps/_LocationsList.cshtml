@@ -1,0 +1,48 @@
+@model _6tactics.Cms.Web.Areas.Plugins.Models.GoogleMaps.Map
+
+@if (Model.Locations != null && Model.Locations.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-locations">
+            <thead>
+                <tr>
+                    <th>Formatted address</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>ZIndex</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Locations)
+                {
+                    <tr>
+                        <td>@item.FormattedAddress</td>
+                        <td>@item.Latitude</td>
+                        <td>@item.Longitude</td>
+                        <td>@item.ZIndex</td>
+                        <td>
+                            @using (Ajax.BeginForm("RemoveLocation", "GoogleMaps", new { mapTitle = Model.Title, formattedAddress = item.FormattedAddress },
+                            new AjaxOptions
+                            {
+                                HttpMethod = "POST",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "locations-list",
+                                OnBegin = "loadingStart",
+                                OnComplete = "updateHeight"
+                            }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div style="display: block;">
+                                    <input type="submit" id="remove-location" class="btn btn-danger" value="Remove">
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+

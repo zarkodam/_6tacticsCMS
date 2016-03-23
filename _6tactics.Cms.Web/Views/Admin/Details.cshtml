@@ -1,0 +1,16 @@
+﻿@model _6tactics.Cms.Core.ViewModels.Admin.AdminActionsViewModel
+
+@{ ViewBag.Title = "Admin / Details"; }
+
+@Html.Partial("Admin/_CurrentLocation", Model)
+
+<div class="row">
+    @Html.Partial("Admin/_TreeView", Model.ContentItemModel)
+    <div id="content-item-preview">
+        <div id="content-item-preview-wrapper" class="scrollbar-outer">
+            @Html.Partial("DetailsForm", Model)
+        </div>
+    </div>
+</div>
+
+@*@Html.Partial("_PopupMessages")*@

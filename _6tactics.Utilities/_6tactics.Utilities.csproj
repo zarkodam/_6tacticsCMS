@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F46D7AF0-F7F8-42F0-B80E-D41982D12D55}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>_6tactics.Utilities</RootNamespace>
+    <AssemblyName>_6tactics.Utilities</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="ftplib">
+      <HintPath>..\packages\ftplib.1.0.1.2\lib\net35\ftplib.dll</HintPath>
+    </Reference>
+    <Reference Include="Fuzzy String Matching Library, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FuzzyStringMatching.1.0.0\lib\net40\Fuzzy String Matching Library.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FuzzyString, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FuzzyString.1.0.0\lib\FuzzyString.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.1.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Activities" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.1.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\CheckExistence.cs" />
+    <Compile Include="Common\CheckFileType.cs" />
+    <Compile Include="Common\Globalization.cs" />
+    <Compile Include="Common\ExtensionMehods\CustomExtensions.cs" />
+    <Compile Include="Common\ImageUtility.cs" />
+    <Compile Include="FileSystem\DataManager.cs" />
+    <Compile Include="FileSystem\FileSystemExtensions.cs" />
+    <Compile Include="FileSystem\FileSystemReader.cs" />
+    <Compile Include="FileSystem\FileSystemUtilities.cs" />
+    <Compile Include="FileSystem\FileSystemWebUploader.cs" />
+    <Compile Include="FileSystem\FileSystemWriter.cs" />
+    <Compile Include="FileSystem\FileWriter.cs" />
+    <Compile Include="FileSystem\Interfaces\IDirectory.cs" />
+    <Compile Include="FileSystem\Interfaces\IDirectoryTree.cs" />
+    <Compile Include="FileSystem\Interfaces\IFile.cs" />
+    <Compile Include="FileSystem\Models\Directory.cs" />
+    <Compile Include="FileSystem\Models\DirectoryTree.cs" />
+    <Compile Include="FileSystem\Models\File.cs" />
+    <Compile Include="Interfaces\IRecursion.cs" />
+    <Compile Include="Network\MailUtility.cs" />
+    <Compile Include="Network\MimeTypeMap.cs" />
+    <Compile Include="Network\PutRequest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ObjectMapping\ObjectMapper.cs" />
+    <Compile Include="StringUtilities\Models\CharDifference.cs" />
+    <Compile Include="StringUtilities\Models\PreparedStrings.cs" />
+    <Compile Include="StringUtilities\Models\StringDifference.cs" />
+    <Compile Include="StringUtilities\StringExtensions.cs" />
+    <Compile Include="StringUtilities\Models\WordDifference.cs" />
+    <Compile Include="StringUtilities\StringUtility.cs" />
+    <Compile Include="Text\StringExtensions.cs" />
+    <Compile Include="Web\CookieHandler.cs" />
+    <Compile Include="DateAndTime\DateTimeParse.cs" />
+    <Compile Include="Common\EvenOdd.cs" />
+    <Compile Include="Network\FtpHandler.cs" />
+    <Compile Include="Network\GetGeoIp.cs" />
+    <Compile Include="Common\OrderNumberManager.cs" />
+    <Compile Include="Network\PostRequest.cs" />
+    <Compile Include="Common\SerializeUtility.cs" />
+    <Compile Include="Common\StringUtility.cs" />
+    <Compile Include="DateAndTime\TimeCompare.cs" />
+    <Compile Include="DateAndTime\TimeFormat.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web\FileUploader.cs" />
+    <Compile Include="Web\FileUrlBuilder.cs" />
+    <Compile Include="Web\Helpers\Pjax\HtmlHelperExtensions.cs" />
+    <Compile Include="Web\Helpers\Pjax\HttpRequestBaseExtensions.cs" />
+    <Compile Include="Web\Helpers\String\WordsExtension.cs" />
+    <Compile Include="Web\UserCheck.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mobile\" />
+    <Folder Include="Wpf\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

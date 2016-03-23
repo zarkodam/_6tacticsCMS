@@ -1,0 +1,60 @@
+﻿@model _6tactics.Cms.Web.Areas.Plugins.Models.MailSender.FormSettings
+
+<div id="action-form">
+    <div id="action-form-wrapper" class="pull-left plugin-content-wrapper">
+
+        @using (Ajax.BeginForm("FormSettings", "MailSender",
+                            new AjaxOptions
+                            {
+                                HttpMethod = "POST",
+                                OnBegin = "loadingStart",
+                                OnComplete = "onFormCompleteCallback"
+                            }))
+        {
+            @Html.AntiForgeryToken()
+            <table class="table">
+                <tr>
+                    <th class="text-center">Enable captcha</th>
+                    <th class="text-center">Enable file upload</th>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.CheckBoxFor(model => model.IsCaptchaEnabled, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.IsCaptchaEnabled)
+                    </td>
+                    <td>
+                        @Html.CheckBoxFor(model => model.IsUploadEnabled, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.IsUploadEnabled)
+                    </td>
+                </tr>
+            </table>
+
+            <input type="submit" value="Save" class="pull-right btn btn-danger popup-submit-btn" />
+        }
+    </div>
+</div>
+
+<p>Turn on/off <b>Mail Form</b> features</p>
+
+<div id="popup" class="popup popup-success mfp-hide">
+    <div class="popup-content">
+        Data successfully saved!
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $.validator.unobtrusive.addValidation('form');
+    });
+
+    function onFormCompleteCallback() {
+        loadingStop();
+
+        $.magnificPopup.open({
+            items: {
+                src: $('#popup'),
+                type: 'inline'
+            }
+        });
+    }
+</script>

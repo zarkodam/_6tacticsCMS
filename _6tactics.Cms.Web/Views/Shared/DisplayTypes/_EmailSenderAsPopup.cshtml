@@ -1,0 +1,23 @@
+﻿@*@using _6tactics.Cms.Core.Enums
+@using _6tactics.Utilities.Common
+@model _6tactics.Cms.Core.ViewModels.ContentItemViewModel
+
+
+@if (Model.LinkOption != LinkOption.Disable && !string.IsNullOrWhiteSpace(Model.LinkTo) && CheckExistence.IsUrlExist(Model.FileUrl)
+    && CheckFileType.IsFileImage(Model.FileUrl))
+{
+    <div class="video-popup-image-wrapper">
+        <a class="iframe-popup-item" title="Send us an email" href="@Url.Action("MailForm", "MailSender", new { area = "MailSender" })">
+            <img src="@Model.FileUrl" alt="image">
+        </a>
+    </div>
+}*@
+
+<div class="video-popup-image-wrapper" >
+    <a class="iframe-popup-item" title="Send us an email" href="@Url.Action("MailForm", "MailSender", new { area = "MailSender" })">
+        <img src="~/Content/Images/emailPupupIcon.png" alt="image">
+    </a>
+</div>
+
+
+@*@{ Html.RenderAction("MailForm", "MailSender", new { area = "MailSender" }); }*@

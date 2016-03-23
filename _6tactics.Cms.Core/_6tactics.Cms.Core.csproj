@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{40BCFD5C-967A-46E9-BF57-EF89414C5B48}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>_6tactics.Cms.Core</RootNamespace>
+    <AssemblyName>_6tactics.Cms.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\ModelStateValidationAttribute.cs" />
+    <Compile Include="Attributes\SimpleCaptchaValidatorAttribute.cs" />
+    <Compile Include="Entities\Plugin.cs" />
+    <Compile Include="Entities\PluginSettings.cs" />
+    <Compile Include="Entities\PostAbusingSettingsFor.cs" />
+    <Compile Include="Entities\SeoData.cs" />
+    <Compile Include="Entities\TrackedUser.cs" />
+    <Compile Include="Entities\UserActivityTracking.cs" />
+    <Compile Include="Enums\Admin\ContentItemAction.cs" />
+    <Compile Include="Enums\Admin\LinkOption.cs" />
+    <Compile Include="Enums\Admin\MessageType.cs" />
+    <Compile Include="Enums\Admin\SectionTitleVisibility.cs" />
+    <Compile Include="Enums\Admin\ElementVisibility.cs" />
+    <Compile Include="Enums\Web\SitemapFrequency.cs" />
+    <Compile Include="Attributes\AddCaching.cs" />
+    <Compile Include="Attributes\AuthorizerAttribute.cs" />
+    <Compile Include="Attributes\ChildActionOnlyCustomAttribute.cs" />
+    <Compile Include="Attributes\ExcludeFromPluginActionListAttribute.cs" />
+    <Compile Include="Attributes\AjaxOnlyAttribute.cs" />
+    <Compile Include="Attributes\MaxFileSizeAttribute.cs" />
+    <Compile Include="Attributes\RemoveDuplicateContentAttribute.cs" />
+    <Compile Include="Models\Admin\PostAbusingSettings.cs" />
+    <Compile Include="Models\Common\ContentItemWithParentCount.cs" />
+    <Compile Include="Helpers\ContentItemFilterHelper.cs" />
+    <Compile Include="Helpers\ContentTypeSelectorHelper.cs" />
+    <Compile Include="Helpers\DisplayTypeSelectorHelper.cs" />
+    <Compile Include="Helpers\DropDownHelper.cs" />
+    <Compile Include="Helpers\ElementWidthHelper.cs" />
+    <Compile Include="Models\Common\IContentItem.cs" />
+    <Compile Include="Entities\ContentItem.cs" />
+    <Compile Include="Enums\Admin\ContentType.cs" />
+    <Compile Include="Models\Common\RootWithContentItemsWithParentCount.cs" />
+    <Compile Include="Models\Admin\IPostAbusingSettings.cs" />
+    <Compile Include="Models\Plugins\IPluginInfo.cs" />
+    <Compile Include="Models\Plugins\PluginInfo.cs" />
+    <Compile Include="Models\Popup\Popup.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\JsonNetResult.cs" />
+    <Compile Include="Utilities\PopupMessageModelGenerator.cs" />
+    <Compile Include="Utilities\PopupMessageUtility.cs" />
+    <Compile Include="Utilities\SeoUtility.cs" />
+    <Compile Include="ViewModels\Admin\AdminPagesListViewModel.cs" />
+    <Compile Include="ViewModels\Admin\CreateDataViewModel.cs" />
+    <Compile Include="ViewModels\Admin\AdminActionsViewModel.cs" />
+    <Compile Include="ViewModels\Error\ErrorViewModel.cs" />
+    <Compile Include="Models\SiteMap\LanguageWithSitemapNode.cs" />
+    <Compile Include="ViewModels\FileManager\PopupReadModeViewModel.cs" />
+    <Compile Include="ViewModels\Web\SeoViewModel.cs" />
+    <Compile Include="ViewModels\Common\ContentItemViewModel.cs" />
+    <Compile Include="ViewModels\FileManager\FileManagerCreateViewModel.cs" />
+    <Compile Include="ViewModels\FileManager\FileManagerFileForPreviewViewModel.cs" />
+    <Compile Include="ViewModels\PluginsCommon\PluginsViewModel.cs" />
+    <Compile Include="ViewModels\Admin\StatisticsViewModel.cs" />
+    <Compile Include="ViewModels\PluginsManager\PluginAction.cs" />
+    <Compile Include="ViewModels\PluginsManager\Plugin.cs" />
+    <Compile Include="ViewModels\Web\PageViewModel.cs" />
+    <Compile Include="ViewModels\Common\ProjectViewModel.cs" />
+    <Compile Include="ViewModels\Web\SectionViewModel.cs" />
+    <Compile Include="ViewModels\Admin\SetupViewModel.cs" />
+    <Compile Include="Models\SiteMap\SitemapNode.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\_6tactics.Utilities\_6tactics.Utilities.csproj">
+      <Project>{F46D7AF0-F7F8-42F0-B80E-D41982D12D55}</Project>
+      <Name>_6tactics.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,42 @@
+﻿@using _6tactics.Cms.Core.Enums
+@using _6tactics.Cms.Core.Enums.Admin
+@using _6tactics.Cms.Web.App_Logic
+@model _6tactics.Cms.Core.ViewModels.Web.PageViewModel
+
+
+<div class="fixed-space-before-footer"></div>
+
+<footer class="navbar-fixed-bottom">
+    <div>
+        @* ne prikazati title ako nije dozvoljeno! *@
+
+        @if (Model.FooterSections != null)
+        {
+            foreach (var item in Model.FooterSections)
+            {
+                if (item.ContentType == ContentType.ContentElement
+                    && ElementsVisibilityUtility.IsSectionVisible(item.ElementVisibility, User.Identity.IsAuthenticated, item.Items.ToList()))
+                {
+                    string linkStyle = "";
+                    if (item.DisplayType == "LinkWithImage" || item.DisplayType == "LinkWithTitle" || item.DisplayType == "LinkWithTitleAndImage")
+                    {
+                        linkStyle = "text-align: center;";
+                    }
+
+                    <div class="row section-row-footer" style="@linkStyle">
+                        @* ne prikazati title ako nije dozvoljeno! *@
+                        @if (ElementsVisibilityUtility.IsSectionTitleVisible(item.SectionTitleVisibility))
+                        {
+                            <p class="section-title-footer">@item.Title</p>
+                        }
+                        @Html.Partial("~/Views/Shared/User/_SectionView.cshtml", item)
+                    </div>
+                }
+            }
+        }
+
+        <div class="footer-text">
+            @Model.Project.Title.ToUpper() &copy; @DateTime.Now.Year
+        </div>
+    </div>
+</footer>

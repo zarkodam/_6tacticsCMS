@@ -1,0 +1,24 @@
+﻿@using _6tactics.Cms.Core.Enums.Admin
+@using _6tactics.Cms.Web.App_Logic
+@model IEnumerable<_6tactics.Cms.Core.Entities.ContentItem>
+
+@{
+    ViewBag.ActionName = ElementsVisibilityUtility.IsPrioritiePage ? "_TreeViewPriorities" : "_TreeViewHome";
+    var currentAction = ElementsVisibilityUtility.CurrentAction;
+}
+
+<script type="text/javascript">
+    $(function () {
+
+        $.getJSON('@Url.Action("GetLanguages", "Ajax")', function (data) {
+            $.each(data, function (key, value) {
+                $('#lang-list').append(
+                    '<li><a href="/Admin/@currentAction/' + value + '" class="page-item">' + value + '</a></li>'
+                    );
+            });
+        });
+
+        $('#pages-list-by-selected-language').load('@Url.Action("PagesBySelectedLanguage", "Ajax")',
+            { selectedLanguage: '@Model.First(i => i.ContentType == ContentType.Language).Title' });
+    });
+</script>

@@ -1,0 +1,115 @@
+﻿@model _6tactics.Cms.Web.Areas.Plugins.ViewModels.GoogleMaps.GoogleMapsWizardViewModel
+
+<div id="choosel-action" class="content-wrapper">
+    <div style="padding: 20px;" class="row">
+        <div id="create-new-map" class="col-md-4">
+            @using (Ajax.BeginForm("AddNewMap", "GoogleMaps",
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "content-item-form",
+                    OnBegin = "loadingStart",
+                    OnComplete = "gotoNextStep"
+                }))
+            {
+                @Html.AntiForgeryToken()
+
+                <span>Create map</span><br><br>
+                @Html.TextBoxFor(model => model.Map.Title, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.Map.Title)
+                <br>
+
+                <input class="btn btn-primary pull-right" id="add-content-item" type="submit" value="Create">
+                <br><br><br>
+            }
+        </div>
+
+        <div id="load-map" class="col-md-4">
+            @using (Ajax.BeginForm("MapToLoad", "GoogleMaps",
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "content-item-form",
+                    OnComplete = "gotoNextStep"
+                }))
+            {
+                @Html.AntiForgeryToken()
+
+                if (Model.MapListItems.Any())
+                {
+                    <span>Load map</span><br><br>
+
+                    @Html.DropDownList("MapToLoad", Model.MapListItems, new {@class = "form-control"})
+                    <br>
+
+                    <input class="btn btn-primary pull-right" id="add-content-item" type="submit" value="Load">
+                    <br><br><br>
+                }
+                else
+                {
+                    <span>Map to load</span><br><br>
+
+                    @Html.DropDownList("MapToLoad", Model.MapListItems, new {@class = "form-control", @readonly = "readonly"})
+                    <br>
+
+                    <input class="btn btn-primary pull-right" id="add-content-item" type="submit" value="Load" disabled="disabled">
+                    <br><br><br>
+                }
+            }
+        </div>
+
+        <div id="delete-map" class="col-md-4">
+            @using (Ajax.BeginForm("RemoveMap", "GoogleMaps",
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "choosel-action"
+                }))
+            {
+                @Html.AntiForgeryToken()
+
+                if (Model.MapListItems.Any())
+                {
+                    <span>Remove map</span><br><br>
+
+                    @Html.DropDownList("MapToRemove", Model.MapListItems, new {@class = "form-control"})
+                    <br>
+
+                    <input class="btn btn-primary pull-right" id="add-content-item" type="submit" value="Remove">
+                    <br><br><br>
+                }
+                else
+                {
+                    <span>Map to load</span><br><br>
+
+                    @Html.DropDownList("MapToRemove", Model.MapListItems, new {@class = "form-control", @readonly = "readonly"})
+                    <br>
+
+                    <input class="btn btn-primary pull-right" id="add-content-item" type="submit" value="Remove" disabled="disabled">
+                    <br><br><br>
+                }
+            }
+        </div>
+    </div>
+
+    <p style="padding: 20px">If you want to create your GoogleMap with a <b>full width</b> or <b>full page</b> preview use MapName<span style="color: red"><b>FullWidth</b></span> or MapName<span style="color: red"><b>FullPage</b></span></p>
+
+</div>
+
+
+<script type="text/javascript">
+    function gotoNextStep() {
+        loadingStop();
+
+        $('#wizard').find('.actions').show();
+        jquerStepsGotoStep(1);
+    }
+
+    $(function () {
+        $.validator.unobtrusive.addValidation('form');
+        jquerStepsHeightRefrash($('.content-wrapper').height());
+    });
+</script>

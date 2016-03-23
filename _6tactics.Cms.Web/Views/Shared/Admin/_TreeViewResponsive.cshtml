@@ -1,0 +1,25 @@
+﻿<script type="text/javascript">
+    $(function () {
+
+        $(window).resize(function () {
+            if ($(window).width() <= 750 && $(window).width() >= 670) {
+                $(".content-item-title").css("max-width", "120px");
+                $(".tree-item-title").css("min-width", "300px");
+            }
+            else if ($(window).width() < 670) {
+                $("#tree-view").css("margin-left", "-50px");
+                $(".tree-item-title").css("min-width", "250px");
+                $(".content-item-type").hide();
+                $(".content-item-title").css("max-width", "180px");
+            }
+            else {
+                $("#tree-view").css("margin-left", "0");
+                $(".tree-item-title").css("min-width", "350px");
+                $(".content-item-title").css("max-width", "270px");
+                $(".content-item-type").show();
+                
+            }
+        });
+
+    });
+</script>

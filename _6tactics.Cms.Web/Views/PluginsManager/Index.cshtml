@@ -1,0 +1,42 @@
+﻿@model IEnumerable<_6tactics.Cms.Core.ViewModels.PluginsManager.Plugin>
+
+@{ ViewBag.Title = "Admin / Plugin manager"; }
+
+@Html.Partial("Admin/_AdminMenu")
+
+<div id="current-location">
+    <div class="gears-wrapper">
+        <span class="gear"></span>
+        <span class="gear"></span>
+    </div>
+
+    <p id="current-location-message">
+        <span id="current-location-intro-message">@ViewBag.Title</span>
+    </p>
+</div>
+
+<br><br>
+
+<div class="row">
+    @Html.Partial("Admin/_PluginsTreeView", Model)
+    <div id="plugin-preview">
+        <div style="margin-top: 5px" id="plugin-actions-menu"></div>
+        <div id="plugin-preview-wrapper" class="scrollbar-outer"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        loadingStart();
+        $("#current-location-message").html("@Model.First().PreviewName");
+        $('#plugin-actions-menu').load('/pluginsmanager/pluginactions?pluginName=' + '@Model.First().RouteName');
+        $('#plugin-preview-wrapper').load('@Url.Action(Model.First().PluginActions.First().RouteName, Model.First().RouteName, new { area = "Plugins" })', function () {
+            loadingStop();
+        });
+    })
+ 
+</script>
+
+@Html.Partial("_PopupMessages")
+
+

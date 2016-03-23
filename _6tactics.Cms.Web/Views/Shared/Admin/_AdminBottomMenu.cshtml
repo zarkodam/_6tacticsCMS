@@ -1,0 +1,95 @@
+﻿@using _6tactics.Cms.Web.App_Logic
+@{
+    var homePageSelected = "";
+    var prioritiesPageSelected = "";
+    var setupPageSelected = "";
+
+    if (ElementsVisibilityUtility.IsHomePage)
+    {
+        homePageSelected = "action-menu-href-selected";
+    }
+    else if (ElementsVisibilityUtility.IsPrioritiePage)
+    {
+        prioritiesPageSelected = "action-menu-href-selected";
+    }
+    else if (ElementsVisibilityUtility.IsSetupPage)
+    {
+        setupPageSelected = "action-menu-href-selected";
+    }
+    else
+    {
+        homePageSelected = "";
+        prioritiesPageSelected = "";
+    }
+}
+
+
+<footer>
+    <div class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="container">
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <div>
+                    <div class="nav-bar-bottom-items">
+                        <ul role="navigation" class="nav navbar-nav bottom-menu-items">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li>
+                                    <a class="action-menu-href" href="@Url.Action("Index", "Admin")">
+                                        <h4><span class="label label-info link-link @homePageSelected"><span class="glyphicon glyphicon-tasks"></span><span class="link-link-text"> Content items list</span></span></h4>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="action-menu-href" href="@Url.Action("Priorities", "Admin")">
+                                        <h4><span class="label label-info link-link @prioritiesPageSelected"><span class="glyphicon glyphicon-sort"></span><span class="link-link-text"> Priorities</span></span></h4>
+                                    </a>
+                                </li>
+
+                                if (ElementsVisibilityUtility.IsCreatePage)
+                                {
+                                    <li>
+                                        <h4><span class="label label-info link-link action-menu-href-selected"><span class="glyphicon glyphicon-new-window"></span><span class="link-link-text"> Create</span></span></h4>
+                                    </li>
+                                }
+                                if (ElementsVisibilityUtility.IsEditPage)
+                                {
+                                    <li>
+                                        <h4><span class="label label-info link-link action-menu-href-selected"><span class="glyphicon glyphicon-edit"></span><span class="link-link-text"> Edit</span></span></h4>
+                                    </li>
+                                }
+                                if (ElementsVisibilityUtility.IsDetailsPage)
+                                {
+                                    <li>
+                                        <h4><span class="label label-info link-link action-menu-href-selected"><span class="glyphicon glyphicon-log-out"></span><span class="link-link-text"> Details</span></span></h4>
+                                    </li>
+                                }
+
+                                <li>
+                                    <a class="action-menu-href" href="@Url.Action("Setup", "Admin")">
+                                        <h4><span class="label label-info link-link @setupPageSelected"><span class="glyphicon glyphicon-cog"></span><span class="link-link-text"> Setup</span></span></h4>
+                                    </a>
+                                </li>
+                            }
+
+                            <li>
+                                <a class="action-menu-href" href="@Url.Action("Index", "Home", new {area = "DreamFactory" })" target="_blank">
+                                    <h4><span class="label label-info link-link"><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="link-link-text"> User's preview</span></span></h4>
+                                </a>
+                            </li>
+
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

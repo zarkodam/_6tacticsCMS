@@ -1,0 +1,198 @@
+﻿@using _6tactics.Cms.Core.Enums
+@using _6tactics.Cms.Core.Enums.Admin
+@using _6tactics.Cms.Web.App_Logic
+@using _6tactics.Utilities.Common
+@using _6tactics.Utilities.Web
+@model _6tactics.Cms.Core.Models.Common.ContentItem
+
+@{
+    ViewBag.Title = "ADMIN/Details";
+    var imageUrl = string.Concat("content/uploads/", Model.Id.ToString()), Model.FileUrl).CreateLocalUrl();
+
+    var isContentTypeIsProjectOrLanguage = Model.ContentType == ContentType.Project || Model.ContentType == ContentType.Language || Model.ContentType == ContentType.Page;
+    var titleWidth = isContentTypeIsProjectOrLanguage ? "col-md-12" : "col-md-6";
+
+    var isLinkToEmpty = string.IsNullOrWhiteSpace(Model.LinkTo);
+    ViewBag.LinkOptionWidth = isLinkToEmpty ? "col-md-12" : "col-md-4";
+}
+
+<div id="details">
+
+    @Html.Partial("Admin/_AdminMenu", Model)
+
+    <div style="margin-top: 5px;">
+        <div class="row">
+
+            @* Title *@
+            <div class="@titleWidth">
+                <div class="panel panel-custom">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">@Html.LabelFor(model => model.Title)</h3>
+                    </div>
+                    <div class="panel-body text-center">
+                        @Html.TextBoxFor(model => model.Title, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+
+            @if (!isContentTypeIsProjectOrLanguage)
+            {
+                <div class="col-md-3">
+                    <div class="panel panel-custom">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><label>Section title visibility</label></h3>
+                        </div>
+                        <div class="panel-body text-center">
+                            @Html.TextBoxFor(model => model.SectionTitleVisibility, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="panel panel-custom">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><label>Element visibility</label></h3>
+                        </div>
+                        <div class="panel-body text-center">
+                            @Html.TextBoxFor(model => model.ElementVisibility, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+        <div class="row">
+            @* ContentType *@
+            <div class="col-md-6">
+                <div class="panel panel-custom">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">@Html.LabelFor(model => model.ContentType)</h3>
+                    </div>
+                    <div class="panel-body text-center">
+                        <div>
+                            @Html.TextBoxFor(model => model.ContentType, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @* DisplayType *@
+            @if (!string.IsNullOrWhiteSpace(Model.DisplayType))
+            {
+                <div class="col-md-6 display-type-panel">
+                    <div class="panel panel-custom">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">@Html.LabelFor(model => model.DisplayType)</h3>
+                        </div>
+                        <div class="panel-body text-center">
+                            @Html.TextBoxFor(model => model.DisplayType, new { @class = "form-control display-type-panel", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+                @* Parent *@
+                <div style="visibility: hidden;"><input id="ParentId" name="ParentId" type="hidden" value="@Model.ParentId"></div>
+            }
+        </div>
+
+        @if (!isContentTypeIsProjectOrLanguage)
+        {
+            <div class="row">
+                <div class="@ViewBag.LinkOptionWidth">
+                    <div class="panel panel-custom">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><label>Link options</label></h3>
+                        </div>
+
+                        <div class="panel-body text-center">
+                            @Html.TextBoxFor(model => model.LinkOption, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+
+                @if (!isLinkToEmpty)
+                {
+                    <div class="col-md-8">
+                        <div class="panel panel-custom">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><label>Link to</label></h3>
+                            </div>
+
+                            <div class="panel-body text-center">
+                                @Html.TextBoxFor(model => model.LinkTo, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(Model.Summary))
+        {
+            <div class="row">
+                @* Summary *@
+                <div class="col-md-12 summary-panel">
+                    <div class="panel panel-custom">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">@Html.LabelFor(model => model.Summary)</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="summary-element" class="tinymce-element">
+                                @Html.TextAreaFor(model => model.Summary)
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Summary)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+
+
+    </div>
+
+    @if (CheckExistence.IsUrlExist(ElementsVisibilityUtility.CreateImagePath(Model.Id, Model.FileUrl)))
+    {
+        <div class="row">
+            @* FileUrl *@
+            <div class="col-md-12 file-url-panel">
+                <div class="panel panel-custom">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">@Html.LabelFor(model => model.FileUrl)</h3>
+                    </div>
+                    <div class="panel-body filestyle-body">
+
+                        <div class="pull-left">
+                            <a class="image-link" href="@imageUrl">
+                                <img class="preview-for-uploaded-image" src="@imageUrl" height="55" alt="img">
+                            </a>
+                        </div>
+
+                        <div class="pull-right">
+                            @Html.TextBoxFor(model => model.FileUrl, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.Content))
+    {
+        <div class="row">
+            @* Content *@
+            <div class="col-md-12 content-panel">
+                <div class="panel panel-custom">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">@Html.LabelFor(model => model.Content)</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div id="content-element" class="tinymce-element">
+                            @Html.TextAreaFor(model => model.Content)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

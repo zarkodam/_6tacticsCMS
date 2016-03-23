@@ -1,0 +1,9 @@
+﻿@model _6tactics.Cms.Web.Areas.Plugins.ViewModels.GoogleMaps.PreviewViewModel
+
+<div id="@Model.Title" class="google-map"></div>
+
+<script type="text/javascript">
+    $(function () {
+        googleMapWizardInit(@Html.Raw(Json.Encode(Model.MapJsonString)), @Html.Raw(Json.Encode(Model.PreviewSetupJsonString)), '@Model.Title');
+    });
+</script>

@@ -1,0 +1,24 @@
+﻿@using _6tactics.Cms.Core.Enums.Admin
+@model _6tactics.Cms.Core.ViewModels.Admin.AdminActionsViewModel
+
+<div id="link-to-with-options-panel" class="panel panel-custom">
+    <div class="panel-heading">
+        <h3 class="panel-title"><label>Add link</label></h3>
+    </div>
+    <div class="panel-body text-center">
+        @{
+            var linkCustomValue = Model.ContentItemViewModel.LinkOption == LinkOption.Custom
+                ? Model.ContentItemViewModel.LinkTo
+                : null;
+        }
+
+        @Html.TextBox("LinkDisabled", null, new { @class = "form-control", @readonly = "readonly" })
+        @Html.TextBox("LinkCustom", linkCustomValue, new { @class = "form-control" })
+        @Html.DropDownList("LinkPageList", Model.CreateEditDataViewModel.PageList, new { @class = "form-control" })
+        @Html.HiddenFor(model => model.ContentItemViewModel.LinkTo)
+
+        <div id="validation-for-link-to">
+            @Html.ValidationMessageFor(model => model.ContentItemViewModel.LinkTo)
+        </div>
+    </div>
+</div>

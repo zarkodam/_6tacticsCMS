@@ -1,0 +1,33 @@
+﻿@using _6tactics.Utilities.FileSystem
+@using _6tactics.Utilities.Network
+@model _6tactics.Cms.Core.ViewModels.Web.SeoViewModel
+
+@{
+    string websiteName = Model != null && !string.IsNullOrEmpty(Model.WebsiteName) ? Model.WebsiteName : "";
+    string keywords = Model != null && !string.IsNullOrEmpty(Model.Keywords) ? Model.Keywords : "";
+    string description = Model != null && !string.IsNullOrEmpty(Model.Description) ? Model.Description : "";
+    //string pageUrl = Request.Url != null ? Request.Url.GetLeftPart(UriPartial.Authority) : "";
+    string pageUrl = Request.Url != null ? string.Concat(Request.Url.GetLeftPart(UriPartial.Authority), Request.Url.AbsolutePath) : "";
+
+    //ContentType
+    string facebookImage = Model != null && Request.Url != null && !string.IsNullOrEmpty(Model.LogoFbUrl) 
+        ? string.Concat(Request.Url.GetLeftPart(UriPartial.Authority), Model.LogoFbUrl) : "";
+
+    string facebookImageType = MimeTypeMap.GetMimeType(facebookImage.GetFileExtensionFromString());
+}
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="@keywords">
+<meta name="description" content="@description">
+<meta name='distribution' content='Global'>
+<meta name='rating' content='General'>
+@*<meta name="creator" content="Žarko Dam,Software Developer,zdam@live.com,6tactics" />*@
+<meta name="author" content="Žarko Dam, 6tactics">
+
+<meta property="og:site_name" content="@websiteName">
+@*<meta property="og:title" content="@ViewBag.Title">*@
+<meta property="og:url" content="@pageUrl">
+<meta property="og:image" content="@facebookImage"/>
+<meta property="og:image:type" content="@facebookImageType">
+<meta property="og:description" content="@description"/>

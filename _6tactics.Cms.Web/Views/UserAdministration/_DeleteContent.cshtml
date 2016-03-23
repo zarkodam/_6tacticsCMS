@@ -1,0 +1,56 @@
+﻿@model _6tactics.AspIdentity.ViewModels.UsersHandler.UsersHandlerIndexViewModel
+
+<div class="row">
+    <h3>Delete confirmation</h3>
+</div>
+
+<br>
+
+<div class="row">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUser.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUser.Email)
+            </th>
+            <th>Roles</th>
+            <th class="text-right">Actions</th>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => Model.ApplicationUser.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.ApplicationUser.Email)
+            </td>
+
+            @if (Model.RolesList.Any())
+            {
+                <td>
+                    @foreach (string role in Model.RolesList)
+                    {
+                        <p>@role</p>
+                    }
+                </td>
+
+            }
+            else
+            {
+                <td></td>
+            }
+
+            <td class="text-right">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ActionLink("Back to list", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
+                    <input type="submit" value="Delete" class="btn btn-danger">
+                }
+            </td>
+
+        </tr>
+    </table>
+</div>

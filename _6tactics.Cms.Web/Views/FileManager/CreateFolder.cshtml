@@ -1,0 +1,63 @@
+﻿@model _6tactics.Cms.Core.ViewModels.FileManager.FileManagerCreateViewModel
+
+
+<div class="popup-wrapper">
+    <div class="popup-text">
+        <p>Add foldername to create folder</p>
+    </div>
+    <div class="popup-form">
+        @using (Ajax.BeginForm("DoCreatingFolder", "FileManager",
+                                        new AjaxOptions
+                                        {
+                                            HttpMethod = "POST",
+                                            InsertionMode = InsertionMode.Replace,
+                                            UpdateTargetId = "current-location-path",
+                                            OnBegin = "onBegin",
+                                            OnSuccess = "onSuccess"
+                                        }, new { @id = "myform" }))
+        {
+            @Html.AntiForgeryToken()
+            @*@Html.ValidationSummary(true)*@
+
+            @Html.HiddenFor(model => model.WhereToCreate)
+
+            @Html.TextBoxFor(model => model.FolderNameToCreate, new { @class = "form-control", @style = "color: #333" })
+            @Html.ValidationMessageFor(model => model.FolderNameToCreate)
+
+            <div style="margin-top: 10px;" class="pull-right">
+                <input type="submit" value="Create" class="btn btn-danger popup-submit-btn" />
+
+            </div>
+        }
+    </div>
+    <br>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $.validator.unobtrusive.addValidation('form');
+
+    });
+
+    function onBegin() {
+        loadingStart();
+    }
+
+    function onSuccess() {
+        if ($(".field-validation-valid").css("display") === "none") {
+            //$("#create-folder-popup").removeClass("popup-info").addClass("popup-success");
+            //$('#create-popup-content').html("Directory successfully created!");
+            //$('.popup-submit-btn').remove();
+
+            $.magnificPopup.instance.close();
+
+            $('#folders-list').load('/FileManager/_FoldersTreeView', function() {
+                // Go to new created folder
+                $('#SelectedLocation').val($('#current-location-path').html());
+                $('body').find('#content-item-preview-wrapper').html('');
+
+                loadingStop();
+            });
+        }
+    }
+</script>

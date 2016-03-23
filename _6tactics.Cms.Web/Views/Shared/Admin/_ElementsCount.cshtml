@@ -1,0 +1,48 @@
+﻿@model _6tactics.Cms.Core.ViewModels.Admin.StatisticsViewModel
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-4 statistics-dashboard-item-wrapper">
+            <div class="statistics-dashboard-item">
+                <p>@Model.ContentItemsCount</p>
+                <p>Content items count</p>
+            </div>
+        </div>
+        <div class="col-md-4 statistics-dashboard-item-wrapper">
+            <div class="statistics-dashboard-item">
+                <p>@Model.LanguagesCount</p>
+                <p>Languages count</p>
+            </div>
+        </div>
+        <div class="col-md-4 statistics-dashboard-item-wrapper">
+            <div class="statistics-dashboard-item">
+                <p>@Model.PagesCount</p>
+                <p>Pages count</p>
+            </div>
+        </div>
+        <div class="col-md-4 statistics-dashboard-item-wrapper">
+            <div class="statistics-dashboard-item">
+                <p>@Model.FootersCount</p>
+                <p>Footers count</p>
+            </div>
+        </div>
+        <div class="col-md-4 statistics-dashboard-item-wrapper">
+            <div class="statistics-dashboard-item">
+                <p>@Model.ContentElementsCount</p>
+                <p>Content elements count</p>
+            </div>
+        </div>
+        <div class="col-md-4 statistics-dashboard-item-wrapper">
+            <div class="statistics-dashboard-item">
+                <p>@Model.FileElementsCount</p>
+                <p>File elements count</p>
+            </div>
+        </div>
+        <div class="col-md-4 statistics-dashboard-item-wrapper">
+            <div class="statistics-dashboard-item">
+                <p>@Model.FileElementsSizeCount <span>Mb</span></p>
+                <p>Uploaded files size count</p>
+            </div>
+        </div>
+    </div>
+</div>

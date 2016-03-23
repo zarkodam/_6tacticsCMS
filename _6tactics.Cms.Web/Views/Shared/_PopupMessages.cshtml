@@ -1,0 +1,31 @@
+﻿@using _6tactics.Cms.Core.Models.Popup
+@using _6tactics.Cms.Core.Utilities
+
+<div id="popup-message" class="popup mfp-hide"></div>
+
+@{
+    Popup message = PopupMessageUtility.GetMessage();
+
+    if (message != null)
+    {
+        <script type="text/javascript">
+            $(function () {
+                var messageType = '@message.MessageType';
+                var popupMessage = '@Html.Raw(message.Message)';
+
+                $('#popup-message').attr("class", messageType).html(popupMessage)
+                    .css("position", "relative")
+                    .css("font-size", "1.2em")
+                    .css("font-weight", "normal")
+                    .css("padding", "20px")
+                    .css("width", "auto")
+                    .css("max-width", "500px")
+                    .css("margin", "20px auto");
+
+                $.magnificPopup.open({ items: { src: '#popup-message' }, type: 'inline', removalDelay: 300, mainClass: 'mfp-fade' });
+            });
+        </script>
+    }
+
+    PopupMessageUtility.RemoveMessage();
+}

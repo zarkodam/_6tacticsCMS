@@ -1,0 +1,130 @@
+﻿@using _6tactics.Cms.Web.Areas.Plugins.Models.MailSender
+@model _6tactics.Cms.Web.Areas.Plugins.ViewModels.MailSender.InputTitleSettingsViewModel
+
+<div id="action-form">
+    <div id="action-form-wrapper" class="pull-left plugin-content-wrapper">
+
+        @using (Ajax.BeginForm("PlaceholderTitles", "MailSender",
+                    new AjaxOptions
+                    {
+                        HttpMethod = "POST",
+                        //InsertionMode = InsertionMode.Replace,
+                        //UpdateTargetId = "callback-content",
+                        OnBegin = "loadingStart",
+                        OnComplete = "onFormCompleteCallback"
+                    }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <table class="table">
+                <tr>
+                    <th>Language</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Content</th>
+
+                    @if (Model.FormSettings.IsUploadEnabled)
+                    {
+                        <th>File</th>
+                        <th>Upload button</th>
+                    }
+
+                    @if (Model.FormSettings.IsCaptchaEnabled)
+                    {
+                        <th>Captcha</th>
+                    }
+
+                    <th>Send button</th>
+                </tr>
+
+                @foreach (var language in Model.LanguageList.Reverse())
+                {
+                    {
+                        string name = "";
+                        string email = "";
+                        string subject = "";
+                        string content = "";
+                        string file = "";
+                        string captchaCode = "";
+                        string uploadButton = "";
+                        string sendButton = "";
+
+                        if (Model.InputTitleSettings != null)
+                        {
+                            InputTitleSettings elementByLanguage = Model.InputTitleSettings.FirstOrDefault(i => i.Language == language);
+
+                            name = elementByLanguage != null ? elementByLanguage.Name : "";
+                            email = elementByLanguage != null ? elementByLanguage.Email : "";
+                            subject = elementByLanguage != null ? elementByLanguage.Subject : "";
+                            content = elementByLanguage != null ? elementByLanguage.Content : "";
+
+                            if (Model.FormSettings.IsUploadEnabled)
+                            {
+                                file = elementByLanguage != null ? elementByLanguage.File : "";
+                                uploadButton = elementByLanguage != null ? elementByLanguage.UploadButton : "";
+                            }
+
+                            if (Model.FormSettings.IsCaptchaEnabled)
+                            {
+                                captchaCode = elementByLanguage != null ? elementByLanguage.CaptchaCode : "";
+                            }
+
+                            sendButton = elementByLanguage != null ? elementByLanguage.SendButton : "";
+                        }
+
+                        <tr>
+                            <td>@Html.TextBox("Language", language, new { @class = "form-control", @readonly = "readonly" })</td>
+                            <td>@Html.TextBox("Name", name, new { @class = "form-control" })</td>
+                            <td>@Html.TextBox("Email", email, new { @class = "form-control" })</td>
+                            <td>@Html.TextBox("Subject", subject, new { @class = "form-control" })</td>
+                            <td>@Html.TextBox("Content", content, new {@class = "form-control"})</td>
+
+                            @if (Model.FormSettings.IsUploadEnabled)
+                            {
+                                <td>@Html.TextBox("File", file, new { @class = "form-control" })</td>
+                                <td>@Html.TextBox("UploadButton", uploadButton, new { @class = "form-control" })</td>
+                            }
+
+
+                            @if (Model.FormSettings.IsCaptchaEnabled)
+                            {
+                                <td>@Html.TextBox("CaptchaCode", captchaCode, new { @class = "form-control" })</td>
+                            }
+
+                            <td>@Html.TextBox("SendButton", sendButton, new { @class = "form-control" })</td>
+                        </tr>
+                    }
+                }
+            </table>
+
+                <input type="submit" value="Save" class="pull-right btn btn-danger popup-submit-btn" />
+        }
+    </div>
+</div>
+
+<div id="mail-form-input-data-popup" class="popup popup-success mfp-hide">
+    <div class="popup-content">
+        Data successfully saved!
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $.validator.unobtrusive.addValidation('form');
+    });
+
+    function onFormCompleteCallback() {
+        //if ($(".field-validation-valid").css("display") === "none") {
+        //}
+
+        loadingStop();
+
+        $.magnificPopup.open({
+            items: {
+                src: $('#mail-form-input-data-popup'),
+                type: 'inline'
+            }
+        });
+    }
+</script>

@@ -1,0 +1,66 @@
+﻿@model _6tactics.Cms.Web.Areas.Plugins.Models.PostAbusing.PostAbusingSettings
+
+<div id="action-form">
+    <div id="action-form-wrapper" class="pull-left plugin-content-wrapper">
+
+        @using (Ajax.BeginForm("MailForm", "PostAbusing",
+            new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnBegin = "loadingStart",
+                OnComplete = "onFormCompleteCallback"
+            }))
+        {
+            @Html.AntiForgeryToken()
+            <table class="table">
+                <tr>
+                    <th>Number of allowed attempts</th>
+                    <th>Time per allowed attempts in hours</th>
+                    <th>Max blocking time in hours</th>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.TextBoxFor(model => model.NumberOfAllowedAttempts, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.NumberOfAllowedAttempts)
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.TimePerAllowedAttemptsInHours, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.TimePerAllowedAttemptsInHours)
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.MaxBlockingTimeInHours, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.MaxBlockingTimeInHours)
+                    </td>
+                </tr>
+            </table>
+
+            <input type="submit" value="Save" class="pull-right btn btn-danger popup-submit-btn"/>
+        }
+    </div>
+</div>
+
+<p>Preventing possible <a href="https://en.wikipedia.org/wiki/Brute-force_attack/" target="_blank" style="color: red"><b>Brute-force attack</b></a>!</p>
+
+
+<div id="popup" class="popup popup-success mfp-hide">
+    <div class="popup-content">
+        Data successfully saved!
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $.validator.unobtrusive.addValidation('form');
+    });
+
+    function onFormCompleteCallback() {
+        loadingStop();
+
+        $.magnificPopup.open({
+            items: {
+                src: $('#popup'),
+                type: 'inline'
+            }
+        });
+    }
+</script>

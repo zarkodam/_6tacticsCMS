@@ -1,0 +1,229 @@
+﻿@using Microsoft.AspNet.Identity
+@using _6tactics.Cms.Core.Entities
+@using _6tactics.Cms.Web.App_Logic
+@model dynamic
+
+@{
+    var homePageSelected = "";
+    var prioritiesPageSelected = "";
+    var setupPageSelected = "";
+    var fileManagerPageSelected = "";
+    var pluginManagerPageSelected = "";
+
+    var createPageSelected = "";
+    var editPageSelected = "";
+    var detailsPageSelected = "";
+
+    var accountMenu = "";
+    var accountManage = "";
+    var usersAdministration = "";
+    var rolesAdministration = "";
+
+
+    if (ElementsVisibilityUtility.IsCurrentControllerAdmin && ElementsVisibilityUtility.IsHomePage)
+    {
+        homePageSelected = "active";
+    }
+    else if (ElementsVisibilityUtility.IsCurrentControllerAdmin && ElementsVisibilityUtility.IsPrioritiePage)
+    {
+        prioritiesPageSelected = "active";
+    }
+    else if (ElementsVisibilityUtility.IsCurrentControllerAdmin && ElementsVisibilityUtility.IsCreatePage)
+    {
+        createPageSelected = "active";
+    }
+    else if (ElementsVisibilityUtility.IsCurrentControllerAdmin && ElementsVisibilityUtility.IsEditPage)
+    {
+        editPageSelected = "active";
+    }
+    else if (ElementsVisibilityUtility.IsCurrentControllerAdmin && ElementsVisibilityUtility.IsDetailsPage)
+    {
+        detailsPageSelected = "active";
+    }
+    else if (ElementsVisibilityUtility.IsCurrentControllerSetup && ElementsVisibilityUtility.IsHomePage)
+    {
+        setupPageSelected = "active";
+    }
+    else if (ElementsVisibilityUtility.IsCurrentControllerPluginsManager && ElementsVisibilityUtility.IsHomePage)
+    {
+        pluginManagerPageSelected = "active";
+    }
+    else if (ElementsVisibilityUtility.IsCurrentControllerFileManager && ElementsVisibilityUtility.IsHomePage)
+    {
+        fileManagerPageSelected = "active";
+    }
+    else
+    {
+        homePageSelected = "";
+        prioritiesPageSelected = "";
+        pluginManagerPageSelected = "";
+        setupPageSelected = "";
+        fileManagerPageSelected = "";
+    }
+
+    if (ElementsVisibilityUtility.IsCurrentControllerManage)
+    {
+        accountManage = "active";
+    }
+    else if (ElementsVisibilityUtility.IsCurrentControllerUserAdministration)
+    {
+        usersAdministration = "active";
+    }
+    else if (ElementsVisibilityUtility.IsCurrentControllerRolesAdministration)
+    {
+        rolesAdministration = "active";
+    }
+    else
+    {
+        accountManage = "";
+        usersAdministration = "";
+        rolesAdministration = "";
+    }
+
+    if (ElementsVisibilityUtility.IsCurrentControllerManage ||
+        ElementsVisibilityUtility.IsCurrentControllerUserAdministration ||
+        ElementsVisibilityUtility.IsCurrentControllerRolesAdministration)
+    {
+        accountMenu = "active";
+    }
+    else
+    {
+        accountMenu = "";
+    }
+}
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid navbar-container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button style="height: 20px !important; border: 0;" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+           
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+            <ul class=" nav navbar-nav">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="@homePageSelected">
+                        <a href="@Url.Action("Index", "Admin")">
+                            <span class="glyphicon glyphicon-tasks navbar-icon-margin"></span> Dashboard
+                        </a>
+                    </li>
+                    if (Model != null && ElementsVisibilityUtility.IsCurrentControllerAdmin && ElementsVisibilityUtility.IsHomePage)
+                    {
+                        @Html.Partial("Admin/_TreeViewActions", (ContentItem)Model)
+
+                    }
+
+                    <li class="@prioritiesPageSelected">
+                        <a href="@Url.Action("Priorities", "Admin")">
+                            <span class="glyphicon glyphicon-sort navbar-icon-margin"></span> Priorities
+                        </a>
+                    </li>
+                    if (Model != null && ElementsVisibilityUtility.IsCurrentControllerAdmin && ElementsVisibilityUtility.IsPrioritiePage)
+                    {
+                        @Html.Partial("Admin/_TreeViewActions", (ContentItem)Model)
+                    }
+
+                    if (ElementsVisibilityUtility.IsCurrentControllerAdmin && ElementsVisibilityUtility.IsCreatePage)
+                    {
+                        <li class="@createPageSelected">
+                            <a><span class="glyphicon glyphicon-new-window navbar-icon-margin"></span>Create</a>
+                        </li>
+
+                        <li>
+                            <div>
+                                <div class="label navbar-label-wrapper navbar-subitems-active pull-left">
+                                    <label class="pull-left" for="CreateEditDataViewModel_IsCreateChild">Automatically create <b>child</b></label>
+                                    <input checked="checked" id="CreateEditDataViewModel_IsCreateChild" name="CreateEditDataViewModel.IsCreateChild" type="checkbox" value="true">
+                                    <input name="CreateEditDataViewModel.IsCreateChild" type="hidden" value="false">
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <input type="submit" value="Create" class="btn btn-danger navbar-action-button" />
+                        </li>
+                    }
+                    if (ElementsVisibilityUtility.IsCurrentControllerAdmin && ElementsVisibilityUtility.IsEditPage)
+                    {
+                        <li class="@editPageSelected">
+                            <a><span class="glyphicon glyphicon-edit navbar-icon-margin"></span>Edit</a>
+                        </li>
+                        <li>
+                            <input type="submit" value="Update" class="btn btn-danger navbar-action-button" />
+                        </li>
+                    }
+                    if (ElementsVisibilityUtility.IsCurrentControllerAdmin && ElementsVisibilityUtility.IsDetailsPage)
+                    {
+                        <li class="@detailsPageSelected">
+                            <a><span class="glyphicon glyphicon-log-out navbar-icon-margin"></span>Details</a>
+                        </li>
+                    }
+
+                    <li class="@fileManagerPageSelected">
+                        <a href="@Url.Action("Index", "FileManager")">
+                            <span class="glyphicon glyphicon-folder-open navbar-icon-margin"></span> File Manager
+                        </a>
+                    </li>
+                    if (ElementsVisibilityUtility.IsCurrentControllerFileManager && ElementsVisibilityUtility.IsHomePage)
+                    {
+                        <li>
+                            <button id="upload-edit-files" class="btn btn-danger navbar-action-button">Upload/Update</button>
+                        </li>
+                    }
+                    <li class="@pluginManagerPageSelected">
+                        <a href="@Url.Action("Index", "PluginsManager")">
+                            <span class="glyphicon glyphicon-paperclip navbar-icon-margin"></span> Plugins Manager
+                        </a>
+                    </li>
+                    @*if (ElementsVisibilityUtility.IsPluginsPage)
+                        {
+                            <li class="navbar-submit-button">
+                                <input type="submit" value="Save plugin settings" class="btn btn-danger navbar-action-button" />
+                            </li>
+                        }*@
+                    <li class="@setupPageSelected">
+                        <a href="@Url.Action("Index", "Setup")">
+                            <span class="glyphicon glyphicon-cog navbar-icon-margin"></span> Setup
+                        </a>
+                    </li>
+                    if (ElementsVisibilityUtility.IsCurrentControllerSetup && ElementsVisibilityUtility.IsHomePage)
+                    {
+                        <li class="navbar-submit-button">
+                            <input type="submit" value="Save setup" class="btn btn-danger navbar-action-button" />
+                        </li>
+                    }
+                }
+            </ul>
+
+
+
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 0;">
+                <li class="dropdown pages-list @accountMenu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdown-language-title">
+                        <span class="glyphicon glyphicon-user navbar-icon-margin"></span> @User.Identity.GetUserName()
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="@accountManage"><a href="@Url.Action("Index", "Manage")">Manage your account</a></li>
+                        <li class="@usersAdministration"><a href="@Url.Action("Index", "UserAdministration")">Users administration</a></li>
+                        <li class="@rolesAdministration"><a href="@Url.Action("Index", "RolesAdministration")">Roles administration</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:document.getElementById('logoutForm').submit()">
+                        <span class="glyphicon glyphicon-off navbar-icon-margin"></span> Log off
+                    </a>
+                </li>
+            </ul>
+
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</div>

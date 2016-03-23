@@ -1,0 +1,33 @@
+﻿@using _6tactics.Cms.Web.App_Logic
+@model _6tactics.Cms.Core.ViewModels.Web.SectionViewModel
+
+@{
+    var bootstrapUnpredictableHeight = new BootstrapUnpredictableHeight();
+}
+
+@foreach (var item in Model.Items.OrderBy(i => i.Priority).ThenBy(i => i.Id))
+{
+
+    switch (item.DisplayType)
+    {
+        case "ImageFluid":
+            @Html.Partial("~/Views/Shared/DisplayTypes/_ImageFluid.cshtml", item)
+            break;
+        case "Image":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_Image.cshtml", item)
+            </div>
+            break;
+        case "FilesForDownload":
+            @Html.Partial("~/Views/Shared/DisplayTypes/_FilesForDownload.cshtml", item)
+            break;
+        case "ImageSlider":
+            @Html.Partial("~/Views/Shared/DisplayTypes/_ImageSlider.cshtml", item)
+            break;
+        case "ImageGallery":
+            <div class="@item.Parent.ElementWidth @BootstrapUnpredictableHeight.ClearBothClassHandler(bootstrapUnpredictableHeight, item.DisplayType, item.Parent.ElementWidth)">
+                @Html.Partial("~/Views/Shared/DisplayTypes/_ImageGallery.cshtml", item)
+            </div>
+            break;
+    }
+}

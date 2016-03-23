@@ -1,0 +1,178 @@
+﻿@using _6tactics.Cms.Core.ViewModels.Admin
+@model  SetupViewModel
+
+@{
+    ViewBag.Title = "Admin / Setup";
+}
+
+<div id="current-location">
+    <p id="current-location-message">
+        <span id="current-location-intro-message">Setup</span>
+    </p>
+</div>
+
+<div class="height-offset-40px"></div>
+
+@using (Html.BeginForm("Create", "Setup", FormMethod.Post, new { @id = "setupForm", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+
+        @Html.Partial("Admin/_AdminMenu")
+
+        @Html.ValidationSummary(true)
+
+        @{
+            if (Model != null && Model.ProjectContentItem != null)
+            {
+                @Html.HiddenFor(model => model.ProjectContentItem.Priority)
+                @Html.HiddenFor(model => model.ProjectContentItem.ContentType)
+
+                if (Model.ProjectContentItem.Id != null)
+                {
+                    @Html.HiddenFor(model => model.ProjectContentItem.Id)
+                }
+            }
+        }
+
+        <div style="margin-top: 5px;">
+            <div class="row">
+                @* Project title *@
+                <div class="col-md-4">
+                    <div class="panel panel-custom">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">@Html.LabelFor(model => model.ProjectContentItem.Title)</h3>
+                        </div>
+                        <div class="panel-body text-center">
+                            @Html.TextBoxFor(model => model.ProjectContentItem.Title, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ProjectContentItem.Title)
+                        </div>
+                    </div>
+                </div>
+
+                @* Website logo url *@
+                <div class="col-md-8">
+                    <div class="file-url-panel panel panel-custom">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">@Html.LabelFor(model => model.ProjectContentItem.FileUrl)</h3>
+                        </div>
+                        <div class="panel-body">
+
+                            @{
+                                if (Model != null && Model.ProjectContentItem != null)
+                                {
+                                    <div class="pull-left">
+                                        <a class="image-link" href="@Model.ProjectContentItem.FileUrl"><img class="preview-for-uploaded-image" src="@Model.ProjectContentItem.FileUrl" alt="img"></a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="prview-image-wrapper">
+                                        <div class="pull-left">
+                                            <a class="image-link" href="#"></a>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            @Html.TextBoxFor(model => model.ProjectContentItem.FileUrl, new { @class = "pull-left form-control file-url-input", @readonly = "readonly" })
+                            <button id="OpenFileManagerForWebsiteLogo" class="pull-right btn btn-primary file-url-button"><span style="margin-right: 2px;" class="glyphicon glyphicon-folder-open"> </span> Open file manager</button>
+                        </div>
+                    </div>
+                </div>
+
+                @* Facebook logo url *@
+                <div class="col-md-12">
+                    <div class="file-url-panel panel panel-custom">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">@Html.LabelFor(model => model.Seo.LogoFbUrl)</h3>
+                        </div>
+                        <div class="panel-body">
+
+                            @{
+                                if (Model != null && Model.ProjectContentItem != null)
+                                {
+                                    <div class="pull-left">
+                                        <a class="image-link" href="@Model.Seo.LogoFbUrl"><img class="preview-for-uploaded-image" src="@Model.Seo.LogoFbUrl" alt="img"></a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="prview-image-wrapper">
+                                        <div class="pull-left">
+                                            <a class="image-link" href="#"></a>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            @Html.TextBoxFor(model => model.Seo.LogoFbUrl, new { @class = "pull-left form-control file-url-input", @readonly = "readonly" })
+                            <button id="OpenFileManagerForFbLogo" class="pull-right btn btn-primary file-url-button"><span style="margin-right: 2px;" class="glyphicon glyphicon-folder-open"> </span> Open file manager</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="panel panel-custom">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">@Html.LabelFor(model => model.Seo.Keywords)</h3>
+                        </div>
+                        <div class="panel-body text-center">
+                            @Html.TextBoxFor(model => model.Seo.Keywords, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Seo.Keywords)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="panel panel-custom">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">@Html.LabelFor(model => model.Seo.Description)</h3>
+                        </div>
+                        <div class="panel-body text-center">
+                            @Html.TextAreaFor(model => model.Seo.Description, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Seo.Description)
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+                                }
+
+<div id="delete-popup" class="popup popup-warning mfp-hide"><div id="delete-popup-content"></div></div>
+
+@Html.Partial("Admin/_FormElementsJS", Model)
+@Html.Partial("_PopupMessages")
+@Html.Partial("FileManager/_FileManagerReadModePopup")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+    function fileManagePopupHandler($element, inputId) {
+        $element.fileManagerPopupHandler({
+            actionType: 'read',
+            popupId: '#files-popup',
+            popupContentClass: '.files-popup-content',
+            classToRemove: 'popup-success',
+            classToAdd: 'popup-info',
+            urlToLoad: '/filemanager/popupreadmode?inputIdToShowFileUrl=' + inputId,
+            onLoadStartCallback: $('.gears-wrapper').show(),
+            onLoadCompleteCallback: $('.gears-wrapper').hide()
+        });
+    }
+
+    $(function () {
+        fixFileUrlWidth();
+
+        fileManagePopupHandler($('#OpenFileManagerForWebsiteLogo'), 'ProjectContentItem_FileUrl');
+        fileManagePopupHandler($('#OpenFileManagerForFbLogo'), 'Seo_LogoFbUrl');
+
+        $(".panel-heading, .bootstrap-filestyle label, .file-url-button").css("background-color", "tomato", "important");
+        $('.image-link').magnificPopup({ type: 'image' });
+
+    });
+</script>
+

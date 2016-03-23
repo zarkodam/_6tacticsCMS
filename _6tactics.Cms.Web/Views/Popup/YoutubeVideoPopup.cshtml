@@ -1,0 +1,24 @@
+﻿@model _6tactics.Cms.Core.ViewModels.Common.ContentItemViewModel
+
+@{
+    const string commonVideoOptions = "fs=1&showinfo=0&theme=light";
+    string flashVideoOptions = string.Concat("?feature=player_embedded&version=3", commonVideoOptions);
+    string videoLinkForFlash = "";
+    string videoLinkForHtml5 = "";
+
+    //if (!string.IsNullOrWhiteSpace(Model.LinkTo))
+    //{
+    //    int indexOf = Model.LinkTo.IndexOf("=", StringComparison.Ordinal) + 1;
+    //    string youtubeVideoCode = Model.LinkTo.Substring(indexOf);
+    //    videoLinkForFlash = string.Concat("https://www.youtube.com/v/", youtubeVideoCode, "&", flashVideoOptions);
+    //    videoLinkForHtml5 = string.Concat("//www.youtube.com/embed/", youtubeVideoCode, "&", commonVideoOptions);
+    //}
+
+
+}
+
+@* HTML5 *@
+<div class="embed-responsive embed-responsive-16by9">
+    <iframe class="embed-responsive-item" src="//www.youtube.com/embed/kT3qLOMK6V4?autoplay=1" frameborder="0"></iframe>
+</div>
+

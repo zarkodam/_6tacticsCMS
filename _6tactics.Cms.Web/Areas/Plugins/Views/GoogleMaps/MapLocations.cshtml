@@ -1,0 +1,55 @@
+﻿@model _6tactics.Cms.Web.Areas.Plugins.ViewModels.GoogleMaps.MapLocationsViewModel
+
+<div class="content-wrapper">
+    <input id="search-box-locations-map" class="search-box controls" type="text" placeholder="Search Box">
+    <div id="adding-locations-map" class="google-map"></div>
+    <div id="location-form">
+        @Html.Partial("_LocationForm", Model)
+    </div>
+    <div id="locations-list">
+        @Html.Partial("_LocationsList", Model.Map)
+    </div>
+</div>
+
+<script type="text/javascript">
+    function updateHeight() {
+        loadingStop();
+
+        var calculatedHeight = $('.google-map').height() + $('#location-form').height() + $('#locations-list').height();
+        jquerStepsHeightRefrash(calculatedHeight);
+    }
+
+    $(function () {
+        $.validator.unobtrusive.addValidation('form');
+
+        $("#adding-locations-map").googleMapsWizard({
+            action: 'search',
+            inputId: '#search-box-locations-map',
+            mapResizeEventActivatorId: '#wizard-t-3, #wizard-t-2, #wizard-t-1, #wizard-t-0',
+            defaultAddress: 'zagreb',
+            zoom: 12,
+            scrollwheel: false,
+
+            formattedAddressId: '#Location_FormattedAddress',
+            addressLatitudeId: '#Location_Latitude',
+            addressLongitudeId: '#Location_Longitude',
+            addresszIndexId: '#Location_ZIndex',
+
+            addLocationFormCallback: function () {
+                var validateMessage = $('.field-validation-error').find('span');
+                if (validateMessage.length > 0)
+                    validateMessage.remove();
+            },
+
+            markerVisibility: true,
+            //markerImageUrl: "/Content/Images/logo-small.png",
+
+            infowindowVisibility: true,
+            infowindowMaxWidth: '300px',
+            infowindowMaxHeight: 'auto'
+            //infowindowImageUrl: "/Content/Images/logo-small.png"
+        });
+
+        updateHeight();
+    });
+</script>

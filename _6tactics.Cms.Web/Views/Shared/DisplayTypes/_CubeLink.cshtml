@@ -1,0 +1,35 @@
+﻿@using _6tactics.Cms.Web.App_Logic
+@using _6tactics.Cms.Web.Helpers
+@using _6tactics.Utilities.Common
+@model _6tactics.Cms.Core.ViewModels.Common.ContentItemViewModel
+
+@{var fileUrlHelper = new FileUrlHelper(Model.FileUrl);}
+
+@if (fileUrlHelper.IsUrlValid && ElementsVisibilityUtility.IsElementVisible(Model.ElementVisibility, User.Identity.IsAuthenticated))
+{
+    <li class="cbp-item">
+        @if (CheckFileType.IsFileImage(Model.FileUrl))
+        {
+            <a href="@Model.LinkTo" class="cbp-caption" data-title="@Model.Title" target="_blank">
+                <div class="cbp-filter-counter"></div>
+
+                @*@if (Model.LinkOption != LinkOption.Disable && !string.IsNullOrWhiteSpace(Model.LinkTo))
+                {*@
+                    <div class="cbp-caption-defaultWrap">
+                        <img src="@Url.Action("GetFile", "Web", new {folderPath = fileUrlHelper.RouteFolderPath, filename = fileUrlHelper.Filename, extensionName = fileUrlHelper.ExtensionName})" alt="image">
+                    </div>
+                @*}*@
+
+                <div class="cbp-caption-activeWrap">
+                    <div class="cbp-l-caption-alignCenter">
+                        <div class="cbp-l-caption-body">
+                            <div class="cbp-l-caption-title">@Model.Title</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        }
+    </li>
+}
+
+

@@ -1,0 +1,10 @@
+﻿@model IEnumerable<_6tactics.Cms.Core.Models.Common.ContentItemWithParentCount>
+
+@* Getting page list for selected language *@
+@foreach (var page in Model)
+{
+    <li>
+        @Html.ActionLink(page.ContentItem.Title, "Priorities", "Admin",
+                new { pageId = page.ContentItem.Id }, new { @style = string.Concat("margin-left:", page.Depth * 10, "px") })
+    </li>
+}

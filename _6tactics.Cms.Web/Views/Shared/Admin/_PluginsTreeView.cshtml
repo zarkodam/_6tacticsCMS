@@ -1,0 +1,62 @@
+﻿@using _6tactics.Cms.Core.ViewModels.PluginsManager
+@model IEnumerable<Plugin>
+
+@helper ListResults(Plugin plugin, string bgColor)
+{
+    <li class="plugin-node">
+        <div class="cursorPointer tree-node" style="background-color: @bgColor; border-right: 1px solid @bgColor; border-top: 1px solid @bgColor"
+             data-routename="@plugin.RouteName" data-pluginlocation="@Url.Action(plugin.PluginActions.First().RouteName, plugin.RouteName, new {area = "Plugins"})">
+            <div class="node-text">
+                <div style="margin-top: 5px;" class="pull-left content-item-title">@plugin.PreviewName</div>
+            </div>
+
+            <div class="action-icons">
+                <div class="glyphicon glyphicon-share-alt" title="Open plugin settings"></div>
+            </div>
+        </div>
+    </li>
+}
+
+<div id="plugin-list" class="tree">
+    <div id="plugin-list-wrapper" class="scrollbar-outer">
+        <ul id="root">
+            @{
+                int counter = 0;
+                foreach (var plugin in Model)
+                {
+                    string bgColor = counter == 0 ? "#6b6a6a" : "#808080";
+                    @ListResults(plugin, bgColor)
+                    counter++;
+                }
+            }
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('.tree').treeView();
+
+        $(".tree-node").on("click", function () {
+            loadingStart();
+
+            $('#current-location-message').html('');
+            $('#plugin-actions-menu').html('');
+            $('#plugin-preview-wrapper').html('');
+            $('#plugin-preview-wrapper').hide();
+
+            treeViewSelectedItemHandler.selectItemInFolderAndPluginTree($(this));
+
+            $('#plugin-actions-menu').load('/pluginsmanager/pluginactions?pluginName=' + $(this).data('routename'), function () {
+                $('#current-location-message').html($(this).find('.content-item-title').html());
+                $('#plugin-preview-wrapper').show();
+            });
+
+            $('#plugin-preview-wrapper').load($(this).data('pluginlocation'), function () {
+                loadingStop();
+            });
+
+        });
+
+    });
+</script>

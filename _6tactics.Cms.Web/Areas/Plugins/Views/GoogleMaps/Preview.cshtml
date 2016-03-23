@@ -1,0 +1,25 @@
+﻿@model _6tactics.Cms.Web.Areas.Plugins.ViewModels.GoogleMaps.PreviewViewModel
+
+<div id="preview" class="google-map"></div>
+
+<script type="text/javascript">
+    $(function () {
+
+        // Fixed json string from model
+        var mapData = @Html.Raw(Json.Encode(Model.MapJsonString));
+        var mapDataParsed = JSON.parse(mapData.replace(/"/g, '"'));
+
+        // Fixed json string from model
+        var mapSettings = @Html.Raw(Json.Encode(Model.PreviewSetupJsonString));
+        var mapSettingsParsed = JSON.parse(mapSettings.replace(/"/g, '"'));
+
+        mapSettingsParsed.mapResizeEventActivatorId = '#wizard-t-3, #wizard-t-2, #wizard-t-1, #wizard-t-0';
+        mapSettingsParsed.zoom = mapDataParsed.zoom;
+        mapSettingsParsed.savedLocations = mapDataParsed.locations;
+
+        $("#preview").googleMapsWizard(mapSettingsParsed);
+
+        jquerStepsHeightRefrash($('.google-map').height());
+
+    });
+</script>

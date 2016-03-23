@@ -1,0 +1,52 @@
+﻿@model _6tactics.Cms.Web.Areas.Plugins.Models.GoogleMaps.Map
+
+@using (Ajax.BeginForm("AddSettingsToMap", "GoogleMaps",
+                                        new AjaxOptions
+                                        {
+                                            HttpMethod = "POST",
+                                            InsertionMode = InsertionMode.Replace,
+                                            UpdateTargetId = "maps-message",
+                                            OnBegin = "loadingStart",
+                                            OnComplete = "loadingStop"
+                                        }))
+{
+    <div class="table-responsive">
+        <table class="table table-locations">
+            @Html.AntiForgeryToken()
+            <tbody>
+                <tr>
+                    <td>
+                        <span>@Html.LabelFor(model => model.Zoom)</span>
+                        <div>
+                            <span class="validation-message">@Html.ValidationMessageFor(model => model.Zoom)</span>
+                            <div class="input-wrapper">@Html.TextBoxFor(model => model.Zoom, new { @class = "form-control", @readonly = "readonly" })</div>
+                        </div>
+                    </td>
+                    <td>
+                        <span>@Html.LabelFor(model => model.MapCenterLatitude)</span>
+                        <div>
+                            <span class="validation-message">@Html.ValidationMessageFor(model => model.MapCenterLatitude)</span>
+                            <div class="input-wrapper">@Html.TextBoxFor(model => model.MapCenterLatitude, new { @class = "form-control", @readonly = "readonly" })</div>
+                        </div>
+                    </td>
+                    <td>
+                        <span>@Html.LabelFor(model => model.MapCenterLongitude)</span>
+                        <div>
+                            <span class="validation-message">@Html.ValidationMessageFor(model => model.MapCenterLongitude)</span>
+                            <div class="input-wrapper">@Html.TextBoxFor(model => model.MapCenterLongitude, new { @class = "form-control", @readonly = "readonly" })</div>
+                        </div>
+                    </td>
+
+                    <td style="text-align: center;">
+                        <div>
+                            <span><label for="add-map-item">Action</label></span>
+                            <input class="btn btn-primary" id="add-map-item" type="submit" value="Save">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+
+<div id="maps-message"></div>

@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNet.Identity.EntityFramework
+@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+
+<div class="row">
+    <h3>Roles</h3>
+</div>
+
+<div class="row text-right">
+    <p> @Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = "btn btn-primary" }) </p>
+</div>
+
+<div class="row">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th class="text-right">
+                Actions
+            </th>
+        </tr>
+
+        @foreach (IdentityRole role in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => role.Name)
+                </td>
+                @if (role.Name.Equals("administrators", StringComparison.InvariantCultureIgnoreCase) || role.Name.Equals("adminreadonly", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    <td class="text-right">
+                        <button class="btn btn-info disabled">Edit</button>
+                        <button class="btn btn-info disabled">Delete</button>
+                    </td>
+                }
+                else
+                {
+                    <td class="text-right">
+                        @Html.ActionLink("Edit", "Edit", new { id = role.Id }, htmlAttributes: new { @class = "btn btn-info" })
+                        @Html.ActionLink("Delete", "Delete", new { id = role.Id }, htmlAttributes: new { @class = "btn btn-info" })
+                    </td>
+                }
+            </tr>
+        }
+
+    </table>
+</div>

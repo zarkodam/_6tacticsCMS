@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    @Html.Action("SeoData", "Web")
+    @Html.Action("IncludeAnalytics", "GoogleAnalytics", new { area = "Plugins" })
+
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Content/web-styles")
+
+    @Scripts.Render("~/Scripts/web-scripts-before-body")
+</head>
+
+<body>
+    @RenderBody()
+
+    @if ((bool)ViewBag.IsAnyGoogleMapOnThisPage)
+    {
+        <script id="googleMapsApi" src="https://maps.googleapis.com/maps/api/js?v=3&libraries=places"></script>
+    }
+
+    @Scripts.Render("~/Scripts/web-scripts-after-body")
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,105 @@
+﻿@using _6tactics.Cms.Web.App_Logic
+@model dynamic
+
+@{
+    var actionName = "";
+    var addingForElement = "";
+    string displayType = "";
+
+    if (ElementsVisibilityUtility.IsCreatePage || ElementsVisibilityUtility.IsEditPage)
+    {
+        var selectedDisplayType = Model.ContentItemViewModel.DisplayType;
+        displayType = selectedDisplayType != null ? string.Concat(" / ", selectedDisplayType.ToUpper()) : "";
+    }
+
+    if (ElementsVisibilityUtility.IsCreatePage)
+    {
+        actionName = "CREATE CHILD FOR:";
+        addingForElement = string.Concat(Model.CreateEditDataViewModel.SelectedTitle.ToUpper(), " (", Model.ContentItemViewModel.ContentType.ToString().ToUpper(), displayType, ")");
+    }
+    else if (ElementsVisibilityUtility.IsEditPage)
+    {
+        actionName = "EDIT:";
+        addingForElement = string.Concat(Model.ContentItemViewModel.Title.ToUpper(), " (", Model.ContentItemViewModel.ContentType.ToString().ToUpper(), displayType, ")");
+    }
+    else if (ElementsVisibilityUtility.IsPluginsPage)
+    {
+        actionName = "PLUGINS";
+    }
+    else if (ElementsVisibilityUtility.IsSetupPage)
+    {
+        actionName = "SETUP";
+    }
+    else if (ElementsVisibilityUtility.IsDetailsPage)
+    {
+        var selectedDisplayType = Model.DisplayType;
+        displayType = selectedDisplayType != null ? string.Concat(" / ", selectedDisplayType.ToUpper()) : "";
+        
+        actionName = "DETAILS:";
+        addingForElement = string.Concat(Model.Title.ToUpper(), " (", Model.ContentType.ToString().ToUpper(), displayType, ")");
+    }
+}
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container actions-menu">
+
+        <div class="navbar-header">
+            <span class="actions-menu-title pull-left"><b>ADMIN</b> / @actionName @addingForElement</span>
+
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right top-menu-items" style="color: white; ">
+
+                @if (ElementsVisibilityUtility.IsCreatePage)
+                {
+                    <li>
+                        <div style="margin-top: 12px;">
+                            <div class="pull-left" style="margin-top: -14px; margin-left: 3px; margin-right: 10px;">
+                                <label style="margin-top: 10px; padding-right: 5px;" class="pull-left" for="CreateEditDataViewModel_IsCreateChild">Automatically create child</label>
+                                    
+                                <input checked="checked" data-val="true" data-val-required="The IsCreateChild field is required." id="CreateEditDataViewModel_IsCreateChild" name="CreateEditDataViewModel.IsCreateChild" type="checkbox" value="true">
+                                <input name="CreateEditDataViewModel.IsCreateChild" type="hidden" value="false">
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="submit" value="Create" class="btn btn-danger" />
+                    </li>
+                }
+                @if (ElementsVisibilityUtility.IsEditPage)
+                {
+                    <li>
+                        <input type="submit" value="Update" class="btn btn-danger" />
+                    </li>
+                }
+                @*@if (ElementsVisibilityUtility.IsPluginsPage)
+                {
+                    <li>
+                        <input type="submit" value="Save plugin settings" class="btn btn-danger" />
+                    </li>
+                }*@
+                @if (ElementsVisibilityUtility.IsSetupPage)
+                {
+                    <li>
+                        <input type="submit" value="Save setup" class="btn btn-danger" />
+                    </li>
+                }
+                @if (ElementsVisibilityUtility.IsDetailsPage)
+                {
+                    <li>
+                        <div class="details-actions">
+                            <a class="action-menu-href" href="@Url.Action("Edit", "Admin", new{id = Model.Id})">
+                                <h4><span class="label label-danger link-link"><span class="glyphicon glyphicon-edit"></span><span class="link-link-text"> Edit</span></span></h4>
+                            </a>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

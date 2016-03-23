@@ -1,0 +1,40 @@
+﻿Usage:
+    
+    var fuzzStringMatching = new FuzzyStringMatching();
+    
+    var trims = new string[]
+        {
+            "GL 2.4",
+            "GL 2.4 Premium",
+            "GL 3.5",
+            "GL 3.5 Sport",
+            "GLS",
+            "GLS V6",
+            "Limited",
+            "Limited 3.5",
+            "Limited V6",
+            "SE"
+        };
+    
+    var trim = "GL-AWD-MAGS";
+    
+    var resultSets = fuzzStringMatching.GetSimiarities(trim, trims);
+    
+    var bestMatch = 0D;
+    var bestMatchValue = string.Empty;
+    
+    foreach (ResultSet resultSet in resultSets)
+    {
+        if (resultSet.Result > bestMatch)
+        {
+            bestMatch = resultSet.Result;
+            bestMatchValue = resultSet.Word;
+        }
+    
+        Console.WriteLine("{0} - {1}",resultSet.Word, resultSet.Result);
+    }
+    
+    Console.WriteLine();
+    Console.WriteLine("Raw trim: {0}", trim);
+    Console.WriteLine();
+    Console.WriteLine("Best match: {0} ({1})", bestMatchValue, bestMatch);

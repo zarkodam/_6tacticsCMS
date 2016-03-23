@@ -1,0 +1,17 @@
+﻿@model _6tactics.Cms.Core.ViewModels.Common.ContentItemViewModel
+
+<div class="summary-contact-us">
+    <div class="element-summary-wrapper col-md-6 remove-padding">
+        <div class="element-summary">
+            @Html.Raw(Model.Summary)
+        </div>
+    </div>
+
+    <div class="col-md-6 remove-padding">
+        @Html.Action("MailForm", "MailSender", new { area = "Plugins" })
+    </div>
+</div>
+
+
+
+

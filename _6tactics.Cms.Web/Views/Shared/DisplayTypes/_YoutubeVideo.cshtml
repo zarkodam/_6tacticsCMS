@@ -1,0 +1,38 @@
+﻿@model _6tactics.Cms.Core.ViewModels.Common.ContentItemViewModel
+
+@{
+    int indexOf;
+
+    int videoCodeIndexFromNormalLink = Model.LinkTo.IndexOf("=", StringComparison.Ordinal) + 1;
+    if (videoCodeIndexFromNormalLink == 0)
+    {
+        // Video code index from shorted link
+        indexOf = Model.LinkTo.LastIndexOf("youtu.be/", StringComparison.Ordinal) + 9;
+    }
+    else
+    {
+        indexOf = videoCodeIndexFromNormalLink;
+    }
+
+    string youtubeVideoCode = Model.LinkTo.Substring(indexOf);
+    const string commonVideoOptions = "fs=1&showinfo=0&theme=light";
+    string flashVideoOptions = string.Concat("?feature=player_embedded&version=3", commonVideoOptions);
+
+    string videoLink = string.Concat("https://www.youtube.com/v/", youtubeVideoCode, "&", flashVideoOptions);
+}
+
+@* HTML5 *@
+<div class="embed-responsive embed-responsive-16by9">
+    <iframe class="embed-responsive-item" src="//www.youtube.com/embed/@string.Concat(youtubeVideoCode, "?", commonVideoOptions)"></iframe>
+</div>
+
+@* Flash *@
+@*<div class="embed-responsive embed-responsive-16by9">
+    <object width="640" height="360" type="application/x-shockwave-flash">
+        <param name="movie" value="@videoLink">
+        <param name="allowFullScreen" value="true">
+        <param name="allowScriptAccess" value="always">
+        <embed src="@videoLink" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always">
+    </object>
+</div>*@
+

@@ -1,0 +1,33 @@
+﻿@model _6tactics.Cms.Core.ViewModels.PluginsManager.Plugin
+
+@if (Model.PluginActions.Any())
+{
+    int counter = 0;
+
+    foreach (var action in Model.PluginActions)
+    {
+        string buttonBgColor = counter == 0 ? "#6b6a6a" : "#808080";
+
+        <button style="margin-right: 6px; margin-bottom: 6px; background-color: @buttonBgColor; outline: 0;" class="pull-left plugin-action btn btn-danger" data-plugin="@Model.RouteName" data-action="@action.RouteName">
+            @action.PreviewName <span class="glyphicon glyphicon-chevron-right"></span>
+        </button>
+
+        counter++;
+    }
+}
+
+<br><br>
+
+<script type="text/javascript">
+    $(function () {
+        $('.plugin-action').on('click', function () {
+            loadingStart();
+
+            $('.plugin-action').css('background-color', '#808080');
+            $(this).css('background-color', '#6b6a6a');
+            $('#plugin-preview-wrapper').load('/plugins/' + $(this).data('plugin') + '/' + $(this).data('action'), function() {
+                loadingStop();
+            });
+        });
+    })
+</script>

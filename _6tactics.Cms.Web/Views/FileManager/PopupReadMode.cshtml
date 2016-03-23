@@ -1,0 +1,59 @@
+﻿@using _6tactics.Utilities.FileSystem.Interfaces
+
+
+@model _6tactics.Cms.Core.ViewModels.FileManager.PopupReadModeViewModel
+
+@helper ListDirectories(IDirectoryTree directoryTree)
+{
+    foreach (IDirectoryTree directory in directoryTree.ChildDirectories)
+    {
+        <option>@string.Concat("/", Model.DirectoryTree.Name.ToLower(), directory.WebPath.ToLower())</option>
+
+        @ListDirectories(directory)
+    }
+}
+
+
+<div id="files-popup-wrapper" class="popup-wrapper">
+    <div class="popup-form">
+        <select id="folders-dropdown" class="form-control">
+            <option selected="selected">/@Model.DirectoryTree.Name.ToLower()</option>
+            @ListDirectories(Model.DirectoryTree)
+        </select>
+    </div>
+    <div id="selected-files-preview">
+        <div  id="selected-files" class="scrollbar-outer"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function fileManagerReadAndEditInit(webFolderPath) {
+        // FileManagerRead
+        fileManagerReadSettings.previewAreaId = '#selected-files';
+        fileManagerReadSettings.urlToLoad = '/filemanager/getfilesfromserver?webfilepath=' + webFolderPath;
+        fileManagerReadSettings.fileStatus = 'uploaded';
+        fileManagerReadSettings.isEditingAllowed = false;
+        $(document.body).fileManagerRead(fileManagerReadSettings);
+    }
+
+    $(function () {
+        fileManagerReadAndEditInit($('#folders-dropdown option:selected').text());
+
+        $('#folders-dropdown').on('change', function() {
+            fileManagerReadAndEditInit(this.value);
+        });
+
+        $(document.body).on('click', '.file-wrapper', function (event) {
+            event.preventDefault();
+
+            var filePath = $(this).find('.fileObject').data('filenamewithpath');
+            var inputId = '#' + '@Model.InputIdToShowFileUrl';
+
+            fixFileUrlWidth(filePath, inputId);
+            $(document.body).find(inputId).val(filePath).data('filepath', $('#folders-dropdown option:selected').text());
+
+            $.magnificPopup.instance.close();
+            $(document.body).off('click', '.file-wrapper');
+        });
+    });
+</script>

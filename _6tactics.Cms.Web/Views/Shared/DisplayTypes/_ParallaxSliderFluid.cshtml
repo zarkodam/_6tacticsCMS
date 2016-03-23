@@ -1,0 +1,33 @@
+﻿@model _6tactics.Cms.Core.ViewModels.Common.ContentItemViewModel
+@using _6tactics.Cms.Core.Enums.Admin
+@using _6tactics.Cms.Web.Helpers
+@using _6tactics.Utilities.Common
+
+<div class="root-element col-xs-12 da-slide">
+    <div class="col-xs-offset-2 col-xs-4 content-left">
+        <div class="pull-right text-left">
+            @*<h3>@Model.Title</h3>*@
+            @Html.Raw(Model.Summary)
+        </div>
+    </div>
+    <div class="col-xs-4 content-right">
+        @Html.Raw(Model.Content)
+
+        @{var fileUrlHelper = new FileUrlHelper(Model.FileUrl);}
+
+        @if (Model.LinkOption != LinkOption.Disable && !string.IsNullOrWhiteSpace(Model.LinkTo) && fileUrlHelper.IsUrlValid && CheckFileType.IsFileImage(Model.FileUrl))
+        {
+            <div class="parallax-slider-image-wrapper">
+                <a class="iframe-popup-item" href="@Model.LinkTo">
+                    <img src="@Url.Action("GetFile", "Web", new {folderPath = fileUrlHelper.RouteFolderPath, filename = fileUrlHelper.Filename, extensionName = fileUrlHelper.ExtensionName})" alt="@Model.Title">
+                </a>
+            </div>
+        }
+        else if (CheckExistence.IsUrlExist(Model.FileUrl) && fileUrlHelper.IsUrlValid && (Model.LinkOption == LinkOption.Disable || string.IsNullOrWhiteSpace(Model.LinkTo)))
+        {
+            <div class="parallax-slider-image-wrapper">
+                <img src="@Url.Action("GetFile", "Web", new {folderPath = fileUrlHelper.RouteFolderPath, filename = fileUrlHelper.Filename, extensionName = fileUrlHelper.ExtensionName})" alt="@Model.Title">
+            </div>
+        }
+    </div>
+</div>

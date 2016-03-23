@@ -1,0 +1,77 @@
+[
+  {
+    "title": "BakerStreet",
+    "zoom": 18,
+    "mapCenterLatitude": "51.5206105000000",
+    "mapCenterLongitude": "-0.1568496000000",
+    "locations": [
+      {
+        "formattedAddress": "Baker St, Marylebone, London, UK",
+        "latitude": "51.52061049999999",
+        "longitude": "-0.15684959999998682",
+        "zIndex": 0,
+        "customLogoUrl": null
+      }
+    ]
+  },
+  {
+    "title": "BakerStreetFullWidth",
+    "zoom": 18,
+    "mapCenterLatitude": "51.5206105000000",
+    "mapCenterLongitude": "-0.1568496000000",
+    "locations": [
+      {
+        "formattedAddress": "Baker St, Marylebone, London, UK",
+        "latitude": "51.52061049999999",
+        "longitude": "-0.15684959999998682",
+        "zIndex": 0,
+        "customLogoUrl": null
+      }
+    ]
+  },
+  {
+    "title": "WallStreet",
+    "zoom": 18,
+    "mapCenterLatitude": "40.7059981000000",
+    "mapCenterLongitude": "-74.0088439000000",
+    "locations": [
+      {
+        "formattedAddress": "Wall St, New York, NY, USA",
+        "latitude": "40.70599809999999",
+        "longitude": "-74.00884389999999",
+        "zIndex": 0,
+        "customLogoUrl": null
+      }
+    ]
+  },
+  {
+    "title": "Vlaska",
+    "zoom": 15,
+    "mapCenterLatitude": "45.8137424000000",
+    "mapCenterLongitude": "15.9873717000000",
+    "locations": [
+      {
+        "formattedAddress": "Vlaška ul., 10000, Zagreb, Croatia",
+        "latitude": "45.8137424",
+        "longitude": "15.98737170000004",
+        "zIndex": 0,
+        "customLogoUrl": null
+      }
+    ]
+  },
+  {
+    "title": "BakerStreetFullPage",
+    "zoom": 19,
+    "mapCenterLatitude": "51.5206105000000",
+    "mapCenterLongitude": "-0.1568496000000",
+    "locations": [
+      {
+        "formattedAddress": "Baker St, Marylebone, London, UK",
+        "latitude": "51.52061049999999",
+        "longitude": "-0.15684959999998682",
+        "zIndex": 0,
+        "customLogoUrl": null
+      }
+    ]
+  }
+]

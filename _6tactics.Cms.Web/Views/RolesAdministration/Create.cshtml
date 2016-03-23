@@ -1,0 +1,21 @@
+﻿@model _6tactics.AspIdentity.ViewModels.RolesHandler.RoleViewModel
+
+@{ ViewBag.Title = "Roles administration / Create"; }
+
+@Html.Partial("Admin/_AdminMenu")
+
+<div id="current-location">
+    <p id="current-location-message">
+        <span id="current-location-intro-message">@ViewBag.Title</span>
+    </p>
+</div>
+
+<br><br>
+
+<div class="container">
+    @Html.Partial("_CreateContent", Model)
+</div>
+
+@Html.Partial("_PopupMessages")
+
+

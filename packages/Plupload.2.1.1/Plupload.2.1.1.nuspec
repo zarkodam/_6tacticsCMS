@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Plupload</id>
+    <version>2.1.1</version>
+    <title>Plupload</title>
+    <authors>shvydky</authors>
+    <owners>shvydky</owners>
+    <licenseUrl>http://www.plupload.com/license.php</licenseUrl>
+    <projectUrl>http://www.plupload.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Plupload is a cross-browser multi-runtime file uploading API. Basically, a set of tools that will help you to build a reliable and visually appealing file uploader in minutes.
+			Historically, Plupload comes from a dark and hostile age of no HTML5, hence all the alternative fallbacks, like Flash, Silverlight and Java (still in development). It is meant to provide an API, that will work anywhere and in any case, in one way or another. While having very solid fallbacks, Plupload is built with the future of HTML5 in mind.</description>
+    <summary>File upload plugin</summary>
+    <releaseNotes />
+    <language />
+  </metadata>
+</package>

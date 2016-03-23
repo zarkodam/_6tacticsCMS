@@ -1,0 +1,75 @@
+﻿@* folder management *@
+
+<div id="delete-folder-popup" class="popup popup-warning mfp-hide">
+    <div class="popup-content" id="delete-popup-content"></div>
+</div>
+
+<div id="create-folder-popup" class="popup popup-info mfp-hide">
+    <div class="popup-content" id="create-popup-content"></div>
+</div>
+
+<div id="rename-file-on-create-popup" class="popup popup-info mfp-hide">
+    <div class="popup-content" id="rename-on-create-popup-content">
+        @Html.TextBox("file-rename-input-on-create", null, new { @id = "file-rename-input-on-create", @class = "form-control" })
+    </div>
+</div>
+
+<div id="rename-file-on-edit-popup" class="popup popup-info mfp-hide">
+    <div class="popup-content" id="rename-on-edit-popup-content">
+        @Html.TextBox("file-rename-input-on-edit", null, new { @id = "file-rename-input-on-edit", @class = "form-control" })
+    </div>
+</div>
+
+
+@* fileManagerUpload *@
+<div id="file-already-exist" class="popup popup-error mfp-hide">
+    <div class="popup-content">
+        File/s already exist!
+    </div>
+</div>
+
+<div id="file-extension-is-not-allowed" class="popup popup-error mfp-hide">
+    <div class="popup-content">
+        File extension is not allowed!
+    </div>
+</div>
+
+<div id="file-limit-exceeded" class="popup popup-error mfp-hide">
+    <div class="popup-content">
+        File/s size exceeding the limit!
+    </div>
+</div>
+
+<div id="upload-complete" class="popup popup-success mfp-hide">
+    <div class="popup-content">
+        Upload complete!
+    </div>
+</div>
+
+<div id="upload-aborted" class="popup popup-warning mfp-hide">
+    <div class="popup-content">
+        Upload for current file aborted!
+    </div>
+</div>
+
+@* fileManagerEdit *@
+<div id="edit-applied" class="popup popup-success mfp-hide">
+    <div class="popup-content">
+        Changes uploaded!
+    </div>
+</div>
+
+
+
+@* fileManagerRemove *@
+<div id="remove-confirmation" class="popup popup-error mfp-hide">
+    <div class="popup-content">
+        Are you shure you want to delete file? <br><br>
+
+        <div class="pull-right">
+            <button id="remove-confirm" class="btn btn-primary">Confirm</button>
+            <button id="remove-cancel" class="btn btn-primary">Cancel</button>
+        </div>
+    </div>
+    <br>
+</div>
